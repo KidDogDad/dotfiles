@@ -143,8 +143,3 @@ alias mirrors="sudo reflector --country 'United States' --protocol https --age 2
 
 # Set cursor to line
 set fish_cursor_default block
-
-# Trying this again at the end WHAT THE HELL IS GOING ON 
-# Remove annoying stuff from PATH that won't freaking go away 
-set PATH (string match -v "/home/josh/Github stuff not in AUR" $PATH)
-set PATH (string match -v "/home/josh/.emacs.d/bin" $PATH)
