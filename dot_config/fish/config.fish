@@ -124,10 +124,6 @@ end
 ##################
 ##################
 
-# Trying to get rid of this crap in my PATH that won't go away 
-set -e PATH
-set -gx PATH /usr/local/sbin /usr/local/bin /usr/bin /var/lib/flatpak/exports/bin /usr/bin/site_perl /usr/bin/vendor_perl /usr/bin/core_perl
-
 # Fix weird-looking man pages
 set -x MANROFFOPT -c
 
