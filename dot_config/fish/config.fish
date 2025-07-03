@@ -20,18 +20,11 @@ if test -f ~/.fish_profile
 end
 
 # Add ~/.local/bin to PATH
-if test -d ~/.local/bin
-    if not contains -- ~/.local/bin $PATH
-        set -p PATH ~/.local/bin
-    end
-end
-
-# Add depot_tools to PATH
-if test -d ~/Applications/depot_tools
-    if not contains -- ~/Applications/depot_tools $PATH
-        set -p PATH ~/Applications/depot_tools
-    end
-end
+#if test -d ~/.local/bin
+#    if not contains -- ~/.local/bin $PATH
+#        set -p PATH ~/.local/bin
+#    end
+#end
 
 ## Starship prompt
 if status --is-interactive
@@ -164,7 +157,3 @@ alias mirrors="sudo reflector --country 'United States' --protocol https --age 2
 
 # Set cursor to line
 set fish_cursor_default block
-
-# Add Ruby Gems to PATH
-#export GEM_HOME="$(gem env user_gemhome)"
-#export PATH="$PATH:$GEM_HOME/bin"
