@@ -19,13 +19,6 @@ if test -f ~/.fish_profile
     source ~/.fish_profile
 end
 
-# Add ~/.local/bin to PATH
-#if test -d ~/.local/bin
-#    if not contains -- ~/.local/bin $PATH
-#        set -p PATH ~/.local/bin
-#    end
-#end
-
 ## Starship prompt
 if status --is-interactive
     source ("/usr/bin/starship" init fish --print-full-init | psub)
@@ -99,12 +92,12 @@ alias ip='ip -color'
 alias cat='bat --style header --style snip --style changes --style header'
 
 # Common use
-alias fixpacman="sudo rm /var/lib/pacman/db.lck"
-alias tarnow='tar -acf '
-alias untar='tar -xvf '
-alias rmpkg="sudo pacman -Rdd"
-alias psmem='ps auxf | sort -nr -k 4'
-alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+#alias fixpacman="sudo rm /var/lib/pacman/db.lck"
+#alias tarnow='tar -acf '
+#alias untar='tar -xvf '
+#alias rmpkg="sudo pacman -Rdd"
+#alias psmem='ps auxf | sort -nr -k 4'
+#alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
@@ -112,13 +105,13 @@ alias fgrep='grep -F --color=auto'
 alias egrep='grep -E --color=auto'
 
 # Cleanup orphaned packages
-alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
+#alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 
 # Get the error messages from journalctl
-alias jctl="journalctl -p 3 -xb"
+#alias jctl="journalctl -p 3 -xb"
 
 # Recent installed packages
-alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+#alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 
 # Run fastfetch if session is interactive
 if status --is-interactive && type -q fastfetch
@@ -130,6 +123,10 @@ end
 ### My custom stuff ###
 ##################
 ##################
+
+# Trying to clear random stuff out of my path that won't go away
+set -e PATH
+set -gx PATH /usr/local/sbin /usr/local/bin /usr/bin /var/lib/flatpak/exports/bin /usr/bin/site_perl /usr/bin/vendor_perl /usr/bin/core_perl
 
 # Fix weird-looking man pages
 set -x MANROFFOPT -c
