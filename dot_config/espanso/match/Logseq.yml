@@ -1,0 +1,11 @@
+matches:
+- trigger: :cca
+  replace: CANCELED
+- trigger: :nwe
+  replace: '#NextWeekend'
+- trigger: :nwk
+  replace: '#NextWeek'
+- trigger: :inbox
+  replace: "# 📥 Inbox"
+- trigger: :notes
+  replace: "# 🗒️ Notes"

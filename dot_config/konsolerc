@@ -1,0 +1,21 @@
+[Desktop Entry]
+DefaultProfile=Dracula.profile
+
+[General]
+ConfigVersion=1
+
+[KonsoleWindow]
+ShowMenuBarByDefault=false
+
+[MainWindow]
+3440x1440 screen: Height=648
+3440x1440 screen: Width=1094
+3440x1440 screen: XPosition=509
+3440x1440 screen: YPosition=386
+DisplayPort-0=DisplayPort-0
+DisplayPort-1=DisplayPort-1
+MenuBar=Disabled
+StatusBar=Disabled
+
+[UiSettings]
+ColorScheme=Nordic-Darker

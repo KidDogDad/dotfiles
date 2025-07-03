@@ -1,0 +1,5 @@
+# This directory is a Syncthing folder marker.
+# Do not delete.
+
+folderID: zvrnm-bhsmm
+created: 2025-06-29T11:07:51-05:00

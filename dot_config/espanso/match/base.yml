@@ -1,0 +1,33 @@
+matches:
+- trigger: :date
+  replace: '{{mydate}}'
+- trigger: :myadd1
+  replace: 13003 Water Race Ct
+- trigger: :myadd2
+  replace: '"13003 Water Race Ct\nAustin, TX 78729"'
+- trigger: :rrisd
+  replace: s178530
+- trigger: :nnn
+  replace: (notes)
+- trigger: :bwpw
+  replace: We will be great so we will
+- trigger: :pper
+  replace: Projects/Personal
+- trigger: :ptec
+  replace: Projects/Tech
+- trigger: :ppet
+  replace: Projects/Pets
+- trigger: :pfin
+  replace: Projects/Finances
+- trigger: :pfam
+  replace: Projects/Family
+- trigger: :pfut
+  replace: Projects/Future
+- trigger: :mytel
+  replace: 512-632-6668
+- trigger: :myzip
+  replace: '78729'
+- trigger: :myem1
+  replace: josh@gilliland.cloud
+- trigger: :myem2
+  replace: josh@joshgilliland.com
