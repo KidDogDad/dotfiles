@@ -1,37 +1,16 @@
 ## Set values
+# Remove annoying stuff from PATH that won't freaking go away 
+set PATH (string match -v "/home/josh/Github stuff not in AUR" $PATH)
+set PATH (string match -v "/home/josh/.emacs.d/bin" $PATH)
+
 # Hide welcome message
 set fish_greeting
 set VIRTUAL_ENV_DISABLE_PROMPT 1
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
-## Export variable need for qt-theme
-if type qtile >>/dev/null 2>&1
-    set -x QT_QPA_PLATFORMTHEME qt5ct
-end
-
 # Set settings for https://github.com/franciscolourenco/done
 set -U __done_min_cmd_duration 10000
 set -U __done_notification_urgency_level low
-
-## Environment setup
-# Apply .profile: use this to put fish compatible .profile stuff in
-if test -f ~/.fish_profile
-    source ~/.fish_profile
-end
-
-# Add ~/.local/bin to PATH
-if test -d ~/.local/bin
-    if not contains -- ~/.local/bin $PATH
-        set -p PATH ~/.local/bin
-    end
-end
-
-# Add depot_tools to PATH
-if test -d ~/Applications/depot_tools
-    if not contains -- ~/Applications/depot_tools $PATH
-        set -p PATH ~/Applications/depot_tools
-    end
-end
 
 ## Starship prompt
 if status --is-interactive
@@ -106,12 +85,12 @@ alias ip='ip -color'
 alias cat='bat --style header --style snip --style changes --style header'
 
 # Common use
-alias fixpacman="sudo rm /var/lib/pacman/db.lck"
-alias tarnow='tar -acf '
-alias untar='tar -xvf '
-alias rmpkg="sudo pacman -Rdd"
-alias psmem='ps auxf | sort -nr -k 4'
-alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+#alias fixpacman="sudo rm /var/lib/pacman/db.lck"
+#alias tarnow='tar -acf '
+#alias untar='tar -xvf '
+#alias rmpkg="sudo pacman -Rdd"
+#alias psmem='ps auxf | sort -nr -k 4'
+#alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
@@ -119,13 +98,13 @@ alias fgrep='grep -F --color=auto'
 alias egrep='grep -E --color=auto'
 
 # Cleanup orphaned packages
-alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
+#alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 
 # Get the error messages from journalctl
-alias jctl="journalctl -p 3 -xb"
+#alias jctl="journalctl -p 3 -xb"
 
 # Recent installed packages
-alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+#alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 
 # Run fastfetch if session is interactive
 if status --is-interactive && type -q fastfetch
@@ -165,6 +144,7 @@ alias mirrors="sudo reflector --country 'United States' --protocol https --age 2
 # Set cursor to line
 set fish_cursor_default block
 
-# Add Ruby Gems to PATH
-#export GEM_HOME="$(gem env user_gemhome)"
-#export PATH="$PATH:$GEM_HOME/bin"
+# Trying this again at the end WHAT THE HELL IS GOING ON 
+# Remove annoying stuff from PATH that won't freaking go away 
+set PATH (string match -v "/home/josh/Github stuff not in AUR" $PATH)
+set PATH (string match -v "/home/josh/.emacs.d/bin" $PATH)
