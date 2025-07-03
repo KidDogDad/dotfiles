@@ -118,9 +118,6 @@ alias grep='grep --color=auto'
 alias fgrep='grep -F --color=auto'
 alias egrep='grep -E --color=auto'
 
-# Get fastest mirrors
-alias mirrors="sudo reflector --country 'United States' --protocol https --age 24 --sort rate --latest 20 --save /etc/pacman.d/mirrorlist"
-
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 
@@ -161,6 +158,12 @@ alias clear='clear && fastfetch'
 
 # Adding zoxide https://github.com/ajeetdsouza/zoxide
 zoxide init fish | source
+
+# Get fastest mirrors
+alias mirrors="sudo reflector --country 'United States' --protocol https --age 24 --sort rate --latest 20 --save /etc/pacman.d/mirrorlist"
+
+# Set cursor to line
+set fish_cursor_default block
 
 # Add Ruby Gems to PATH
 #export GEM_HOME="$(gem env user_gemhome)"
