@@ -37,9 +37,12 @@ set fish_cursor_default block
 ## FZF stuff ##
 # Enables these keybindings: 
 # ctrl-t - fzf select 
-# ctrl-r - fzf history
 # alt-c - fzf cd
+# The second & third lines disable the fzf ctrl-r keybinding 
+# for searching history in favor of fish's implementation
 fzf --fish | source
+fzf_key_bindings
+bind --erase \cr
 
 #######################
 #### Garuda stuff #####
