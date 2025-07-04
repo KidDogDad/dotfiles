@@ -35,7 +35,7 @@ alias mirrors="sudo reflector --country 'United States' --protocol https --age 2
 set fish_cursor_default block
 
 ## FZF stuff ##
-# Enables these keybindings: 
+# Keybindings 
 # ctrl-t - fzf select 
 # alt-c - fzf cd
 # The second & third lines disable the fzf ctrl-r keybinding 
@@ -43,6 +43,9 @@ set fish_cursor_default block
 fzf --fish | source
 fzf_key_bindings
 bind --erase \cr
+
+# Set fzf default command to fd 
+set -gx FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
 
 #######################
 #### Garuda stuff #####
