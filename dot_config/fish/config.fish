@@ -3,6 +3,41 @@
 set PATH (string match -v "/home/josh/Github stuff not in AUR" $PATH)
 set PATH (string match -v "/home/josh/.emacs.d/bin" $PATH)
 
+#######################
+### My custom stuff ###
+#######################
+
+# Fix weird-looking man pages
+set -x MANROFFOPT -c
+
+# Set nvim as default editor 
+set -Ux EDITOR nvim
+
+# Stop ranger from loading both system and local config
+set -x RANGER_LOAD_DEFAULT_RC FALSE
+
+# Alias cd to Zoxide
+alias cd='z'
+
+# Alias paru -Rcs to yeet lol
+alias yeet='paru -Rcus'
+
+# Alias clear to clear && fastfetch
+alias clear='clear && fastfetch'
+
+# Adding zoxide https://github.com/ajeetdsouza/zoxide
+zoxide init fish | source
+
+# Get fastest mirrors
+alias mirrors="sudo reflector --country 'United States' --protocol https --age 24 --sort rate --latest 20 --save /etc/pacman.d/mirrorlist"
+
+# Set cursor to line
+set fish_cursor_default block
+
+#######################
+#### Garuda stuff #####
+#######################
+
 # Hide welcome message
 set fish_greeting
 set VIRTUAL_ENV_DISABLE_PROMPT 1
@@ -85,61 +120,13 @@ alias ip='ip -color'
 alias cat='bat --color=always'
 
 # Common use
-#alias fixpacman="sudo rm /var/lib/pacman/db.lck"
-#alias tarnow='tar -acf '
-#alias untar='tar -xvf '
-#alias rmpkg="sudo pacman -Rdd"
-#alias psmem='ps auxf | sort -nr -k 4'
-#alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='grep -F --color=auto'
 alias egrep='grep -E --color=auto'
 
-# Cleanup orphaned packages
-#alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
-
-# Get the error messages from journalctl
-#alias jctl="journalctl -p 3 -xb"
-
-# Recent installed packages
-#alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
-
 # Run fastfetch if session is interactive
 if status --is-interactive && type -q fastfetch
     fastfetch
 end
-
-##################
-##################
-### My custom stuff ###
-##################
-##################
-
-# Fix weird-looking man pages
-set -x MANROFFOPT -c
-
-# Set nvim as default editor 
-set -Ux EDITOR nvim
-
-# Stop ranger from loading both system and local config
-set -x RANGER_LOAD_DEFAULT_RC FALSE
-
-# Alias cd to Zoxide
-alias cd='z'
-
-# Alias paru -Rcs to yeet lol
-alias yeet='paru -Rcus'
-
-# Alias clear to clear && fastfetch
-alias clear='clear && fastfetch'
-
-# Adding zoxide https://github.com/ajeetdsouza/zoxide
-zoxide init fish | source
-
-# Get fastest mirrors
-alias mirrors="sudo reflector --country 'United States' --protocol https --age 24 --sort rate --latest 20 --save /etc/pacman.d/mirrorlist"
-
-# Set cursor to line
-set fish_cursor_default block
