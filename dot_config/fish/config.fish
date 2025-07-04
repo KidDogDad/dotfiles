@@ -34,6 +34,13 @@ alias mirrors="sudo reflector --country 'United States' --protocol https --age 2
 # Set cursor to line
 set fish_cursor_default block
 
+## FZF stuff ##
+# Enables these keybindings: 
+# ctrl-t - fzf select 
+# ctrl-r - fzf history
+# alt-c - fzf cd
+fzf --fish | source
+
 #######################
 #### Garuda stuff #####
 #######################
