@@ -43,7 +43,7 @@ set -gx FZF_DEFAULT_OPTS '--border=rounded -m\
 --color=fg:#CAD3F5,header:#ED8796,info:#C6A0F6,pointer:#F4DBD6 \
 --color=marker:#B7BDF8,fg+:#CAD3F5,prompt:#C6A0F6,hl+:#ED8796 \
 --color=selected-bg:#494D64 \
---color=border:#363A4F,label:#CAD3F5"'
+--color=border:#363A4F,label:#CAD3F5'
 
 # Keybindings 
 # ctrl-t - fzf select 
