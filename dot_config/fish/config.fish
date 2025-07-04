@@ -82,7 +82,7 @@ alias l.='exa -ald --color=always --group-directories-first --icons .*' # show o
 alias ip='ip -color'
 
 # Replace some more things with better alternatives
-alias cat='bat --style header --style snip --style changes --style header'
+alias cat='bat --style snip --style changes --style header'
 
 # Common use
 #alias fixpacman="sudo rm /var/lib/pacman/db.lck"
