@@ -38,12 +38,14 @@ set fish_cursor_default block
 # fzf default options 
 # Adds rounded border and defaults to multi-select
 # Also adds Catppuccin Macchiato colors from https://github.com/catppuccin/fzf
-set -gx FZF_DEFAULT_OPTS '--border=rounded -m\
+set -gx FZF_DEFAULT_OPTS "\
+--border=rounded \
+-m \
 --color=bg+:#363A4F,bg:#24273A,spinner:#F4DBD6,hl:#ED8796 \
 --color=fg:#CAD3F5,header:#ED8796,info:#C6A0F6,pointer:#F4DBD6 \
 --color=marker:#B7BDF8,fg+:#CAD3F5,prompt:#C6A0F6,hl+:#ED8796 \
 --color=selected-bg:#494D64 \
---color=border:#363A4F,label:#CAD3F5'
+--color=border:#363A4F,label:#CAD3F5"
 
 # Keybindings 
 # ctrl-t - fzf select 
