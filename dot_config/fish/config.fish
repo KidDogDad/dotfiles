@@ -45,7 +45,7 @@ fzf_key_bindings
 bind --erase \cr
 
 # Set fzf default command to fd 
-set -gx FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
+set -gx FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix --hidden --exclude .git'
 
 #######################
 #### Garuda stuff #####
