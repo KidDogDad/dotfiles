@@ -34,7 +34,11 @@ alias mirrors="sudo reflector --country 'United States' --protocol https --age 2
 # Set cursor to line
 set fish_cursor_default block
 
-## FZF stuff ##
+## fzf stuff ##
+# fzf default options 
+# Adds rounded border and defaults to multi-select
+set -gx FZF_DEFAULT_OPTS '--border=rounded -m'
+
 # Keybindings 
 # ctrl-t - fzf select 
 # alt-c - fzf cd
