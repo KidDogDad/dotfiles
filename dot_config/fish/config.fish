@@ -20,7 +20,7 @@ set -x RANGER_LOAD_DEFAULT_RC FALSE
 alias cd='z'
 
 # Alias chezmoi to cz 
-aliaz cz='chezmoi'
+alias cz='chezmoi'
 
 # Alias paru -Rcs to yeet lol
 alias yeet='paru -Rcus'
