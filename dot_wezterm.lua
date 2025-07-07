@@ -16,6 +16,9 @@ config.initial_rows = 40
 config.font_size = 10
 config.color_scheme = "Catppuccin Macchiato"
 
+-- Cursor shape
+config.default_cursor_style = 'SteadyBar'
+
 -- Hide tab bar if only one tab
 --config.hide_tab_bar_if_only_one_tab = true
 
