@@ -19,6 +19,9 @@ set -x RANGER_LOAD_DEFAULT_RC FALSE
 # Alias cd to Zoxide
 alias cd='z'
 
+# Alias chezmoi to cz 
+aliaz cz='chezmoi'
+
 # Alias paru -Rcs to yeet lol
 alias yeet='paru -Rcus'
 
