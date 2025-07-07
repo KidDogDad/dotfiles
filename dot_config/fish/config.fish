@@ -22,10 +22,6 @@ alias cd='z'
 # Alias chezmoi to cz 
 alias cz='chezmoi'
 
-# Testing what meld looks like 
-# Yep 
-#
-
 # Alias paru -Rcs to yeet lol
 alias yeet='paru -Rcus'
 

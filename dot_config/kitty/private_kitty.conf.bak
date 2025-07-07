@@ -10,11 +10,10 @@ shell fish
 #: kitty has very powerful font management. You can configure
 #: individual font faces and even specify special fonts for particular
 #: characters.
-
-font_family      FiraCode Nerd Font Mono
-bold_font        auto
-italic_font      auto
-bold_italic_font auto
+# font_family      FiraCode Nerd Font Mono
+# bold_font        auto
+# italic_font      auto
+# bold_italic_font auto
 
 #: You can specify different fonts for the bold/italic/bold-italic
 #: variants. To get a full list of supported fonts use the `kitty
@@ -265,7 +264,7 @@ font_size 10.0
 #: special keyword: background. Note that if cursor is set to none
 #: then this option is ignored.
 
-# cursor_shape block
+cursor_shape beam
 
 #: The cursor shape can be one of block, beam, underline. Note that
 #: when reloading the config this will be changed only if the cursor
@@ -1054,8 +1053,7 @@ tab_title_template {title}{' :{}:'.format(num_windows) if num_windows > 1 else '
 
 #: Template to use for active tabs. If not specified falls back to
 #: tab_title_template.
-
-active_tab_foreground   #c6a0f6
+# active_tab_foreground   #c6a0f6
 # active_tab_background   #eee
 # active_tab_font_style   bold-italic
 # inactive_tab_foreground #444
@@ -2399,7 +2397,9 @@ map ctrl+shift+c send_text all \x03
 #: }}}
 
 
-# BEGIN_KITTY_THEME
-# Dracula
-# include current-theme.conf
-# END_KITTY_THEME
+# BEGIN_KITTY_FONTS
+font_family      family="NotoMono Nerd Font Mono"
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+# END_KITTY_FONTS
