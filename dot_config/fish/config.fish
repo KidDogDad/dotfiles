@@ -23,7 +23,7 @@ alias cd='z'
 alias cz='chezmoi'
 
 # Alias paru -Rcs to yeet lol
-alias yeet='paru -Rcus'
+alias yeet='sudo pacman -Rcus'
 
 # Alias clear to clear && fastfetch
 alias clear='clear && fastfetch'
