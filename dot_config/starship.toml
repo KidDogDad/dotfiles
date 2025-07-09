@@ -75,7 +75,7 @@ time_format = "%T"
 
 # Prompt: param 2
 [character]
-error_symbol = " [╰─×](bold mauve)"
+error_symbol = " [╰─×](bold lavender)"
 success_symbol = " [╰─λ](bold lavender)"
 
 # SYMBOLS
