@@ -14,10 +14,11 @@ config.initial_rows = 40
 
 -- Font & color scheme
 config.font_size = 10
+config.font = wezterm.font("Fira Code")
 config.color_scheme = "Catppuccin Macchiato"
 
 -- Cursor shape
-config.default_cursor_style = 'SteadyBar'
+config.default_cursor_style = "SteadyBar"
 
 -- Hide tab bar if only one tab
 --config.hide_tab_bar_if_only_one_tab = true
