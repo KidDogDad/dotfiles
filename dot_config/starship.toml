@@ -80,13 +80,13 @@ success_symbol = " [╰─λ](bold lavender)"
 
 # SYMBOLS
 [status]
-disabled = false
-format = '[\[$symbol$status_common_meaning$status_signal_name$status_maybe_int\]]($style)'
-map_symbol = true
-pipestatus = true
-symbol = "x"
-sigint_symbol = "🚫"
-signal_symbol = "!"
+disabled = true
+#format = '[\[$symbol$status_common_meaning$status_signal_name$status_maybe_int\]]($style)'
+#map_symbol = true
+#pipestatus = true
+#symbol = "x"
+#sigint_symbol = "🚫"
+#signal_symbol = "!"
 
 [aws]
 symbol = " "
