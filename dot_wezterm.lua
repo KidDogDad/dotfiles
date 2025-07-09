@@ -64,8 +64,8 @@ config.colors = {
 
 		-- Inactive tabs are the tabs that do not have focus
 		inactive_tab = {
-			bg_color = "#363a4f",
-			fg_color = "#8aadf4",
+			bg_color = "#181926",
+			fg_color = "#cad3f5",
 
 			-- The same options that were listed under the `active_tab` section above
 			-- can also be used for `inactive_tab`.
