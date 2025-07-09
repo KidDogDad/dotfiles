@@ -84,8 +84,8 @@ config.colors = {
 
 		-- The new tab button that let you create new tabs
 		new_tab = {
-			bg_color = "#1b1032",
-			fg_color = "#808080",
+			bg_color = "#181926",
+			fg_color = "#cad3f5",
 
 			-- The same options that were listed under the `active_tab` section above
 			-- can also be used for `new_tab`.
