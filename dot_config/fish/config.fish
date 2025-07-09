@@ -11,7 +11,7 @@ set PATH (string match -v "/home/josh/.emacs.d/bin" $PATH)
 set -x MANROFFOPT -c
 
 # Set nvim as default editor 
-set -Ux EDITOR nvim
+set -gx EDITOR nvim
 
 # Stop ranger from loading both system and local config
 set -x RANGER_LOAD_DEFAULT_RC FALSE
