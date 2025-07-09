@@ -28,7 +28,7 @@ config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
 
 -- Retro style tab
-config.use_fancy_tab_bar = false
+-- config.use_fancy_tab_bar = false
 
 config.colors = {
 	tab_bar = {
