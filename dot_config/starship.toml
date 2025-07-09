@@ -75,7 +75,7 @@ time_format = "%T"
 
 # Prompt: param 2
 [character]
-error_symbol = " [×](bold mauve)"
+error_symbol = " [╰─×](bold mauve)"
 success_symbol = " [╰─λ](bold lavender)"
 
 # SYMBOLS
@@ -84,7 +84,9 @@ disabled = false
 format = '[\[$symbol$status_common_meaning$status_signal_name$status_maybe_int\]]($style)'
 map_symbol = true
 pipestatus = true
-#symbol = "🔴"
+symbol = "╰─⨉"
+sigint_symbol = "╰─⏹"
+signal_symbol = "╰─❕"
 
 [aws]
 symbol = " "
