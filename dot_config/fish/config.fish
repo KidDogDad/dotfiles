@@ -13,6 +13,7 @@ set -x MANROFFOPT -c
 # Set nvim as default editor 
 set -gx EDITOR nvim
 set -gx VISUAL nvim
+set -gx SYSTEMD_EDITOR nvim
 
 # Stop ranger from loading both system and local config
 set -x RANGER_LOAD_DEFAULT_RC FALSE
