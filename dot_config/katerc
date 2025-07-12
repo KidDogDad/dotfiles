@@ -179,6 +179,7 @@ SetEditor=false
 [MainWindow]
 1504x1003 screen: Height=925
 1504x1003 screen: Width=735
+1671x1114 screen: Window-Maximized=true
 3440x1440 screen: Height=1344
 3440x1440 screen: Width=1166
 
