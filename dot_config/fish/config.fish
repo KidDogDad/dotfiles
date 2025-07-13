@@ -33,6 +33,8 @@ alias clear='clear && fastfetch'
 # Adding zoxide https://github.com/ajeetdsouza/zoxide
 zoxide init fish | source
 
+# test w/ cz edit
+
 # Get fastest mirrors
 alias mirrors="sudo reflector --versobe --country 'United States' --protocol https --age 24 --sort rate --latest 20 --save /etc/pacman.d/mirrorlist"
 
