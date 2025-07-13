@@ -34,7 +34,7 @@ alias clear='clear && fastfetch'
 zoxide init fish | source
 
 # Get fastest mirrors
-alias mirrors="sudo reflector --country 'United States' --protocol https --age 24 --sort rate --latest 20 --save /etc/pacman.d/mirrorlist"
+alias mirrors="sudo reflector --versobe --country 'United States' --protocol https --age 24 --sort rate --latest 20 --save /etc/pacman.d/mirrorlist"
 
 # Set cursor to line
 set fish_cursor_default block
