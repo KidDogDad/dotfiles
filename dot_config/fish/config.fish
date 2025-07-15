@@ -36,8 +36,6 @@ zoxide init fish | source
 # Get fastest mirrors
 alias mirrors="sudo reflector --verbose --country 'United States' --protocol https --age 24 --sort rate --latest 20 --save /etc/pacman.d/mirrorlist"
 
-# test
-
 # Set cursor to line
 set fish_cursor_default block
 
@@ -65,6 +63,9 @@ bind --erase \cr
 
 # Set fzf default command to fd 
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix --hidden --exclude .git'
+
+# Flutter stuff
+set -gx CHROME_EXECUTABLE=/usr/bin/chromium
 
 #######################
 #### Garuda stuff #####
