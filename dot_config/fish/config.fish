@@ -65,7 +65,7 @@ bind --erase \cr
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix --hidden --exclude .git'
 
 # Flutter stuff
-set -gx CHROME_EXECUTABLE=/usr/bin/chromium
+set -gx CHROME_EXECUTABLE /usr/bin/chromium
 
 #######################
 #### Garuda stuff #####
