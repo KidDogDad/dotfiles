@@ -18,17 +18,12 @@ set -gx SYSTEMD_EDITOR nvim
 # Stop ranger from loading both system and local config
 set -x RANGER_LOAD_DEFAULT_RC FALSE
 
-# Alias cd to Zoxide
+# Aliases 
 alias cd='z'
-
-# Alias chezmoi to cz 
 alias cz='chezmoi'
-
-# Alias paru -Rcs to yeet lol
 alias yeet='sudo pacman -Rcus'
-
-# Alias clear to clear && fastfetch
 alias clear='clear && fastfetch'
+alias c='clear && fastfetch'
 
 # Adding zoxide https://github.com/ajeetdsouza/zoxide
 zoxide init fish | source
