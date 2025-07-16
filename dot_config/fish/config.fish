@@ -67,6 +67,16 @@ set -gx FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix --hidden --exclude .
 # Flutter stuff
 set -gx CHROME_EXECUTABLE /usr/bin/chromium
 
+# Bind yazi to 'y'
+function y
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    yazi $argv --cwd-file="$tmp"
+    if read -z cwd <"$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+        builtin cd -- "$cwd"
+    end
+    rm -f -- "$tmp"
+end
+
 #######################
 #### Garuda stuff #####
 #######################
