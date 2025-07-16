@@ -42,5 +42,17 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
+# Theme & font
 theme = catppuccin-macchiato
 font-size = 12
+
+# Window padding
+window-padding-x = 10
+window-padding-y = 10
+
+# Tab stuff
+adw-toolbar-style = flat
+gtk-wide-tabs = false
+gtk-adwaita = true
+window-theme = ghostty
+#gtk-custom-css = ./tabs.css
