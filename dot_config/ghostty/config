@@ -57,3 +57,6 @@ gtk-wide-tabs = false
 gtk-adwaita = true
 window-theme = ghostty
 #gtk-custom-css = ./tabs.css
+
+# Other 
+cursor-style = bar
