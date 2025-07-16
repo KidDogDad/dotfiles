@@ -5,7 +5,8 @@
     "source": "arch_small",
     "padding": {
       "top": 2,
-      "left": 2
+      "left": 2,
+      "right": 2
     },
     "color": {
       "1": "#b7bdf8",
