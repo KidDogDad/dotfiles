@@ -4,7 +4,7 @@
     "type": "auto",
     "source": "arch_small",
     "padding": {
-      "top": 6,
+      "top": 1,
       "left": 2
     },
     "color": {
