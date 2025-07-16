@@ -23,7 +23,7 @@ alias cd='z'
 alias cz='chezmoi'
 alias yeet='sudo pacman -Rcus'
 alias clear='clear && fastfetch'
-alias c='clear && fastfetch'
+alias c='clear'
 
 # Adding zoxide https://github.com/ajeetdsouza/zoxide
 zoxide init fish | source
