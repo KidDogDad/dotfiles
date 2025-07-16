@@ -18,17 +18,12 @@ set -gx SYSTEMD_EDITOR nvim
 # Stop ranger from loading both system and local config
 set -x RANGER_LOAD_DEFAULT_RC FALSE
 
-# Alias cd to Zoxide
+# Aliases 
 alias cd='z'
-
-# Alias chezmoi to cz 
 alias cz='chezmoi'
-
-# Alias paru -Rcs to yeet lol
 alias yeet='sudo pacman -Rcus'
-
-# Alias clear to clear && fastfetch
 alias clear='clear && fastfetch'
+alias c='clear'
 
 # Adding zoxide https://github.com/ajeetdsouza/zoxide
 zoxide init fish | source
@@ -66,6 +61,16 @@ set -gx FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix --hidden --exclude .
 
 # Flutter stuff
 set -gx CHROME_EXECUTABLE /usr/bin/chromium
+
+# Bind yazi to 'y'
+function y
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    yazi $argv --cwd-file="$tmp"
+    if read -z cwd <"$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+        builtin cd -- "$cwd"
+    end
+    rm -f -- "$tmp"
+end
 
 #######################
 #### Garuda stuff #####

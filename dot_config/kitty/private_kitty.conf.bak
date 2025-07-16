@@ -2,13 +2,29 @@
 include current-theme.conf
 # END_KITTY_THEME
 
-### I don't think I need this stuff actually ###
-# Nerd Fonts v3.3.0
-# symbol_map U+e000-U+e00a,U+ea60-U+ebeb,U+e0a0-U+e0c8,U+e0ca,U+e0cc-U+e0d7,U+e200-U+e2a9,U+e300-U+e3e3,U+e5fa-U+e6b7,U+e700-U+e8ef,U+ed00-U+efc1,U+f000-U+f2ff,U+f000-U+f2e0,U+f300-U+f381,U+f400-U+f533,U+f0001-U+f1af0 Symbols Nerd Font Mono
-# narrow_symbols U+e000-U+e00a,U+ea60-U+ebeb,U+e0a0-U+e0c8,U+e0ca,U+e0cc-U+e0d7,U+e200-U+e2a9,U+e300-U+e3e3,U+e5fa-U+e6b7,U+e700-U+e8ef,U+ed00-U+efc1,U+f000-U+f2ff,U+f000-U+f2e0,U+f300-U+f381,U+f400-U+f533,U+f0001-U+f1af0 1
-### xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ###
-
 shell fish
+
+########### My stuff ###########
+
+# Create new window below current one
+map ctrl+shift+\ launch --location=vsplit
+
+# Create new window to the right of current one
+map ctrl+shift+- launch --location=hsplit  
+
+# Navigating windows
+map ctrl+shift+h neighboring_window left
+map ctrl+shift+l neighboring_window right 
+map ctrl+shift+k neighboring_window up
+map ctrl+shift+j neighboring_window down
+
+# Moving windows
+map ctrl+alt+h move_window left
+map ctrl+alt+l move_window right
+map ctrl+alt+k move_window up
+map ctrl+alt+j move_window down
+
+################################
 
 # vim:fileencoding=utf-8:foldmethod=marker
 
@@ -35,7 +51,7 @@ shell fish
 #:     italic_font      Operator Mono Book Italic
 #:     bold_italic_font Operator Mono Medium Italic
 
-font_size 10.0
+font_size 12.0
 
 #: Font size (in pts)
 
@@ -751,8 +767,8 @@ cursor_shape beam
 #: Window layout {{{
 
 remember_window_size  no
-initial_window_width  862
-initial_window_height 670
+#initial_window_width  130c
+#initial_window_height 50c
 
 #: If enabled, the OS Window size will be remembered so that new
 #: instances of kitty will have the same size as the previous
@@ -761,7 +777,7 @@ initial_window_height 670
 #: suffix of "c" on the width/height values to have them interpreted
 #: as number of cells instead of pixels.
 
-# enabled_layouts *
+enabled_layouts Splits
 
 #: The enabled window layouts. A comma separated list of layout names.
 #: The special value all means all layouts. The first listed layout
@@ -792,14 +808,14 @@ initial_window_height 670
 #: that setting a non-zero window_margin_width overrides this and
 #: causes all borders to be drawn.
 
-# window_margin_width 0
+window_margin_width 5 3
 
 #: The window margin (in pts) (blank area outside the border). A
 #: single value sets all four sides. Two values set the vertical and
 #: horizontal sides. Three values set top, horizontal and bottom. Four
 #: values set top, right, bottom and left.
 
-# single_window_margin_width -1
+single_window_margin_width 0
 
 #: The window margin to use when only a single window is visible (in
 #: pts). Negative values will cause the value of window_margin_width
@@ -807,7 +823,7 @@ initial_window_height 670
 #: set the vertical and horizontal sides. Three values set top,
 #: horizontal and bottom. Four values set top, right, bottom and left.
 
-# window_padding_width 0
+window_padding_width 10 5
 
 #: The window padding (in pts) (blank area between the text and the
 #: window border). A single value sets all four sides. Two values set
@@ -1798,25 +1814,25 @@ map ctrl+shift+c send_text all \x03
 #: Scroll line up
 
 # map kitty_mod+up    scroll_line_up
-# map kitty_mod+k     scroll_line_up
+map ctrl+alt+k            scroll_line_up
 # map opt+cmd+page_up scroll_line_up
 # map cmd+up          scroll_line_up
 
 #: Scroll line down
 
 # map kitty_mod+down    scroll_line_down
-# map kitty_mod+j       scroll_line_down
+map ctrl+alt+j              scroll_line_down
 # map opt+cmd+page_down scroll_line_down
 # map cmd+down          scroll_line_down
 
 #: Scroll page up
 
-# map kitty_mod+page_up scroll_page_up
+map super+k         scroll_page_up
 # map cmd+page_up       scroll_page_up
 
 #: Scroll page down
 
-# map kitty_mod+page_down scroll_page_down
+map super+j           scroll_page_down
 # map cmd+page_down       scroll_page_down
 
 #: Scroll to top
@@ -2404,7 +2420,7 @@ map ctrl+shift+c send_text all \x03
 #: }}}
 
 # BEGIN_KITTY_FONTS
-font_family      family="FiraCode Nerd Font"
+font_family      family="Fira Code"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto

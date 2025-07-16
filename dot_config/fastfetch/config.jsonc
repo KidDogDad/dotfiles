@@ -1,10 +1,12 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "type": "kitty-direct",
-    "source": "/home/josh/Pictures/Icons/icons8-arch-linux-color/icons8-arch-linux-240.png",
+    "type": "auto",
+    "source": "arch_small",
     "padding": {
-      "left": 2
+      "top": 2,
+      "left": 2,
+      "right": 2
     },
     "color": {
       "1": "#b7bdf8",
@@ -54,24 +56,24 @@
             "yellow": 70
         }
     },
-    {
-        "type": "terminal",
-        "key": "   Terminal"
-    },
+    // {
+    //     "type": "terminal",
+    //     "key": "   Terminal"
+    // },
     {
         "type": "terminalfont",
-        "key": "   Terminal Font"
+        "key": "   Font"
     },
     //{
     //    "type": "theme",
     //    "key": "  󰔎 Theme",
     //    "format": "{1}"
     //},
-    {
-        "type": "CPU",
-        "key": "  󰻠 CPU",
-        "format": "{name}"
-    },
+    // {
+    //     "type": "CPU",
+    //     "key": "  󰻠 CPU",
+    //     "format": "{name}"
+    // },
     {
         "type": "memory",
         "key": "  󰍛 Memory",
@@ -82,11 +84,11 @@
             "yellow": 70
         }
     },
-    {
-        "type": "command",
-        "key": "   OS Age",
-        "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
-    },
+    // {
+    //     "type": "command",
+    //     "key": "   OS Age",
+    //     "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
+    // },
     {
         "type": "uptime",
         "key": "   Uptime"
