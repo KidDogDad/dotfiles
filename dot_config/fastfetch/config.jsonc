@@ -54,10 +54,10 @@
             "yellow": 70
         }
     },
-    {
-        "type": "terminal",
-        "key": "   Terminal"
-    },
+    // {
+    //     "type": "terminal",
+    //     "key": "   Terminal"
+    // },
     {
         "type": "terminalfont",
         "key": "   Terminal Font"
