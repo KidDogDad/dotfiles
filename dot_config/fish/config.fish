@@ -24,6 +24,7 @@ alias cz='chezmoi'
 alias yeet='sudo pacman -Rcus'
 alias clear='clear && fastfetch'
 alias c='clear'
+alias n='nvim'
 
 # Adding zoxide https://github.com/ajeetdsouza/zoxide
 zoxide init fish | source
