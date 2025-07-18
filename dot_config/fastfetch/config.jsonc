@@ -11,7 +11,7 @@
     "color": {
       "1": "#b7bdf8",
       "2": "#8aadf4"
-    },
+    }
   },
   "display": {
     "color": {
@@ -30,39 +30,38 @@
     },
     //"separator",
     {
-        "type": "custom",
-        "format": "╭───────────────────────────────────────────────────╮"
-    },
-
-    {
-        "type": "os",
-	    "key": "  󰣇 OS"
+      "type": "custom",
+      "format": "╭───────────────────────────────────────────────────╮"
     },
     {
-        "type": "kernel",
-        "key": "   Kernel"
+      "type": "os",
+      "key": "  󰣇 OS"
     },
     {
-        "type": "packages",
-        "key": "  󰮯 Packages"
+      "type": "kernel",
+      "key": "   Kernel"
     },
     {
-        "type": "btrfs",
-        "key": "   Btrfs",
-        "format": "{used} / {total} {10}",
-        "percent": {
-            "type": 3,
-            "green": 30,
-            "yellow": 70
-        }
+      "type": "packages",
+      "key": "  󰮯 Packages"
+    },
+    {
+      "type": "btrfs",
+      "key": "   Btrfs",
+      "format": "{used} / {total} {10}",
+      "percent": {
+        "type": 3,
+        "green": 30,
+        "yellow": 70
+      }
     },
     // {
     //     "type": "terminal",
     //     "key": "   Terminal"
     // },
     {
-        "type": "terminalfont",
-        "key": "   Font"
+      "type": "terminalfont",
+      "key": "   Font"
     },
     //{
     //    "type": "theme",
@@ -75,14 +74,14 @@
     //     "format": "{name}"
     // },
     {
-        "type": "memory",
-        "key": "  󰍛 Memory",
-        "format": "{used} / {total} {4}",
-        "percent": {
-            "type": 3,
-            "green": 30,
-            "yellow": 70
-        }
+      "type": "memory",
+      "key": "  󰍛 Memory",
+      "format": "{used} / {total} {4}",
+      "percent": {
+        "type": 3,
+        "green": 30,
+        "yellow": 70
+      }
     },
     // {
     //     "type": "command",
@@ -90,18 +89,18 @@
     //     "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
     // },
     {
-        "type": "uptime",
-        "key": "   Uptime"
+      "type": "uptime",
+      "key": "   Uptime"
     },
     {
-        "type": "custom",
-        "format": "╰───────────────────────────────────────────────────╯"
+      "type": "custom",
+      "format": "╰───────────────────────────────────────────────────╯"
     },
     //"break",
     {
-        "type": "colors",
-        "symbol": "circle",
-        "paddingLeft": 2
+      "type": "colors",
+      "symbol": "circle",
+      "paddingLeft": 2
     }
   ]
 }
