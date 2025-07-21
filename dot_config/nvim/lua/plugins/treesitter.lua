@@ -13,6 +13,7 @@ return {
       "vim",
       "vimdoc",
       "yaml",
+      "dart",
     },
   },
 }
