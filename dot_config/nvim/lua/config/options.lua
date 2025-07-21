@@ -4,3 +4,8 @@
 
 -- Make sure Neovim is using the right shell
 vim.o.shell = "fish"
+
+-- Fold manually
+vim.opt.foldmethod = "manual"
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
