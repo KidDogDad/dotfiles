@@ -3,22 +3,8 @@
 #
 #   /home/josh/.config/ghostty/config
 #
-# The template does not set any default options, since Ghostty ships
-# with sensible defaults for all options. Users should only need to set
-# options that they want to change from the default.
-#
 # Run `ghostty +show-config --default --docs` to view a list of
 # all available config options and their default values.
-
-# Config syntax crash course
-# ==========================
-# # Empty values are used to reset config keys to default.
-# key =
-#
-# # Some config options have unique syntaxes for their value,
-# # which is explained in the docs for that config option.
-# # Just for example:
-# resize-overlay-duration = 4s 200ms
 
 # Theme & font
 theme = catppuccin-macchiato
@@ -29,12 +15,20 @@ font-family =
 window-padding-x = 10
 window-padding-y = 10
 
-# Tab stuff
+# Appearance stuff
 adw-toolbar-style = flat
 gtk-wide-tabs = false
-gtk-adwaita = true
+gtk-adwaita = false
+gtk-titlebar = false
 window-theme = ghostty
 #gtk-custom-css = ./tabs.css
 
 # Other 
 cursor-style = bar
+
+# Keybindings
+keybind = ctrl+shift+\=new_split:right
+keybind = ctrl+shift+-=new_split:down
+keybind = ctrl+shift+w=close_surface
+keybind = ctrl+super+k=scroll_page_lines:-20
+keybind = ctrl+super+j=scroll_page_lines:20
