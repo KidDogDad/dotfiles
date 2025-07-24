@@ -17,6 +17,15 @@ bind x tabclose
 unbind <C-f>
 bind J tabprev
 bind K tabnext
+bind g1 tab 1
+bind g2 tab 2
+bind g3 tab 3
+bind g4 tab 4
+bind g5 tab 5
+bind g6 tab 6
+bind g7 tab 7
+bind g8 tab 8
+bind g9 tab 9
 
 " Allow Ctrl-a to select all in the commandline
 unbind --mode=ex <C-a>
@@ -114,7 +123,7 @@ bindurl www.google.com K tabnext
 bindurl www.google.com gt tabnext_gt
 bindurl www.google.com gT tabprev
 bindurl www.google.com g^ tabfirst
-bindurl www.google.com g0 tabfirst
+bindurl www.google.com g0 tablast
 bindurl www.google.com g$ tablast
 bindurl www.google.com ga tabaudio
 bindurl www.google.com gr reader --old
@@ -270,7 +279,7 @@ bind g; changelistjump -1
 bind gt tabnext_gt
 bind gT tabprev
 bind g^ tabfirst
-bind g0 tabfirst
+bind g0 tablast
 bind g$ tablast
 bind ga tabaudio
 bind gr reader --old
