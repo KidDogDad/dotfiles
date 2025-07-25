@@ -33,6 +33,9 @@ unbind --mode=ex <C-a>
 " Allow Ctrl-c to copy in the commandline
 unbind --mode=ex <C-c>
 
+" Control what sites can steal focus 
+set allowautofocus false
+seturl ^https://www.google.com/ allowautofocus true
 
 " " Make `gi` on GitHub take you to the search box
 bindurl ^https://github.com gi hint -Vc .AppHeader-searchButton
