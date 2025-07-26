@@ -23,7 +23,7 @@ alias cd='z'
 alias cz='chezmoi'
 alias yeet='sudo pacman -Rcus'
 alias clear='clear'
-alias c='clear'
+# alias c='clear' # Stop using this and start hitting ctrl-l
 alias n='nvim'
 alias ccn='clear && nvim'
 
