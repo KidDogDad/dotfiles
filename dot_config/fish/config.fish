@@ -167,6 +167,6 @@ alias fgrep='grep -F --color=auto'
 alias egrep='grep -E --color=auto'
 
 # Run fastfetch if session is interactive
-if status --is-interactive && type -q fastfetch
-    fastfetch
-end
+# if status --is-interactive && type -q fastfetch
+#     fastfetch
+# end
