@@ -22,7 +22,7 @@ set -x RANGER_LOAD_DEFAULT_RC FALSE
 alias cd='z'
 alias cz='chezmoi'
 alias yeet='sudo pacman -Rcus'
-alias clear='clear && fastfetch'
+alias clear='clear'
 alias c='clear'
 alias n='nvim'
 alias ccn='clear && nvim'
