@@ -1,0 +1,17 @@
+[ButtonColors]
+ButtonIconColorsActive=Accent
+ButtonOverrideColorsActiveClose={"BackgroundHover":[243,139,168],"BackgroundPress":[243,139,168],"IconHover":[243,139,168],"IconPress":[243,139,168],"OutlineHover":[243,139,168],"OutlinePress":[243,139,168]}
+ButtonOverrideColorsActiveMaximize={"BackgroundHover":[166,227,161],"BackgroundPress":[166,227,161],"IconHover":[166,227,161],"IconPress":[166,227,161],"OutlineHover":[166,227,161],"OutlinePress":[166,227,161]}
+ButtonOverrideColorsActiveMinimize={"BackgroundHover":[249,226,175],"BackgroundPress":[249,226,175],"IconHover":[249,226,175],"IconPress":[249,226,175],"OutlineHover":[249,226,175],"OutlinePress":[249,226,175]}
+CloseButtonIconColorActive=AsSelected
+
+[Global]
+LookAndFeelSet=Catppuccin-Mocha-Lavender
+
+[SystemIconGeneration]
+KlassyDarkIconThemeInherits=Tela-circle-dark
+KlassyIconThemeInherits=Tela-circle-dark
+
+[Windeco]
+ButtonIconStyle=StyleTraditional
+WindowCornerRadius=0
