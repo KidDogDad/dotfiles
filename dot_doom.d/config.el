@@ -5,8 +5,7 @@
 ;     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 
 (setq doom-theme 'catppuccin)
-(setq catppuccin-flavor 'macchiato)
-(catppuccin-reload)
+(setq catppuccin-flavor 'mocha)
 
 (setq display-line-numbers-type t)
 

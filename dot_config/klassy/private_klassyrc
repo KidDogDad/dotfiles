@@ -14,4 +14,4 @@ KlassyIconThemeInherits=Tela-circle-dark
 
 [Windeco]
 ButtonIconStyle=StyleTraditional
-WindowCornerRadius=0
+WindowCornerRadius=0.5

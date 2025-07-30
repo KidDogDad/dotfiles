@@ -39,8 +39,7 @@ available. You can either set `doom-theme' or manually load a theme with the
 `load-theme' function.
 #+begin_src emacs-lisp
 (setq doom-theme 'catppuccin)
-(setq catppuccin-flavor 'macchiato)
-(catppuccin-reload)
+(setq catppuccin-flavor 'mocha)
 #+end_src
 ** Doom style of line numbers
 This determines the style of line numbers in effect. If set to `nil', line
