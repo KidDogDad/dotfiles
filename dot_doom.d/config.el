@@ -16,6 +16,7 @@
 )
 (after! org
   (setq
+   org-modern-star 'replace
    org-auto-align-tags nil
    org-hide-emphasis-markers t
    org-tags-column 0
