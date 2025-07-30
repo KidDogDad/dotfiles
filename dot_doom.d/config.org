@@ -11,15 +11,41 @@
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12.0 :weight 'semibold)
      doom-variable-pitch-font (font-spec :family "Inter" :size 12.0))
 #+end_src
-*** Some other font / appearance settings
+** Some other font / appearance settings
 #+begin_src emacs-lisp
 (after! doom-themes
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t))
-(after! org
-  (setq org-hide-emphasis-markers t))
 #+end_src
-*** Line spacing
+** org-modern
+Beautiful theme for org-mode buffers. Enabling globally.
+#+begin_src emacs-lisp
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+(use-package! org-modern
+  :hook (org-mode . org-modern-mode)
+  :config
+  (setq org-modern-horizontal-rule t)
+  (setq org-modern-table-horizontal 0.1)
+)
+(after! org
+  (setq
+   org-auto-align-tags nil
+   org-hide-emphasis-markers t
+   org-tags-column 0
+   org-catch-invisible-edits 'show-and-error
+   org-pretty-entities t
+   org-ellipsis "…"
+))
+(global-org-modern-mode)
+#+end_src
+** org-modern-indent
+#+begin_src emacs-lisp
+(use-package org-modern-indent
+  :config
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+)
+#+end_src
+** Line spacing
 #+begin_src emacs-lisp
 (setq-default line-spacing 0)
 #+end_src
@@ -65,37 +91,6 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 ** org-appear
 #+begin_src emacs-lisp
 (add-hook 'org-mode-hook 'org-appear-mode)
-#+end_src
-** org-modern
-Beautiful theme for org-mode buffers. Enabling globally.
-*** Base org-modern settings
-#+begin_src emacs-lisp
-(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
-(use-package! org-modern
-  :hook (org-mode . org-modern-mode)
-  :config
-  (setq org-modern-horizontal-rule t)
-  (setq org-modern-table-horizontal 0.1)
-)
-#+end_src
-*** Other settings suggested on [[https://github.com/minad/org-modern][org-modern github page]]
-#+begin_src emacs-lisp
-(setq
- org-auto-align-tags nil
- org-hide-emphasis-markers t
- org-tags-column 0
- org-catch-invisible-edits 'show-and-error
- org-pretty-entities t
- org-ellipsis "…"
-)
-(global-org-modern-mode)
-#+end_src
-*** org-modern-indent
-#+begin_src emacs-lisp
-(use-package org-modern-indent
-  :config
-  (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
-)
 #+end_src
 ** Company mode (autocomplete) in org files
 #+begin_src emacs-lisp

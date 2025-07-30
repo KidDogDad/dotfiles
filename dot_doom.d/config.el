@@ -6,8 +6,29 @@
 (after! doom-themes
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t))
+
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+(use-package! org-modern
+  :hook (org-mode . org-modern-mode)
+  :config
+  (setq org-modern-horizontal-rule t)
+  (setq org-modern-table-horizontal 0.1)
+)
 (after! org
-  (setq org-hide-emphasis-markers t))
+  (setq
+   org-auto-align-tags nil
+   org-hide-emphasis-markers t
+   org-tags-column 0
+   org-catch-invisible-edits 'show-and-error
+   org-pretty-entities t
+   org-ellipsis "…"
+))
+(global-org-modern-mode)
+
+(use-package org-modern-indent
+  :config
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+)
 
 (setq-default line-spacing 0)
 
@@ -34,29 +55,6 @@
 )
 
 (add-hook 'org-mode-hook 'org-appear-mode)
-
-(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
-(use-package! org-modern
-  :hook (org-mode . org-modern-mode)
-  :config
-  (setq org-modern-horizontal-rule t)
-  (setq org-modern-table-horizontal 0.1)
-)
-
-(setq
- org-auto-align-tags nil
- org-hide-emphasis-markers t
- org-tags-column 0
- org-catch-invisible-edits 'show-and-error
- org-pretty-entities t
- org-ellipsis "…"
-)
-(global-org-modern-mode)
-
-(use-package org-modern-indent
-  :config
-  (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
-)
 
 (defun my-org-roam-company-backend (command &optional arg &rest _ignored)
   "Company backend function for org-roam links."
