@@ -60,6 +60,7 @@
 (package! olivetti)
 (package! real-auto-save)
 (package! nov)
+(package! chezmoi)
 (package! sublime-themes)
 (package! beacon)
 (package! visual-fill-column)
