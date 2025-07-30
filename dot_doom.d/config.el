@@ -20,8 +20,9 @@
    org-hide-emphasis-markers t
    org-tags-column 0
    org-catch-invisible-edits 'show-and-error
-   org-pretty-entities nil
+   org-pretty-entities t
    org-ellipsis "…"
+   org-modern-bullet '("●" "○" "■" "◆")
 ))
 (global-org-modern-mode)
 
