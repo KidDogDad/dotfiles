@@ -50,6 +50,11 @@
  org-pretty-entities t
  org-ellipsis "…")
 
+(use-package org-modern-indent
+  :config
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+)
+
 (defun my-org-roam-company-backend (command &optional arg &rest _ignored)
   "Company backend function for org-roam links."
   (interactive (list 'interactive))
