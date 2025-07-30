@@ -1,10 +1,26 @@
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12.0 :weight 'semi-light)
+     doom-variable-pitch-font (font-spec :family "Inter" :size 12.0))
+
+(after! doom-themes
+  (setq doom-themes-enable-bold t)
+  (setq doom-themes-enable-italic t))
+(after! org
+  (setq org-hide-emphasis-markers t))
 
 (setq doom-theme 'catppuccin)
 (setq catppuccin-flavor 'mocha)
 
 (setq display-line-numbers-type 'relative)
+
+(setq fancy-splash-image "~/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
+
+(setq-default line-spacing 0.2)
+
+(custom-set-faces
+; '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
+; '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
+; '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
+; '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
 
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
 
@@ -17,18 +33,13 @@
 
 (add-hook 'org-mode-hook 'org-appear-mode)
 
-;(after! org
-;  (global-org-moder-mode))
-;
-;(add-hook 'org-mode-hook #'org-modern-mode)
 (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 (use-package! org-modern
   :hook (org-mode . org-modern-mode)
   :config
   (setq org-modern-horizontal-rule t)
   (setq org-modern-table-horizontal 0.1)
-  ;(set-face-attribute 'org-modern-symbol nil :family "Iosevka")
-  )
+)
 
 (setq
  org-auto-align-tags nil
@@ -53,10 +64,6 @@
 (add-hook 'org-mode-hook
           (lambda ()
             (add-to-list 'company-backends 'my-org-roam-company-backend)))
-
-(defun display-line-numbers--turn-off ()
-  (setq display-line-numbers nil))
-(add-hook 'org-mode-hook 'display-line-numbers--turn-off)
 
 (custom-set-faces
   '(org-document-title ((t (:inherit outline-1 :height 1.0))))
@@ -95,26 +102,5 @@
 (add-load-path! "~/.doom.d")
 
 (beacon-mode 1)
-
-(setq fancy-splash-image "~/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
-
-(require (intern (system-name)) nil 'noerror)
-
-(after! doom-themes
-  (setq doom-themes-enable-bold t)
-  (setq doom-themes-enable-italic t))
-(after! org
-  (setq org-hide-emphasis-markers t))
-
-(setq-default line-spacing 0.2)
-
-(custom-set-faces
- '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight bold :family "variable-pitch"))))
- '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
- '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
- '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
-
-(require 'olivetti)
-(add-hook 'org-mode-hook 'olivetti-mode 1)
 
 (global-auto-revert-mode 1)

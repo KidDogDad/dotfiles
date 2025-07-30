@@ -1,13 +1,19 @@
 #+title: Config
-#+property: header-args :tangle config.el
-#+auto_tangle: t
 #+startup: show2levels
 
-* Doom appearance settings
+* Appearance settings
 ** Font
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12.0 :weight 'semi-light)
+     doom-variable-pitch-font (font-spec :family "Inter" :size 12.0))
+#+end_src
+*** Some other font / appearance settings
+#+begin_src emacs-lisp
+(after! doom-themes
+  (setq doom-themes-enable-bold t)
+  (setq doom-themes-enable-italic t))
+(after! org
+  (setq org-hide-emphasis-markers t))
 #+end_src
 ** Doom theme
 #+begin_src emacs-lisp
@@ -19,6 +25,22 @@ This determines the style of line numbers in effect. If set to `nil', line
 numbers are disabled. For relative line numbers, set this to `relative'.
 #+begin_src emacs-lisp
 (setq display-line-numbers-type 'relative)
+#+end_src
+** Custom splash image
+#+begin_src emacs-lisp
+(setq fancy-splash-image "~/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
+#+end_src
+** Line spacing
+#+begin_src emacs-lisp
+(setq-default line-spacing 0.2)
+#+end_src
+** Markdown font sizes
+#+begin_src emacs-lisp
+(custom-set-faces
+; '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
+; '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
+; '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
+; '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
 #+end_src
 * Org-mode
 ** auto-save when quitting org agenda
@@ -44,18 +66,13 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 Beautiful theme for org-mode buffers. Enabling globally.
 *** Base org-modern settings
 #+begin_src emacs-lisp
-;(after! org
-;  (global-org-moder-mode))
-;
-;(add-hook 'org-mode-hook #'org-modern-mode)
 (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 (use-package! org-modern
   :hook (org-mode . org-modern-mode)
   :config
   (setq org-modern-horizontal-rule t)
   (setq org-modern-table-horizontal 0.1)
-  ;(set-face-attribute 'org-modern-symbol nil :family "Iosevka")
-  )
+)
 #+end_src
 *** Other settings suggested on [[https://github.com/minad/org-modern][org-modern github page]]
 #+begin_src emacs-lisp
@@ -85,12 +102,6 @@ Beautiful theme for org-mode buffers. Enabling globally.
           (lambda ()
             (add-to-list 'company-backends 'my-org-roam-company-backend)))
 #+end_src
-** org-mode: hide line numbers
-#+begin_src emacs-lisp
-(defun display-line-numbers--turn-off ()
-  (setq display-line-numbers nil))
-(add-hook 'org-mode-hook 'display-line-numbers--turn-off)
-#+end_src
 ** org-mode: header level font sizes
 #+begin_src emacs-lisp
 (custom-set-faces
@@ -118,6 +129,7 @@ Beautiful theme for org-mode buffers. Enabling globally.
 (require 'real-auto-save)
 (add-hook 'org-mode-hook 'real-auto-save-mode)
 #+end_src
+* Other custom settings
 ** Default shell
 I need to do this for Framework, since it has fish set as the default shell
 #+begin_src emacs-lisp
@@ -150,41 +162,6 @@ I need to do this for Framework, since it has fish set as the default shell
 ** beacon
 #+begin_src emacs-lisp
 (beacon-mode 1)
-#+end_src
-** Custom splash image
-#+begin_src emacs-lisp
-(setq fancy-splash-image "~/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
-#+end_src
-** Font settings
-*** Different fonts for different computers
-This loads a .el file with the hostname, which enables different font settings for the tower vs the laptop.
-#+begin_src emacs-lisp
-(require (intern (system-name)) nil 'noerror)
-#+end_src
-*** Some other font / appearance settings:
-#+begin_src emacs-lisp
-(after! doom-themes
-  (setq doom-themes-enable-bold t)
-  (setq doom-themes-enable-italic t))
-(after! org
-  (setq org-hide-emphasis-markers t))
-#+end_src
-** line spacing
-#+begin_src emacs-lisp
-(setq-default line-spacing 0.2)
-#+end_src
-** Markdown font sizes
-#+begin_src emacs-lisp
-(custom-set-faces
- '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight bold :family "variable-pitch"))))
- '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
- '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
- '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
-#+end_src
-** olivetti
-#+begin_src emacs-lisp
-(require 'olivetti)
-(add-hook 'org-mode-hook 'olivetti-mode 1)
 #+end_src
 ** global auto revert
 #+begin_src emacs-lisp
