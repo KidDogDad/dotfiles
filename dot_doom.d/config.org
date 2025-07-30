@@ -82,11 +82,11 @@ Beautiful theme for org-mode buffers. Enabling globally.
 #+begin_src emacs-lisp
 (setq
  org-auto-align-tags nil
+ org-hide-emphasis-markers t
  org-tags-column 0
  org-catch-invisible-edits 'show-and-error
  org-pretty-entities t
  org-ellipsis "…"
- ;; org-modern-list t
 )
 #+end_src
 *** org-modern-indent
