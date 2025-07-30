@@ -20,7 +20,7 @@
    org-hide-emphasis-markers t
    org-tags-column 0
    org-catch-invisible-edits 'show-and-error
-   org-pretty-entities t
+   org-pretty-entities nil
    org-ellipsis "…"
 ))
 (global-org-modern-mode)
