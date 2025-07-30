@@ -51,6 +51,7 @@
  org-pretty-entities t
  org-ellipsis "…"
 )
+(global-org-modern-mode)
 
 (use-package org-modern-indent
   :config

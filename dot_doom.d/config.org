@@ -88,6 +88,7 @@ Beautiful theme for org-mode buffers. Enabling globally.
  org-pretty-entities t
  org-ellipsis "…"
 )
+(global-org-modern-mode)
 #+end_src
 *** org-modern-indent
 #+begin_src emacs-lisp
