@@ -85,7 +85,9 @@ Beautiful theme for org-mode buffers. Enabling globally.
  org-tags-column 0
  org-catch-invisible-edits 'show-and-error
  org-pretty-entities t
- org-ellipsis "…")
+ org-ellipsis "…"
+ ;; org-modern-list t
+)
 #+end_src
 *** org-modern-indent
 #+begin_src emacs-lisp

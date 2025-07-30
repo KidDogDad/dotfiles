@@ -48,7 +48,9 @@
  org-tags-column 0
  org-catch-invisible-edits 'show-and-error
  org-pretty-entities t
- org-ellipsis "…")
+ org-ellipsis "…"
+ ;; org-modern-list t
+)
 
 (use-package org-modern-indent
   :config

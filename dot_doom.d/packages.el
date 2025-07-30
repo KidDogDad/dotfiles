@@ -66,7 +66,7 @@
 (package! consult)
 (package! org-auto-tangle)
 (package! org-modern)
-(package! org-modern-indent)
+(package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 (package! ultra-scroll)
 (package! emojify)
 (package! org-appear)
