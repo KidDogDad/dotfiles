@@ -87,6 +87,13 @@ Beautiful theme for org-mode buffers. Enabling globally.
  org-pretty-entities t
  org-ellipsis "…")
 #+end_src
+*** org-modern-indent
+#+begin_src emacs-lisp
+(use-package org-modern-indent
+  :config
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+)
+#+end_src
 ** Company mode (autocomplete) in org files
 #+begin_src emacs-lisp
 (defun my-org-roam-company-backend (command &optional arg &rest _ignored)

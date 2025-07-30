@@ -174,6 +174,9 @@
          :desc "Diff" "d" #'chezmoi-diff
          :desc "Apply" "a" #'chezmoi-apply)))
 
+(setq which-key-idle-delay 0.1)
+(setq which-key-idle-secondary-delay 0.05)
+
 (setq shell-file-name (executable-find "bash"))
 
 (setq doom-modeline-height 25
