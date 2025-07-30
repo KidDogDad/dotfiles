@@ -51,7 +51,7 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 If you use `org' and don't want your org files in the default location below,
 change `org-directory'. It must be set before org loads!
 #+begin_src emacs-lisp
-(setq org-directory "~/Sync/roam")
+;(setq org-directory "~/Sync/roam")
 #+end_src
 ** Doom package instructions
 Whenever you reconfigure a package, make sure to wrap your config in an
@@ -88,70 +88,70 @@ they are implemented.
 * Org-mode
 ** Agenda files directory
  #+begin_src emacs-lisp
-(setq org-agenda-files '("~/Sync/roam/agenda"))
+;(setq org-agenda-files '("~/Sync/roam/agenda"))
 #+end_src
 ** Agenda settings
 *** Global agenda settings
 #+begin_src emacs-lisp
-(after! org
-  (setq
-   org-agenda-start-day "+0d"
-   org-agenda-window-setup 'current-window
-   org-deadline-warning-days 2
-   org-tags-exclude-from-inheritance '("thisweek" "weekend" "weekday")
-   org-agenda-span 1
-   org-agenda-tags-column 0
-   org-agenda-skip-scheduled-if-done t
-   org-agenda-skip-deadline-if-done t
-   org-agenda-sorting-strategy
-        '((agenda time-up habit-down priority-down category-keep)
-          (todo priority-down category-keep)
-          (tags priority-down category-keep)
-          (search category-keep))
+;(after! org
+;  (setq
+;   org-agenda-start-day "+0d"
+;   org-agenda-window-setup 'current-window
+;   org-deadline-warning-days 2
+;   org-tags-exclude-from-inheritance '("thisweek" "weekend" "weekday")
+;   org-agenda-span 1
+;   org-agenda-tags-column 0
+;   org-agenda-skip-scheduled-if-done t
+;   org-agenda-skip-deadline-if-done t
+;   org-agenda-sorting-strategy
+;        '((agenda time-up habit-down priority-down category-keep)
+;          (todo priority-down category-keep)
+;          (tags priority-down category-keep)
+;          (search category-keep))
 
  ;; Suggested on org-modern github page
- org-agenda-block-separator ?─
- org-agenda-time-grid
- '((daily today require-timed)
-   (800 1000 1200 1400 1600 1800 2000)
-   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
- org-agenda-current-time-string
- "⭠ now ─────────────────────────────────────────────────"))
+; org-agenda-block-separator ?─
+; org-agenda-time-grid
+; '((daily today require-timed)
+;   (800 1000 1200 1400 1600 1800 2000)
+;   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+; org-agenda-current-time-string
+; "⭠ now ─────────────────────────────────────────────────"))
 #+end_src
 *** Define stuck projects
 #+begin_src emacs-lisp
-(setq org-stuck-projects
-      '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
+;(setq org-stuck-projects
+;      '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
 #+end_src
 *** Custom agenda commands
 #+begin_src emacs-lisp
-(after! org
-  (setq org-agenda-custom-commands
-      '(("y" tags-todo "yiyi" nil)
-        ("h" "Habits"
-            ((agenda ""
-                ((org-agenda-files '("~/Sync/roam/agenda/habits_org.org"))))))
-        ("A" "Main agenda"
-            ((agenda ""
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
-                 (org-agenda-overriding-header "Scheduled\n")))
-            (tags-todo "thisweek"
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled 'deadline))
-                 (org-agenda-overriding-header "\nThis Week\n")))
+;(after! org
+;  (setq org-agenda-custom-commands
+;      '(("y" tags-todo "yiyi" nil)
+;        ("h" "Habits"
+;            ((agenda ""
+;                ((org-agenda-files '("~/Sync/roam/agenda/habits_org.org"))))))
+;        ("A" "Main agenda"
+;            ((agenda ""
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
+;                 (org-agenda-overriding-header "Scheduled\n")))
+;            (tags-todo "thisweek"
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled 'deadline))
+;                 (org-agenda-overriding-header "\nThis Week\n")))
             ;(tags-todo "weekend"
                 ;((org-agenda-skip-function
                   ;`(org-agenda-skip-entry-if 'todo 'done 'scheduled 'deadline))
                  ;(org-agenda-overriding-header "\nWeekend\n")))
-            ))
+;            ))
             ;((org-agenda-tag-filter-preset '("-habit"))))
-        ("w" "Weekend"
-            ((agenda ""
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
-                 (org-deadline-warning-days 0)
-                 (org-agenda-overriding-header "WEEKEND AGENDA\n\nToday")))
+;        ("w" "Weekend"
+;            ((agenda ""
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
+;                 (org-deadline-warning-days 0)
+;                 (org-agenda-overriding-header "WEEKEND AGENDA\n\nToday")))
              ;; (agenda ""
              ;;    ((org-agenda-skip-function
              ;;      `(org-agenda-skip-entry-if 'todo 'done))
@@ -159,12 +159,12 @@ they are implemented.
              ;;     (org-agenda-prefix-format "  %s ")
              ;;     (org-agenda-entry-types `(:deadline))
              ;;     (org-agenda-overriding-header "\nDue soon")))
-             (tags-todo "+weekend-fun-errands"
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled))
-                 (org-agenda-sorting-strategy `(priority-down deadline-up category-keep))
-                 (org-agenda-overriding-header "\nWeekend")))
-             ))
+;             (tags-todo "+weekend-fun-errands"
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled))
+;                 (org-agenda-sorting-strategy `(priority-down deadline-up category-keep))
+;                 (org-agenda-overriding-header "\nWeekend")))
+;             ))
              ;(tags-todo "fun"
                 ;((org-agenda-overriding-header "\nFun")))
              ;(tags-todo "+errands+weekend"
@@ -172,32 +172,32 @@ they are implemented.
                   ;`(org-agenda-skip-entry-if 'todo 'done 'scheduled))
                  ;(org-agenda-overriding-header "\nWeekend Errands")))
             ;((org-agenda-tag-filter-preset '("-habit"))))
-        ("W" "This week"
-            ((agenda ""
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
-                 (org-deadline-warning-days 0)
-                 (org-agenda-overriding-header "THIS WEEK\n\nToday")))
-             (agenda ""
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done))
-                 (org-deadline-warning-days 2)
-                 (org-agenda-prefix-format "  %s ")
-                 (org-agenda-entry-types `(:deadline))
-                 (org-agenda-sorting-strategy `(deadline-up))
-                 (org-agenda-overriding-header "\nDue soon")))
-            (tags-todo "thisweek"
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled 'deadline))
-                 (org-agenda-sorting-strategy `(deadline-up priority-down category-up))
-                 (org-agenda-overriding-header "\nThis week")))
+;        ("W" "This week"
+;            ((agenda ""
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
+;                 (org-deadline-warning-days 0)
+;                 (org-agenda-overriding-header "THIS WEEK\n\nToday")))
+;             (agenda ""
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done))
+;                 (org-deadline-warning-days 2)
+;                 (org-agenda-prefix-format "  %s ")
+;                 (org-agenda-entry-types `(:deadline))
+;                 (org-agenda-sorting-strategy `(deadline-up))
+;                 (org-agenda-overriding-header "\nDue soon")))
+;            (tags-todo "thisweek"
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled 'deadline))
+;                 (org-agenda-sorting-strategy `(deadline-up priority-down category-up))
+;                 (org-agenda-overriding-header "\nThis week")))
             ;(tags-todo "+errands+thisweek"
                 ;((org-agenda-overriding-header "\nErrands")))
-            ))
+;            ))
             ;((org-agenda-tag-filter-preset '("-habit"))))
-        )
-    )
-  )
+;        )
+;    )
+;  )
 #+end_src
 *** auto-save when quitting org agenda
 #+begin_src emacs-lisp
@@ -238,16 +238,16 @@ they are implemented.
 #+end_src
 *** Templates
 #+begin_src emacs-lisp
-(after! org
-  (setq org-capture-templates
-      '(("t" "Todo" entry (file "~/Sync/roam/agenda/inbox.org")
-         "* TODO %?")
-        ("T" "Todo (clipboard)" entry (file "~/Sync/roam/agenda/inbox.org")
-         "* TODO %? (notes)\n%x")
-        ("d" "Todo (document)" entry (file "~/Sync/roam/agenda/inbox.org")
-         "* TODO %? (notes)\n%a")
-        ("i" "Todo (interactive)" entry (file "~/Sync/roam/agenda/inbox.org")
-         "* TODO %? (notes)\n%^C")))
+;(after! org
+;  (setq org-capture-templates
+;      '(("t" "Todo" entry (file "~/Sync/roam/agenda/inbox.org")
+;         "* TODO %?")
+;        ("T" "Todo (clipboard)" entry (file "~/Sync/roam/agenda/inbox.org")
+;         "* TODO %? (notes)\n%x")
+;        ("d" "Todo (document)" entry (file "~/Sync/roam/agenda/inbox.org")
+;         "* TODO %? (notes)\n%a")
+;        ("i" "Todo (interactive)" entry (file "~/Sync/roam/agenda/inbox.org")
+;         "* TODO %? (notes)\n%^C")))
 )
 #+End_src
 ** org-modern
@@ -278,44 +278,44 @@ Beautiful theme for org-mode buffers. Enabling globally.
 #+end_src
 ** org-roam
 #+begin_src emacs-lisp
-(use-package org-roam
+;(use-package org-roam
 ;  :ensure t
-  :custom
-  (org-roam-directory "~/Sync/roam")
-  (org-roam-capture-templates
-   '(("d" "default" plain
-      "%?"
-      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
-      :unnarrowed t)))
-  :config
-  (org-roam-setup))
+;  :custom
+;  (org-roam-directory "~/Sync/roam")
+;  (org-roam-capture-templates
+;   '(("d" "default" plain
+;      "%?"
+;      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
+;      :unnarrowed t)))
+;  :config
+;  (org-roam-setup))
 #+end_src
 ** org-roam-ui
 *** Basic settings
 Settings from https://github.com/org-roam/org-roam-ui#doom
 #+begin_src emacs-lisp
-(use-package! websocket
-  :after org-roam)
+;(use-package! websocket
+;  :after org-roam)
 
-(use-package! org-roam-ui
-  :after org-roam
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
+;(use-package! org-roam-ui
+;  :after org-roam
+;  :config
+;  (setq org-roam-ui-sync-theme t
+;        org-roam-ui-follow t
+;        org-roam-ui-update-on-save t
+;        org-roam-ui-open-on-start t))
 #+end_src
 *** Map keybinding for org-roam-ui
 #+begin_src emacs-lisp
-(map! :after org-roam-ui
-      :leader
-      :desc "Org-roam UI"
-      "n r u" #'org-roam-ui-open)
+;(map! :after org-roam-ui
+;      :leader
+;      :desc "Org-roam UI"
+;      "n r u" #'org-roam-ui-open)
 #+end_src
 *** Unmap org-mode-graph because it sucks
 #+begin_src emacs-lisp
-(map! :leader
-      "n r g" nil)
+;(map! :leader
+;      "n r g" nil)
 #+end_src
 ** Company mode (autocomplete) in org files
 #+begin_src emacs-lisp
@@ -338,12 +338,12 @@ Settings from https://github.com/org-roam/org-roam-ui#doom
 #+end_src
 ** Org-auto-tangle
 #+begin_src emacs-lisp
-(use-package! org-auto-tangle
-    :defer t
-    :hook (org-mode . org-auto-tangle-mode)
-    :config
-    (setq org-auto-tangle-default t)
-)
+;(use-package! org-auto-tangle
+;    :defer t
+;    :hook (org-mode . org-auto-tangle-mode)
+;    :config
+;    (setq org-auto-tangle-default t)
+;)
 #+end_src
 ** org-mode: hide line numbers
 #+begin_src emacs-lisp
@@ -370,27 +370,27 @@ Settings from https://github.com/org-roam/org-roam-ui#doom
 #+end_src
 ** org-habit
 #+begin_src emacs-lisp
-(use-package! org-habit
-  :after org
-  :config
-  (setq org-habit-following-days 7
-        org-habit-preceding-days 15
-        org-habit-show-habits t
-        org-habit-show-habits-only-for-today nil
-        org-habit-graph-window-ratio 0.2
-        org-habit-graph-padding 1))
+;(use-package! org-habit
+;  :after org
+;  :config
+;  (setq org-habit-following-days 7
+;        org-habit-preceding-days 15
+;        org-habit-show-habits t
+;        org-habit-show-habits-only-for-today nil
+;        org-habit-graph-window-ratio 0.2
+;        org-habit-graph-padding 1))
 #+end_src
 ** Searching org-roam files with consult-ripgrep
 Taken from https://baty.net/2022/searching-org-roam-files/
 #+begin_src emacs-lisp
-(defun josh/search-roam ()
-  "Run consult-ripgrep on the org roam directory"
-  (interactive)
-  (consult-ripgrep org-roam-directory))
+;(defun josh/search-roam ()
+;  "Run consult-ripgrep on the org roam directory"
+;  (interactive)
+;  (consult-ripgrep org-roam-directory))
 
-(map! :leader
-      (:prefix ("s" . "search")
-       :desc "Search org-roam files" "R" #'josh/search-roam))
+(;map! :leader
+ ;     (:prefix ("s" . "search")
+ ;      :desc "Search org-roam files" "R" #'josh/search-roam))
 #+end_src
 ** Keybinding for org-element-cache-reset
 #+begin_src emacs-lisp
@@ -442,11 +442,11 @@ I need to do this for Framework, since it has fish set as the default shell
 ** For the love of god stop putting shit in my clipboard
 Press super-c to copy without affecting the kill ring. Press super-x or super-v to cut or paste. On OS X, use ⌘-c, ⌘-v, ⌘-x.
 #+begin_src emacs-lisp
-(require 'simpleclip)
-(simpleclip-mode 1)
-(map! "C-S-c" #'simpleclip-copy
-      "C-S-v" #'simpleclip-paste
-      "C-S-x" #'simpleclip-cut)
+;(require 'simpleclip)
+;(simpleclip-mode 1)
+;(map! "C-S-c" #'simpleclip-copy
+;      "C-S-v" #'simpleclip-paste
+;      "C-S-x" #'simpleclip-cut)
 #+end_src
 ** Show parens
 #+begin_src emacs-lisp
@@ -575,7 +575,7 @@ From [[https://gitlab.com/dwt1/dotfiles/-/blob/master/.config/doom/config.org#se
 ** DEPRECATED treemacs
 #+begin_src emacs-lisp
 ;(require 'treemacs)
-;; (setq treemacs-no-png-images t)
+; (setq treemacs-no-png-images t)
 ;(setq doom-themes-treemacs-theme "doom-colors")
 #+end_src
 ** DEPRECATED calfw

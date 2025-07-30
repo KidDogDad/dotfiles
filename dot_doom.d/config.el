@@ -9,65 +9,65 @@
 
 (setq display-line-numbers-type t)
 
-(setq org-directory "~/Sync/roam")
+;(setq org-directory "~/Sync/roam")
 
-(setq org-agenda-files '("~/Sync/roam/agenda"))
+;(setq org-agenda-files '("~/Sync/roam/agenda"))
 
-(after! org
-  (setq
-   org-agenda-start-day "+0d"
-   org-agenda-window-setup 'current-window
-   org-deadline-warning-days 2
-   org-tags-exclude-from-inheritance '("thisweek" "weekend" "weekday")
-   org-agenda-span 1
-   org-agenda-tags-column 0
-   org-agenda-skip-scheduled-if-done t
-   org-agenda-skip-deadline-if-done t
-   org-agenda-sorting-strategy
-        '((agenda time-up habit-down priority-down category-keep)
-          (todo priority-down category-keep)
-          (tags priority-down category-keep)
-          (search category-keep))
+;(after! org
+;  (setq
+;   org-agenda-start-day "+0d"
+;   org-agenda-window-setup 'current-window
+;   org-deadline-warning-days 2
+;   org-tags-exclude-from-inheritance '("thisweek" "weekend" "weekday")
+;   org-agenda-span 1
+;   org-agenda-tags-column 0
+;   org-agenda-skip-scheduled-if-done t
+;   org-agenda-skip-deadline-if-done t
+;   org-agenda-sorting-strategy
+;        '((agenda time-up habit-down priority-down category-keep)
+;          (todo priority-down category-keep)
+;          (tags priority-down category-keep)
+;          (search category-keep))
 
  ;; Suggested on org-modern github page
- org-agenda-block-separator ?─
- org-agenda-time-grid
- '((daily today require-timed)
-   (800 1000 1200 1400 1600 1800 2000)
-   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
- org-agenda-current-time-string
- "⭠ now ─────────────────────────────────────────────────"))
+; org-agenda-block-separator ?─
+; org-agenda-time-grid
+; '((daily today require-timed)
+;   (800 1000 1200 1400 1600 1800 2000)
+;   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+; org-agenda-current-time-string
+; "⭠ now ─────────────────────────────────────────────────"))
 
-(setq org-stuck-projects
-      '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
+;(setq org-stuck-projects
+;      '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
 
-(after! org
-  (setq org-agenda-custom-commands
-      '(("y" tags-todo "yiyi" nil)
-        ("h" "Habits"
-            ((agenda ""
-                ((org-agenda-files '("~/Sync/roam/agenda/habits_org.org"))))))
-        ("A" "Main agenda"
-            ((agenda ""
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
-                 (org-agenda-overriding-header "Scheduled\n")))
-            (tags-todo "thisweek"
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled 'deadline))
-                 (org-agenda-overriding-header "\nThis Week\n")))
+;(after! org
+;  (setq org-agenda-custom-commands
+;      '(("y" tags-todo "yiyi" nil)
+;        ("h" "Habits"
+;            ((agenda ""
+;                ((org-agenda-files '("~/Sync/roam/agenda/habits_org.org"))))))
+;        ("A" "Main agenda"
+;            ((agenda ""
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
+;                 (org-agenda-overriding-header "Scheduled\n")))
+;            (tags-todo "thisweek"
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled 'deadline))
+;                 (org-agenda-overriding-header "\nThis Week\n")))
             ;(tags-todo "weekend"
                 ;((org-agenda-skip-function
                   ;`(org-agenda-skip-entry-if 'todo 'done 'scheduled 'deadline))
                  ;(org-agenda-overriding-header "\nWeekend\n")))
-            ))
+;            ))
             ;((org-agenda-tag-filter-preset '("-habit"))))
-        ("w" "Weekend"
-            ((agenda ""
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
-                 (org-deadline-warning-days 0)
-                 (org-agenda-overriding-header "WEEKEND AGENDA\n\nToday")))
+;        ("w" "Weekend"
+;            ((agenda ""
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
+;                 (org-deadline-warning-days 0)
+;                 (org-agenda-overriding-header "WEEKEND AGENDA\n\nToday")))
              ;; (agenda ""
              ;;    ((org-agenda-skip-function
              ;;      `(org-agenda-skip-entry-if 'todo 'done))
@@ -75,12 +75,12 @@
              ;;     (org-agenda-prefix-format "  %s ")
              ;;     (org-agenda-entry-types `(:deadline))
              ;;     (org-agenda-overriding-header "\nDue soon")))
-             (tags-todo "+weekend-fun-errands"
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled))
-                 (org-agenda-sorting-strategy `(priority-down deadline-up category-keep))
-                 (org-agenda-overriding-header "\nWeekend")))
-             ))
+;             (tags-todo "+weekend-fun-errands"
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled))
+;                 (org-agenda-sorting-strategy `(priority-down deadline-up category-keep))
+;                 (org-agenda-overriding-header "\nWeekend")))
+;             ))
              ;(tags-todo "fun"
                 ;((org-agenda-overriding-header "\nFun")))
              ;(tags-todo "+errands+weekend"
@@ -88,32 +88,32 @@
                   ;`(org-agenda-skip-entry-if 'todo 'done 'scheduled))
                  ;(org-agenda-overriding-header "\nWeekend Errands")))
             ;((org-agenda-tag-filter-preset '("-habit"))))
-        ("W" "This week"
-            ((agenda ""
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
-                 (org-deadline-warning-days 0)
-                 (org-agenda-overriding-header "THIS WEEK\n\nToday")))
-             (agenda ""
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done))
-                 (org-deadline-warning-days 2)
-                 (org-agenda-prefix-format "  %s ")
-                 (org-agenda-entry-types `(:deadline))
-                 (org-agenda-sorting-strategy `(deadline-up))
-                 (org-agenda-overriding-header "\nDue soon")))
-            (tags-todo "thisweek"
-                ((org-agenda-skip-function
-                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled 'deadline))
-                 (org-agenda-sorting-strategy `(deadline-up priority-down category-up))
-                 (org-agenda-overriding-header "\nThis week")))
+;        ("W" "This week"
+;            ((agenda ""
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'deadline))
+;                 (org-deadline-warning-days 0)
+;                 (org-agenda-overriding-header "THIS WEEK\n\nToday")))
+;             (agenda ""
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done))
+;                 (org-deadline-warning-days 2)
+;                 (org-agenda-prefix-format "  %s ")
+;                 (org-agenda-entry-types `(:deadline))
+;                 (org-agenda-sorting-strategy `(deadline-up))
+;                 (org-agenda-overriding-header "\nDue soon")))
+;            (tags-todo "thisweek"
+;                ((org-agenda-skip-function
+;                  `(org-agenda-skip-entry-if 'todo 'done 'scheduled 'deadline))
+;                 (org-agenda-sorting-strategy `(deadline-up priority-down category-up))
+;                 (org-agenda-overriding-header "\nThis week")))
             ;(tags-todo "+errands+thisweek"
                 ;((org-agenda-overriding-header "\nErrands")))
-            ))
+;            ))
             ;((org-agenda-tag-filter-preset '("-habit"))))
-        )
-    )
-  )
+;        )
+;    )
+;  )
 
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
 
@@ -137,16 +137,16 @@
       :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer
       :desc "Org Capture" "x" #'org-capture)
 
-(after! org
-  (setq org-capture-templates
-      '(("t" "Todo" entry (file "~/Sync/roam/agenda/inbox.org")
-         "* TODO %?")
-        ("T" "Todo (clipboard)" entry (file "~/Sync/roam/agenda/inbox.org")
-         "* TODO %? (notes)\n%x")
-        ("d" "Todo (document)" entry (file "~/Sync/roam/agenda/inbox.org")
-         "* TODO %? (notes)\n%a")
-        ("i" "Todo (interactive)" entry (file "~/Sync/roam/agenda/inbox.org")
-         "* TODO %? (notes)\n%^C")))
+;(after! org
+;  (setq org-capture-templates
+;      '(("t" "Todo" entry (file "~/Sync/roam/agenda/inbox.org")
+;         "* TODO %?")
+;        ("T" "Todo (clipboard)" entry (file "~/Sync/roam/agenda/inbox.org")
+;         "* TODO %? (notes)\n%x")
+;        ("d" "Todo (document)" entry (file "~/Sync/roam/agenda/inbox.org")
+;         "* TODO %? (notes)\n%a")
+;        ("i" "Todo (interactive)" entry (file "~/Sync/roam/agenda/inbox.org")
+;         "* TODO %? (notes)\n%^C")))
 )
 
 ;(after! org
@@ -169,36 +169,36 @@
  org-pretty-entities t
  org-ellipsis "…")
 
-(use-package org-roam
+;(use-package org-roam
 ;  :ensure t
-  :custom
-  (org-roam-directory "~/Sync/roam")
-  (org-roam-capture-templates
-   '(("d" "default" plain
-      "%?"
-      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
-      :unnarrowed t)))
-  :config
-  (org-roam-setup))
+;  :custom
+;  (org-roam-directory "~/Sync/roam")
+;  (org-roam-capture-templates
+;   '(("d" "default" plain
+;      "%?"
+;      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
+;      :unnarrowed t)))
+;  :config
+;  (org-roam-setup))
 
-(use-package! websocket
-  :after org-roam)
+;(use-package! websocket
+;  :after org-roam)
 
-(use-package! org-roam-ui
-  :after org-roam
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
+;(use-package! org-roam-ui
+;  :after org-roam
+;  :config
+;  (setq org-roam-ui-sync-theme t
+;        org-roam-ui-follow t
+;        org-roam-ui-update-on-save t
+;        org-roam-ui-open-on-start t))
 
-(map! :after org-roam-ui
-      :leader
-      :desc "Org-roam UI"
-      "n r u" #'org-roam-ui-open)
+;(map! :after org-roam-ui
+;      :leader
+;      :desc "Org-roam UI"
+;      "n r u" #'org-roam-ui-open)
 
-(map! :leader
-      "n r g" nil)
+;(map! :leader
+;      "n r g" nil)
 
 (defun my-org-roam-company-backend (command &optional arg &rest _ignored)
   "Company backend function for org-roam links."
@@ -217,12 +217,12 @@
           (lambda ()
             (add-to-list 'company-backends 'my-org-roam-company-backend)))
 
-(use-package! org-auto-tangle
-    :defer t
-    :hook (org-mode . org-auto-tangle-mode)
-    :config
-    (setq org-auto-tangle-default t)
-)
+;(use-package! org-auto-tangle
+;    :defer t
+;    :hook (org-mode . org-auto-tangle-mode)
+;    :config
+;    (setq org-auto-tangle-default t)
+;)
 
 (defun display-line-numbers--turn-off ()
   (setq display-line-numbers nil))
@@ -241,24 +241,24 @@
    (setq org-log-done 'time)
    )
 
-(use-package! org-habit
-  :after org
-  :config
-  (setq org-habit-following-days 7
-        org-habit-preceding-days 15
-        org-habit-show-habits t
-        org-habit-show-habits-only-for-today nil
-        org-habit-graph-window-ratio 0.2
-        org-habit-graph-padding 1))
+;(use-package! org-habit
+;  :after org
+;  :config
+;  (setq org-habit-following-days 7
+;        org-habit-preceding-days 15
+;        org-habit-show-habits t
+;        org-habit-show-habits-only-for-today nil
+;        org-habit-graph-window-ratio 0.2
+;        org-habit-graph-padding 1))
 
-(defun josh/search-roam ()
-  "Run consult-ripgrep on the org roam directory"
-  (interactive)
-  (consult-ripgrep org-roam-directory))
+;(defun josh/search-roam ()
+;  "Run consult-ripgrep on the org roam directory"
+;  (interactive)
+;  (consult-ripgrep org-roam-directory))
 
-(map! :leader
-      (:prefix ("s" . "search")
-       :desc "Search org-roam files" "R" #'josh/search-roam))
+(;map! :leader
+ ;     (:prefix ("s" . "search")
+ ;      :desc "Search org-roam files" "R" #'josh/search-roam))
 
 (map! :leader
       :desc "Reset element cache" "~" #'org-element-cache-reset)
@@ -288,11 +288,11 @@
       doom-modeline-modal-icon t
       doom-modeline-hud t)
 
-(require 'simpleclip)
-(simpleclip-mode 1)
-(map! "C-S-c" #'simpleclip-copy
-      "C-S-v" #'simpleclip-paste
-      "C-S-x" #'simpleclip-cut)
+;(require 'simpleclip)
+;(simpleclip-mode 1)
+;(map! "C-S-c" #'simpleclip-copy
+;      "C-S-v" #'simpleclip-paste
+;      "C-S-x" #'simpleclip-cut)
 
 (show-paren-mode t)
 (setq show-paren-style 'mixed)
@@ -376,7 +376,7 @@
 ;        :desc "Insert todays date" "t" #'dt/insert-todays-date))
 
 ;(require 'treemacs)
-;; (setq treemacs-no-png-images t)
+; (setq treemacs-no-png-images t)
 ;(setq doom-themes-treemacs-theme "doom-colors")
 
 ;(require 'calfw)
