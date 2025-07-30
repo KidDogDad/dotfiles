@@ -1,11 +1,15 @@
 #+title: Config
 #+startup: show2levels
 
+* Load path
+#+begin_src emacs-lisp
+(add-load-path! "~/.doom.d")
+#+end_src
 * Appearance settings
 ** Font
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "JetBrains Mono" :size 12.0 :weight 'semi-light)
-     doom-variable-pitch-font (font-spec :family "Inter" :size 12.0))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'semi-light)
+     doom-variable-pitch-font (font-spec :family "Inter" :size 11.0))
 #+end_src
 *** Some other font / appearance settings
 #+begin_src emacs-lisp
@@ -36,11 +40,11 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 #+end_src
 ** Markdown font sizes
 #+begin_src emacs-lisp
-(custom-set-faces
-; '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
-; '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
-; '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
-; '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
+;; (custom-set-faces
+;; '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
+;; '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
+;; '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
+;; '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
 #+end_src
 * Org-mode
 ** auto-save when quitting org agenda
@@ -136,7 +140,6 @@ I need to do this for Framework, since it has fish set as the default shell
 (setq shell-file-name (executable-find "bash"))
 #+end_src
 ** Modeline settings
-*** My doom-modeline settings
 #+begin_src emacs-lisp
 (setq doom-modeline-height 25
       doom-modeline-bar-width 5
@@ -154,10 +157,6 @@ I need to do this for Framework, since it has fish set as the default shell
 ** Stop confirming on exit
 #+begin_src emacs-lisp
 (setq confirm-kill-emacs nil)
-#+end_src
-** load path
-#+begin_src emacs-lisp
-(add-load-path! "~/.doom.d")
 #+end_src
 ** beacon
 #+begin_src emacs-lisp

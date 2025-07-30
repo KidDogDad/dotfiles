@@ -1,5 +1,7 @@
-(setq doom-font (font-spec :family "JetBrains Mono" :size 12.0 :weight 'semi-light)
-     doom-variable-pitch-font (font-spec :family "Inter" :size 12.0))
+(add-load-path! "~/.doom.d")
+
+(setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'semi-light)
+     doom-variable-pitch-font (font-spec :family "Inter" :size 11.0))
 
 (after! doom-themes
   (setq doom-themes-enable-bold t)
@@ -16,11 +18,11 @@
 
 (setq-default line-spacing 0.2)
 
-(custom-set-faces
-; '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
-; '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
-; '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
-; '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
+;; (custom-set-faces
+;; '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
+;; '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
+;; '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
+;; '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
 
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
 
@@ -98,8 +100,6 @@
 (setq show-paren-style 'mixed)
 
 (setq confirm-kill-emacs nil)
-
-(add-load-path! "~/.doom.d")
 
 (beacon-mode 1)
 
