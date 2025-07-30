@@ -1,7 +1,7 @@
 (add-load-path! "~/.doom.d")
 
-(setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'semi-light)
-     doom-variable-pitch-font (font-spec :family "Inter" :size 11.0))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12.0 :weight 'semibold)
+     doom-variable-pitch-font (font-spec :family "Inter" :size 12.0))
 
 (after! doom-themes
   (setq doom-themes-enable-bold t)
@@ -9,14 +9,14 @@
 (after! org
   (setq org-hide-emphasis-markers t))
 
+(setq-default line-spacing 0)
+
 (setq doom-theme 'catppuccin)
 (setq catppuccin-flavor 'mocha)
 
 (setq display-line-numbers-type 'relative)
 
 (setq fancy-splash-image "~/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
-
-(setq-default line-spacing 0.2)
 
 ;; (custom-set-faces
 ;; '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
@@ -86,86 +86,72 @@
 (require 'real-auto-save)
 (add-hook 'org-mode-hook 'real-auto-save-mode)
 
-(use-package! good-scroll
+(use-package! ultra-scroll
+  :init
+  (setq scroll-conservatively 3
+        scroll-margin 0)
   :config
-  (good-scroll-mode 1)
-  (setq good-scroll-duration 0.3
-        good-scroll-step 80))
+  (ultra-scroll-mode 1))
 
-(use-package! scroll-on-jump
-  :config
-  (setq scroll-on-jump-duration 0.6
-        scroll-on-jump-smooth t
-        scroll-on-jump-use-curve t)
+;; === SMOOTH SCROLLING CONFIGURATION (FIXED) ===
+;; Use ONLY scroll-on-jump
+(with-eval-after-load 'evil
+  (scroll-on-jump-advice-add evil-undo)
+  (scroll-on-jump-advice-add evil-redo)
+  (scroll-on-jump-advice-add evil-jump-item)
+  (scroll-on-jump-advice-add evil-jump-forward)
+  (scroll-on-jump-advice-add evil-jump-backward)
+  (scroll-on-jump-advice-add evil-ex-search-next)
+  (scroll-on-jump-advice-add evil-ex-search-previous)
+  (scroll-on-jump-advice-add evil-forward-paragraph)
+  (scroll-on-jump-advice-add evil-backward-paragraph)
+  (scroll-on-jump-advice-add evil-goto-mark)
 
-  ;; Enable for common jump commands
-  (with-eval-after-load 'evil
-    (scroll-on-jump-advice-add evil-goto-line)
-    (scroll-on-jump-advice-add evil-goto-first-line)
-    (scroll-on-jump-advice-add evil-goto-mark)
-    (scroll-on-jump-advice-add evil-goto-mark-line)
-    (scroll-on-jump-advice-add evil-jump-forward)
-    (scroll-on-jump-advice-add evil-jump-backward)
-    (scroll-on-jump-advice-add evil-ex-search-next)
-    (scroll-on-jump-advice-add evil-ex-search-previous))
+  ;; Actions that themselves scroll.
+  (scroll-on-jump-with-scroll-advice-add evil-goto-line)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-down)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-up)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-center)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-top)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-bottom))
 
-  ;; Enable for other common commands
-  (scroll-on-jump-advice-add imenu)
-  (scroll-on-jump-advice-add beginning-of-buffer)
-  (scroll-on-jump-advice-add end-of-buffer))
+(with-eval-after-load 'goto-chg
+  (scroll-on-jump-advice-add goto-last-change)
+  (scroll-on-jump-advice-add goto-last-change-reverse))
 
-;; Alternative smooth scrolling with iscroll
-(use-package! iscroll
-  :config
-  (setq iscroll-preserve-screen-position t
-        iscroll-margin 20)
-  (iscroll-mode 1))
+(global-set-key (kbd "<C-M-next>") (scroll-on-jump-interactive 'diff-hl-next-hunk))
+(global-set-key (kbd "<C-M-prior>") (scroll-on-jump-interactive 'diff-hl-previous-hunk))
 
-;; === SMART CLIPBOARD CONFIGURATION (IMPROVED) ===
-(use-package! simpleclip
-  :config
-  (simpleclip-mode 1)
-  (setq select-enable-clipboard nil
-        select-enable-primary nil))
+;; === Cutlass-like Clipboard Behavior ===
+;; This configuration replicates the "cutlass" behavior from Neovim.
+;; 1. Deletions (`d`, `c`, `x` in normal mode) do NOT go to the kill ring.
+;; 2. A specific "cut" operation (`x` in visual mode) DOES go to the kill ring.
+;; 3. All "yank" (copy) operations continue to go to the kill ring.
+;; 4. The Emacs kill-ring is synced with the system clipboard.
 
-;; Custom delete that bypasses BOTH clipboard AND kill ring
-(defun my/delete-without-kill (beg end)
-  "Delete region without adding to kill ring or clipboard."
-  (delete-region beg end))
-
-(defun my/evil-delete-char ()
-  "Delete character without kill ring or clipboard."
-  (interactive)
-  (delete-char 1))
-
-(defun my/evil-delete-line ()
-  "Delete line without kill ring or clipboard."
-  (interactive)
-  (beginning-of-line)
-  (my/delete-without-kill (point) (progn (forward-line 1) (point))))
-
-;; Delete operations that respect visual selection
-(defun my/evil-delete ()
-  "Delete without kill ring or clipboard."
-  (interactive)
-  (if (evil-visual-state-p)
-      (my/delete-without-kill (region-beginning) (region-end))
-    (call-interactively 'my/evil-delete-char)))
+;; Step 1: Ensure the Emacs kill-ring syncs with the system clipboard.
+;; Any text added to the kill-ring will now be available on the clipboard.
+(setq select-enable-clipboard t)
 
 (after! evil
-  ;; Normal mode 'x' - delete char only
-  (evil-define-key 'normal 'global "x" 'my/evil-delete-char)
+    ;; Step 2: Force all standard deletions to use the "black hole" register.
+  ;; This advice intercepts `evil-delete` and changes the register to `_`.
+  (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
+    (apply orig-fn beg end type ?_ args))
+  (advice-add 'evil-delete :around 'bb/evil-delete)
 
-  ;; Visual mode 'x' - cut to BOTH kill ring AND clipboard
-  (evil-define-key 'visual 'global "x" 'simpleclip-cut)
+  ;; Step 3: Define a new "cut" command based on your suggestion.
+  ;; This function first yanks the selection to the kill-ring/clipboard,
+  ;; then deletes it. The delete operation will use the black hole register
+  ;; because of the advice above, which is exactly what we want.
+  (defun custom-yank-and-delete (beg end)
+    "Yank the region, then delete it."
+    (interactive "r")
+    (evil-yank beg end)
+    (evil-delete beg end))
 
-  ;; 'd' operations - delete only (no kill ring, no clipboard)
-  (evil-define-key 'normal 'global "d" 'my/evil-delete)
-  (evil-define-key 'normal 'global "dd" 'my/evil-delete-line)
-
-  ;; Copy operations go to BOTH kill ring AND clipboard
-  (evil-define-key 'normal 'global "y" 'simpleclip-copy)
-  (evil-define-key 'visual 'global "y" 'simpleclip-copy))
+  ;; Step 4: Bind 'x' in visual mode to this new "yank and delete" command.
+  (evil-define-key 'visual 'global "x" #'custom-yank-and-delete))
 
 ;; === CHEZMOI CONFIGURATION ===
 (use-package! chezmoi
