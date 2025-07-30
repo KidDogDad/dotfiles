@@ -230,6 +230,11 @@ Beautiful theme for org-mode buffers. Enabling globally.
          :desc "Diff" "d" #'chezmoi-diff
          :desc "Apply" "a" #'chezmoi-apply)))
 #+end_src
+** Which-key settings
+#+begin_src emacs-lisp
+(setq which-key-idle-delay 0.1)
+(setq which-key-idle-secondary-delay 0.05)
+#+end_src
 ** Default shell
 I need to do this for Framework, since it has fish set as the default shell
 #+begin_src emacs-lisp
