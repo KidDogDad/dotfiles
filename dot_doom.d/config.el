@@ -7,25 +7,39 @@
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t))
 
-(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+(setq org-hide-emphasis-markers t)
+(setq org-modern-bullet '("●" "○" "■" "◆"))
+
+;; (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+;; (use-package! org-modern
+;;   :hook (org-mode . org-modern-mode)
+;;   :config
+;;   (setq org-modern-horizontal-rule t)
+;;   (setq org-modern-table-horizontal 0.1)
+;; )
+;; (after! org
+;;   (setq
+;;    org-modern-star 'replace
+;;    org-auto-align-tags nil
+;;    org-hide-emphasis-markers t
+;;    org-tags-column 0
+;;    org-catch-invisible-edits 'show-and-error
+;;    org-pretty-entities nil
+;;    org-ellipsis "…"
+;;    org-modern-bullet '("●" "○" "■" "◆")
+;; ))
+;; (global-org-modern-mode)
+
 (use-package! org-modern
-  :hook (org-mode . org-modern-mode)
-  :config
-  (setq org-modern-horizontal-rule t)
-  (setq org-modern-table-horizontal 0.1)
-)
-(after! org
-  (setq
-   org-modern-star 'replace
-   org-auto-align-tags nil
-   org-hide-emphasis-markers t
-   org-tags-column 0
-   org-catch-invisible-edits 'show-and-error
-   org-pretty-entities nil
-   org-ellipsis "…"
-   org-modern-bullet '("●" "○" "■" "◆")
-))
-(global-org-modern-mode)
+  :ensure t
+  :custom
+  (org-modern-hide-stars nil)		; adds extra indentation
+  (org-modern-table nil)
+  (org-modern-star 'replace)
+  (org-auto-align-tags nil)
+  :hook
+  (org-mode . org-modern-mode)
+  (org-agenda-finalize . org-modern-agenda))
 
 (use-package org-modern-indent
   :config
@@ -49,7 +63,9 @@
 
 (require 'olivetti)
 (add-hook 'org-mode-hook 'olivetti-mode 1)
-(setq olivetti-body-width 100)
+(setq olivetti-body-width 125)
+(setq olivetti-style 'margins)
+(setq olivetti-style 'fringes)
 
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
 
@@ -159,8 +175,6 @@
   :config
   (ultra-scroll-mode 1))
 
-;; === SMOOTH SCROLLING CONFIGURATION (FIXED) ===
-;; Use ONLY scroll-on-jump
 (with-eval-after-load 'evil
   (scroll-on-jump-advice-add evil-undo)
   (scroll-on-jump-advice-add evil-redo)
@@ -177,16 +191,17 @@
   (scroll-on-jump-with-scroll-advice-add evil-goto-line)
   (scroll-on-jump-with-scroll-advice-add evil-scroll-down)
   (scroll-on-jump-with-scroll-advice-add evil-scroll-up)
-  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-center)
-  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-top)
-  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-bottom))
+  (scroll-on-jump-interactive evil-scroll-line-to-center)
+  (scroll-on-jump-interactive evil-scroll-line-to-top)
+  (scroll-on-jump-interactive evil-scroll-line-to-bottom)
+)
 
 (with-eval-after-load 'goto-chg
   (scroll-on-jump-advice-add goto-last-change)
   (scroll-on-jump-advice-add goto-last-change-reverse))
 
-(global-set-key (kbd "<C-M-next>") (scroll-on-jump-interactive 'diff-hl-next-hunk))
-(global-set-key (kbd "<C-M-prior>") (scroll-on-jump-interactive 'diff-hl-previous-hunk))
+;; (global-set-key (kbd "<C-M-next>") (scroll-on-jump-interactive 'diff-hl-next-hunk))
+;; (global-set-key (kbd "<C-M-prior>") (scroll-on-jump-interactive 'diff-hl-previous-hunk))
 
 ;; === Cutlass-like Clipboard Behavior ===
 ;; This configuration replicates the "cutlass" behavior from Neovim.
@@ -219,7 +234,6 @@
   ;; Step 4: Bind 'x' in visual mode to this new "yank and delete" command.
   (evil-define-key 'visual 'global "x" #'custom-yank-and-delete))
 
-;; === CHEZMOI CONFIGURATION ===
 (use-package! chezmoi
   :config
   ;; Enable chezmoi mode for dotfiles

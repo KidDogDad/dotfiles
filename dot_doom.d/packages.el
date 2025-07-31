@@ -54,7 +54,7 @@
 (unpin! org-roam)
 (package! org-roam-ui)
 (package! evil-tutor)
-(package! scroll-on-jump :recipe (:host github :repo "emacsmirror/scroll-on-jump"))
+(package! scroll-on-jump)
 (package! olivetti)
 (package! real-auto-save)
 (package! nov)
