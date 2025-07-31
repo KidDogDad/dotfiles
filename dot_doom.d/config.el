@@ -39,7 +39,7 @@
 
 (setq display-line-numbers-type 'relative)
 
-(setq fancy-splash-image "~/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
+(setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/Scherazard.webp")
 
 ;; (custom-set-faces
 ;; '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
@@ -93,6 +93,13 @@
 
 (require 'real-auto-save)
 (add-hook 'org-mode-hook 'real-auto-save-mode)
+
+(use-package! org-auto-tangle
+    :defer t
+    :hook (org-mode . org-auto-tangle-mode)
+    :config
+    (setq org-auto-tangle-default t)
+)
 
 (use-package! ultra-scroll
   :init

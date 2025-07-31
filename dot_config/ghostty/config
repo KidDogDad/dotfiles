@@ -7,7 +7,7 @@
 # all available config options and their default values.
 
 # Theme & font
-theme = catppuccin-macchiato
+theme = catppuccin-mocha
 font-size = 12
 font-family = 
 

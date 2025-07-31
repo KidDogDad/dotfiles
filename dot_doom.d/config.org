@@ -1,5 +1,7 @@
 #+title: Config
 #+startup: show2levels
+#+auto_tangle: t
+
 
 * Load path
 #+begin_src emacs-lisp
@@ -64,7 +66,7 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 #+end_src
 ** Custom splash image
 #+begin_src emacs-lisp
-(setq fancy-splash-image "~/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
+(setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/Scherazard.webp")
 #+end_src
 ** Markdown font sizes
 #+begin_src emacs-lisp
@@ -139,6 +141,15 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 #+begin_src emacs-lisp
 (require 'real-auto-save)
 (add-hook 'org-mode-hook 'real-auto-save-mode)
+#+end_src
+** Org-auto-tangle
+#+begin_src emacs-lisp
+(use-package! org-auto-tangle
+    :defer t
+    :hook (org-mode . org-auto-tangle-mode)
+    :config
+    (setq org-auto-tangle-default t)
+)
 #+end_src
 * Other custom settings
 ** Ultra-scroll
