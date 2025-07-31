@@ -8,6 +8,15 @@
 (add-load-path! "~/.doom.d")
 #+end_src
 * Appearance settings
+** Initial frame size
+#+begin_src emacs-lisp
+(setq initial-frame-alist
+      (append initial-frame-alist
+              '((left   . 12)
+                (top    . 56)
+                (width  . 1650)
+                (height . 1050))))
+#+end_src
 ** Font
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12.0 :weight 'semibold)
@@ -270,9 +279,9 @@ Settings from https://github.com/org-roam/org-roam-ui#doom
   (scroll-on-jump-with-scroll-advice-add evil-goto-line)
   (scroll-on-jump-with-scroll-advice-add evil-scroll-down)
   (scroll-on-jump-with-scroll-advice-add evil-scroll-up)
-  (scroll-on-jump-interactive evil-scroll-line-to-center)
-  (scroll-on-jump-interactive evil-scroll-line-to-top)
-  (scroll-on-jump-interactive evil-scroll-line-to-bottom)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-center)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-top)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-bottom)
 )
 
 (with-eval-after-load 'goto-chg
@@ -343,9 +352,11 @@ Settings from https://github.com/org-roam/org-roam-ui#doom
 (setq which-key-idle-secondary-delay 0.05)
 #+end_src
 ** Default shell
-I need to do this for Framework, since it has fish set as the default shell
+Avoid problems from using fish shell, but still allow Emacs terminal emulators to use fish.
 #+begin_src emacs-lisp
 (setq shell-file-name (executable-find "bash"))
+(setq-default vterm-shell "/usr/bin/fish")
+(setq-default explicit-shell-file-name "/usr/bin/fish")
 #+end_src
 ** Modeline settings
 #+begin_src emacs-lisp

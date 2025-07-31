@@ -1,5 +1,12 @@
 (add-load-path! "~/.doom.d")
 
+(setq initial-frame-alist
+      (append initial-frame-alist
+              '((left   . 12)
+                (top    . 56)
+                (width  . 1650)
+                (height . 1050))))
+
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12.0 :weight 'semibold)
      doom-variable-pitch-font (font-spec :family "Inter" :size 12.0))
 
@@ -191,9 +198,9 @@
   (scroll-on-jump-with-scroll-advice-add evil-goto-line)
   (scroll-on-jump-with-scroll-advice-add evil-scroll-down)
   (scroll-on-jump-with-scroll-advice-add evil-scroll-up)
-  (scroll-on-jump-interactive evil-scroll-line-to-center)
-  (scroll-on-jump-interactive evil-scroll-line-to-top)
-  (scroll-on-jump-interactive evil-scroll-line-to-bottom)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-center)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-top)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-bottom)
 )
 
 (with-eval-after-load 'goto-chg
@@ -258,6 +265,8 @@
 (setq which-key-idle-secondary-delay 0.05)
 
 (setq shell-file-name (executable-find "bash"))
+(setq-default vterm-shell "/usr/bin/fish")
+(setq-default explicit-shell-file-name "/usr/bin/fish")
 
 (setq doom-modeline-height 25
       doom-modeline-bar-width 5
