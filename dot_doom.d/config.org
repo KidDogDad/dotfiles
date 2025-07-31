@@ -65,7 +65,7 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 #+end_src
 ** Custom splash image
 #+begin_src emacs-lisp
-(setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/Scherazard-small.webp")
+(setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
 #+end_src
 ** Markdown font sizes
 #+begin_src emacs-lisp
