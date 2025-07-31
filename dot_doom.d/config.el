@@ -39,7 +39,7 @@
 
 (setq display-line-numbers-type 'relative)
 
-(setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/Scherazard.webp")
+(setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/Scherazard-small.webp")
 
 ;; (custom-set-faces
 ;; '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
