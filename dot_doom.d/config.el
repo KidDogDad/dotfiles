@@ -1,11 +1,10 @@
 (add-load-path! "~/.doom.d")
 
-(setq initial-frame-alist
-      (append initial-frame-alist
-              '((left   . 12)
-                (top    . 56)
-                (width  . 1650)
-                (height . 1050))))
+(setq default-frame-alist
+  '((left   . 5)
+   (top    . 5)
+   (width  . 161)
+   (height . 46)))
 
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12.0 :weight 'semibold)
      doom-variable-pitch-font (font-spec :family "Inter" :size 12.0))
@@ -14,8 +13,8 @@
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t))
 
-(setq org-hide-emphasis-markers t)
-(setq org-modern-bullet '("●" "○" "■" "◆"))
+   (setq org-hide-emphasis-markers t)
+   (setq org-modern-bullet '("●" "○" "■" "◆"))
 
 ;; (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 ;; (use-package! org-modern
@@ -70,7 +69,7 @@
 
 (require 'olivetti)
 (add-hook 'org-mode-hook 'olivetti-mode 1)
-(setq olivetti-body-width 125)
+(setq olivetti-body-width 100)
 (setq olivetti-style 'margins)
 (setq olivetti-style 'fringes)
 
@@ -198,9 +197,9 @@
   (scroll-on-jump-with-scroll-advice-add evil-goto-line)
   (scroll-on-jump-with-scroll-advice-add evil-scroll-down)
   (scroll-on-jump-with-scroll-advice-add evil-scroll-up)
-  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-center)
-  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-top)
-  (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-bottom)
+  ;; (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-center)
+  ;; (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-top)
+  ;; (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-bottom)
 )
 
 (with-eval-after-load 'goto-chg
