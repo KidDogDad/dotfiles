@@ -39,13 +39,17 @@
 
 (setq display-line-numbers-type 'relative)
 
-(setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/Scherazard-small.webp")
+(setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
 
 ;; (custom-set-faces
 ;; '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
 ;; '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
 ;; '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
 ;; '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
+
+(require 'olivetti)
+(add-hook 'org-mode-hook 'olivetti-mode 1)
+(setq olivetti-body-width 100)
 
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
 
@@ -100,6 +104,53 @@
     :config
     (setq org-auto-tangle-default t)
 )
+
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory "~/Sync/roam")
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?"
+      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
+      :unnarrowed t)))
+  :config
+  (org-roam-setup))
+
+(map! :leader
+      :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer
+      :desc "Org Capture" "x" #'org-capture)
+
+(after! org
+  (setq org-capture-templates
+      '(("t" "Todo" entry (file "~/Sync/roam/agenda/inbox.org")
+         "* TODO %?")
+        ("T" "Todo (clipboard)" entry (file "~/Sync/roam/agenda/inbox.org")
+         "* TODO %? (notes)\n%x")
+        ("d" "Todo (document)" entry (file "~/Sync/roam/agenda/inbox.org")
+         "* TODO %? (notes)\n%a")
+        ("i" "Todo (interactive)" entry (file "~/Sync/roam/agenda/inbox.org")
+         "* TODO %? (notes)\n%^C")))
+)
+
+(use-package! websocket
+  :after org-roam)
+
+(use-package! org-roam-ui
+  :after org-roam
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
+
+(map! :after org-roam-ui
+      :leader
+      :desc "Org-roam UI"
+      "n r u" #'org-roam-ui-open)
+
+(map! :leader
+      "n r g" nil)
 
 (use-package! ultra-scroll
   :init

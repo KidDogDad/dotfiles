@@ -75,6 +75,12 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 ;; '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
 ;; '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
 #+end_src
+** olivetti
+#+begin_src emacs-lisp
+(require 'olivetti)
+(add-hook 'org-mode-hook 'olivetti-mode 1)
+(setq olivetti-body-width 100)
+#+end_src
 * Org-mode
 ** auto-save when quitting org agenda
 #+begin_src emacs-lisp
@@ -149,6 +155,69 @@ numbers are disabled. For relative line numbers, set this to `relative'.
     :config
     (setq org-auto-tangle-default t)
 )
+#+end_src
+* Org-roam
+** Basic settings
+#+begin_src emacs-lisp
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory "~/Sync/roam")
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?"
+      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
+      :unnarrowed t)))
+  :config
+  (org-roam-setup))
+#+end_src
+** org-mode capture
+*** Keybindings
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Pop up scratch buffer" "X" #'doom/open-scratch-buffer
+      :desc "Org Capture" "x" #'org-capture)
+#+end_src
+*** Templates
+#+begin_src emacs-lisp
+(after! org
+  (setq org-capture-templates
+      '(("t" "Todo" entry (file "~/Sync/roam/agenda/inbox.org")
+         "* TODO %?")
+        ("T" "Todo (clipboard)" entry (file "~/Sync/roam/agenda/inbox.org")
+         "* TODO %? (notes)\n%x")
+        ("d" "Todo (document)" entry (file "~/Sync/roam/agenda/inbox.org")
+         "* TODO %? (notes)\n%a")
+        ("i" "Todo (interactive)" entry (file "~/Sync/roam/agenda/inbox.org")
+         "* TODO %? (notes)\n%^C")))
+)
+#+End_src
+** org-roam-ui
+*** Basic settings
+Settings from https://github.com/org-roam/org-roam-ui#doom
+#+begin_src emacs-lisp
+(use-package! websocket
+  :after org-roam)
+
+(use-package! org-roam-ui
+  :after org-roam
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
+#+end_src
+*** Map keybinding for org-roam-ui
+#+begin_src emacs-lisp
+(map! :after org-roam-ui
+      :leader
+      :desc "Org-roam UI"
+      "n r u" #'org-roam-ui-open)
+#+end_src
+*** Unmap org-mode-graph because it sucks
+#+begin_src emacs-lisp
+(map! :leader
+      "n r g" nil)
 #+end_src
 * Other custom settings
 ** Ultra-scroll
