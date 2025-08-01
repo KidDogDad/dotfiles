@@ -7,7 +7,7 @@
    (height . 46)))
 
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12.0 :weight 'semibold)
-     doom-variable-pitch-font (font-spec :family "Inter" :size 12.0))
+      doom-variable-pitch-font (font-spec :family "Inter" :size 12.0))
 
 (after! doom-themes
   (setq doom-themes-enable-bold t)
@@ -15,13 +15,14 @@
 
 (setq org-hide-emphasis-markers t)
 (setq org-modern-bullet '("●" "○" "■" "◆"))
-    (setq org-pretty-entities t)
-    (setq org-catch-invisible-edits 'show-and-error)
+(setq org-pretty-entities t)
+(setq org-catch-invisible-edits 'show-and-error)
+(setq org-indent-indentation-per-level 0)
 
 (use-package! org-modern
   :ensure t
   :custom
-  (org-modern-hide-stars nil)		; adds extra indentation
+  (org-modern-hide-stars t)
   (org-modern-table nil)
   (org-modern-star 'replace)
   (org-auto-align-tags nil)
@@ -30,10 +31,10 @@
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda))
 
-(use-package org-modern-indent
-  :config
-  (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
-)
+;; (use-package org-modern-indent
+;;   :config
+;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+;; )
 
 (setq-default line-spacing 0)
 
@@ -82,20 +83,6 @@
 (add-hook 'org-mode-hook
           (lambda ()
             (add-to-list 'company-backends 'my-org-roam-company-backend)))
-
-(custom-set-faces
-  '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight 'bold :family "variable-pitch"))))
-  '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
-  '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
-  '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))
-  '(org-document-title ((t (:inherit outline-1 :height 1.8))))
-  '(org-level-1 ((t (:inherit outline-1 :height 1.6))))
-  '(org-level-2 ((t (:inherit outline-2 :height 1.5))))
-  '(org-level-3 ((t (:inherit outline-3 :height 1.4))))
-  '(org-level-4 ((t (:inherit outline-4 :height 1.3))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.2))))
-      '(org-level-6 ((t (:inherit outline-6 :height 1.1))))
-)
 
 (after! org
    (setq org-log-done 'time)
@@ -256,7 +243,7 @@
          :desc "Diff" "d" #'chezmoi-diff
          :desc "Apply" "a" #'chezmoi-apply)))
 
-(setq which-key-idle-delay 0.1)
+(setq which-key-idle-delay 0.05)
 (setq which-key-idle-secondary-delay 0.05)
 
 (setq shell-file-name (executable-find "bash"))
