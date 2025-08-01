@@ -75,15 +75,6 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 #+begin_src emacs-lisp
 (setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
 #+end_src
-** Markdown font sizes
-#+begin_src emacs-lisp
-(custom-set-faces
-  '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
-  '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
-  '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
-  '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))
-)
-#+end_src
 ** olivetti
 #+begin_src emacs-lisp
 (require 'olivetti)
@@ -140,9 +131,13 @@ numbers are disabled. For relative line numbers, set this to `relative'.
           (lambda ()
             (add-to-list 'company-backends 'my-org-roam-company-backend)))
 #+end_src
-** org-mode: header level font sizes
+** org-mode & markdown header level font sizes
 #+begin_src emacs-lisp
 (custom-set-faces
+  '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight 'bold :family "variable-pitch"))))
+  '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
+  '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
+  '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))
   '(org-document-title ((t (:inherit outline-1 :height 1.8))))
   '(org-level-1 ((t (:inherit outline-1 :height 1.6))))
   '(org-level-2 ((t (:inherit outline-2 :height 1.5))))

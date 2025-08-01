@@ -44,13 +44,6 @@
 
 (setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
 
-(custom-set-faces
-  '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight ;bold :family "variable-pitch"))))
-  '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
-  '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
-  '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))
-)
-
 (require 'olivetti)
 (add-hook 'org-mode-hook 'olivetti-mode 1)
 (setq olivetti-body-width 100)
@@ -91,6 +84,10 @@
             (add-to-list 'company-backends 'my-org-roam-company-backend)))
 
 (custom-set-faces
+  '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight 'bold :family "variable-pitch"))))
+  '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.6))))
+  '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
+  '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))
   '(org-document-title ((t (:inherit outline-1 :height 1.8))))
   '(org-level-1 ((t (:inherit outline-1 :height 1.6))))
   '(org-level-2 ((t (:inherit outline-2 :height 1.5))))
