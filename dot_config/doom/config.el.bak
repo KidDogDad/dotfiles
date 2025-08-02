@@ -1,0 +1,111 @@
+;;; config.el -*- lexical-binding: t; -*-
+
+;; Splash image
+(setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
+
+;; Theme & line numbers
+(setq doom-theme 'catppuccin)
+(setq catppuccin-flavor 'mocha)
+(setq display-line-numbers-type 'relative)
+
+;; Initial frame size
+(setq default-frame-alist
+  '((width  . 176)
+   (height . 48))
+  )
+
+;; Font
+(setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'semibold)
+      doom-variable-pitch-font (font-spec :family "Inter" :size 11.0))
+
+;; Disable org-indent
+(after! org
+  (setq org-startup-indented nil)
+  )
+
+;; org-modern
+(use-package! org-modern
+  :ensure t
+  :custom
+  (org-indent-indentation-per-level 0)
+  (org-modern-replace-stars)
+  (org-modern-table nil)
+  (org-auto-align-tags nil)
+  (org-hide-emphasis-markers t)
+  (org-ellipsis "…")
+  (org-catch-invisible-edits 'show-and-error)
+  :hook
+  (org-mode . org-modern-mode)
+  (org-agenda-finalize . org-modern-agenda)
+  )
+
+;; olivetti
+;; (use-package! olivetti
+;;   :ensure t
+;;   :custom
+;;   (setq olivetti-body-width 100)
+;;   ;; (setq olivetti-style 'margins)
+;;   ;; (setq olivetti-style 'fringes)
+;;   :hook
+;;   (org-mode . olivetti-mode)
+;;   )
+
+;; Speed up which-key
+(setq which-key-idle-delay 0.05)
+(setq which-key-idle-secondary-delay 0.05)
+
+;; Evil-surround stuff
+(after! evil-surround
+  (defun evil-surround-source-block ()
+    "Read a source block name from the minibuffer and wrap selection in that source block"
+    (let ((fname (evil-surround-read-from-minibuffer "Source block type: " "")))
+      (cons (format "#+begin_src %s" (or fname ""))
+            "#+end_src"))
+    )
+
+  ;; This isn't working and I can't for the life of me figure out why
+  ;; (defun evil-surround-after-block ()
+  ;;   "Read a mode name from the minibuffer and wrap selection an after! block for that mode"
+  ;;   (let ((fname (evil-surround-read-from-minibuffer "Mode name: " "")))
+  ;;     (cons (format "(after! %s" (or fname ""))
+  ;;           ")"))
+  ;;   )
+
+  (push '(?\" . ("“" . "”")) evil-surround-pairs-alist)
+  (push '(?\' . ("‘" . "’")) evil-surround-pairs-alist)
+  (push '(?b . ("*" . "*")) evil-surround-pairs-alist)
+  (push '(?* . ("*" . "*")) evil-surround-pairs-alist)
+  (push '(?i . ("/" . "/")) evil-surround-pairs-alist)
+  (push '(?/ . ("/" . "/")) evil-surround-pairs-alist)
+  (push '(?= . ("=" . "=")) evil-surround-pairs-alist)
+  (push '(?~ . ("~" . "~")) evil-surround-pairs-alist)
+  (push '(?s . evil-surround-source-block) evil-surround-pairs-alist)
+  ;; (push '(?a . evil-surround-after-block) evil-surround-pairs-alist)
+  )
+
+;; Cutlass-like Clipboard Behavior
+;; This configuration replicates the "cutlass" behavior from Neovim.
+;; 1. Deletions (`d`, `c`, `x` in normal mode) do NOT go to the kill ring.
+;; 2. A specific "cut" operation (`x` in visual mode) DOES go to the kill ring.
+;; 3. All "yank" (copy) operations continue to go to the kill ring.
+;; 4. The Emacs kill-ring is synced with the system clipboard.
+
+(after! evil
+    ;; Step 2: Force all standard deletions to use the "black hole" register.
+  ;; This advice intercepts `evil-delete` and changes the register to `_`.
+  (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
+    (apply orig-fn beg end type ?_ args))
+  (advice-add 'evil-delete :around 'bb/evil-delete)
+
+  ;; Step 3: Define a new "cut" command based on your suggestion.
+  ;; This function first yanks the selection to the kill-ring/clipboard,
+  ;; then deletes it. The delete operation will use the black hole register
+  ;; because of the advice above, which is exactly what we want.
+  (defun custom-yank-and-delete (beg end)
+    "Yank the region, then delete it."
+    (interactive "r")
+    (evil-yank beg end)
+    (evil-delete beg end))
+
+  ;; Step 4: Bind 'x' in visual mode to this new "yank and delete" command.
+  (evil-define-key 'visual 'global "x" #'custom-yank-and-delete))

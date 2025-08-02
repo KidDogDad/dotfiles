@@ -1,0 +1,16 @@
+#+title: Unused Config
+
+** Olivetti
+
+#+begin_src emacs-lisp
+;; olivetti
+(use-package! olivetti
+  :ensure t
+  :custom
+  (setq olivetti-body-width 100)
+  ;; (setq olivetti-style 'margins)
+  ;; (setq olivetti-style 'fringes)
+  :hook
+  (org-mode . olivetti-mode)
+  )
+#+end_src
