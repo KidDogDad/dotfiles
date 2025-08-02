@@ -89,6 +89,26 @@
 (setq-default vterm-shell "/usr/bin/fish")
 (setq-default explicit-shell-file-name "/usr/bin/fish")
 
+(use-package! chezmoi
+  :config
+  ;; Enable chezmoi mode for dotfiles
+  (setq chezmoi-use-magit t)
+
+  ;; Auto-enable for chezmoi managed files
+  (add-hook 'find-file-hook
+            (lambda ()
+              (when (and buffer-file-name
+                         (string-match-p "/\\.local/share/chezmoi/" buffer-file-name))
+                (chezmoi-mode 1))))
+
+  ;; Key bindings
+  (map! :leader
+        (:prefix ("z" . "chezmoi")
+         :desc "Edit file" "e" #'chezmoi-find
+         :desc "Write buffer" "w" #'chezmoi-write
+         :desc "Diff" "d" #'chezmoi-diff
+         :desc "Apply" "a" #'chezmoi-apply)))
+
 (setq org-directory "~/Sync/roam")
 (setq org-agenda-files (directory-files-recursively "~/Sync/roam" "\\.org$"))
 

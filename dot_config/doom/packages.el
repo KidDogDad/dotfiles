@@ -8,3 +8,4 @@
 (package! org-web-tools)
 (package! super-save)
 (package! org-auto-tangle)
+(package! chezmoi)

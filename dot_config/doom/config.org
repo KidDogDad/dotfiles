@@ -147,6 +147,29 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 (setq-default explicit-shell-file-name "/usr/bin/fish")
 #+end_src
 
+** Chezmoi Mode
+
+#+begin_src emacs-lisp
+(use-package! chezmoi
+  :config
+  ;; Enable chezmoi mode for dotfiles
+  (setq chezmoi-use-magit t)
+
+  ;; Auto-enable for chezmoi managed files
+  (add-hook 'find-file-hook
+            (lambda ()
+              (when (and buffer-file-name
+                         (string-match-p "/\\.local/share/chezmoi/" buffer-file-name))
+                (chezmoi-mode 1))))
+
+  ;; Key bindings
+  (map! :leader
+        (:prefix ("z" . "chezmoi")
+         :desc "Edit file" "e" #'chezmoi-find
+         :desc "Write buffer" "w" #'chezmoi-write
+         :desc "Diff" "d" #'chezmoi-diff
+         :desc "Apply" "a" #'chezmoi-apply)))
+#+end_src
 * Org & Org-Roam
 ** Set Directories
 
