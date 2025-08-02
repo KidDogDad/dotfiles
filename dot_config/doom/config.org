@@ -1,7 +1,7 @@
 #+title: Config
 #+property: header-args :tangle config.el
 #+auto_tangle: t
-#+STARTUP: show2levels
+#+startup: show2levels
 
 * Basic Appearance
 ** Splash Image
@@ -83,7 +83,7 @@
 ;; Evil-surround stuff
 (after! evil-surround
   (defun evil-surround-source-block ()
-    "Read a source block name from the minibuffer and wrap selection in that source block"
+    "Wrap selection in source block as input in minibuffer"
     (let ((fname (evil-surround-read-from-minibuffer "Source block type: " "")))
       (cons (format "#+begin_src %s" (or fname ""))
             "#+end_src"))
@@ -287,4 +287,23 @@ Taken from https://baty.net/2022/searching-org-roam-files/
             #'org-roam-reflinks-section
             #'org-roam-unlinked-references-section
             ))
+#+end_src
+
+** Org Auto Tangle
+
+#+begin_src emacs-lisp
+(use-package! org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default t))
+#+end_src
+
+* Experimental
+** Org Web Tools & Org Roam Capture
+
+#+begin_src emacs-lisp
+(after! org-roam
+
+  )
 #+end_src

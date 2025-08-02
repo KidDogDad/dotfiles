@@ -41,7 +41,7 @@
 ;; Evil-surround stuff
 (after! evil-surround
   (defun evil-surround-source-block ()
-    "Read a source block name from the minibuffer and wrap selection in that source block"
+    "Wrap selection in source block as input in minibuffer"
     (let ((fname (evil-surround-read-from-minibuffer "Source block type: " "")))
       (cons (format "#+begin_src %s" (or fname ""))
             "#+end_src"))
@@ -191,3 +191,13 @@
             #'org-roam-reflinks-section
             #'org-roam-unlinked-references-section
             ))
+
+(use-package! org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default t))
+
+(after! org-roam
+
+  )
