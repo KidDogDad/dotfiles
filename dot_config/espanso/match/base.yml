@@ -1,5 +1,5 @@
 matches:
-- trigger: :date
+- trigger: :dd
   replace: '{{mydate}}'
 - trigger: :myadd1
   replace: 13003 Water Race Ct
