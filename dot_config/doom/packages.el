@@ -12,4 +12,3 @@
 (package! chezmoi)
 (package! org-transclusion)
 (package! windresize)
-(package! deadgrep)
