@@ -9,7 +9,7 @@
         (height . (text-pixels . 1020)))
       )
 
-(setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'semibold)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "Inter" :size 11.0))
 
 ;; Increase line spacing
@@ -162,12 +162,13 @@
    org-modern-replace-stars '("◉" "○" "●" "○" "▸")
    org-auto-align-tags nil
    org-hide-emphasis-markers t
-   org-ellipsis "…"
+   org-ellipsis " >"
    org-catch-invisible-edits 'show-and-error
    org-adapt-indentation nil
    org-hide-leading-stars t
    org-startup-with-inline-images t
-   org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
+   org-cycle-separator-lines 1
+      org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
 
    ;; Todo states
    org-todo-keywords
