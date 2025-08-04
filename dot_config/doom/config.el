@@ -24,11 +24,15 @@
 
 (scroll-bar-mode -1)
 
-(require 'olivetti)
-(add-hook 'org-mode-hook 'olivetti-mode 1)
-(setq olivetti-body-width 100)
-(setq olivetti-style 'margins)
-(setq olivetti-style 'fringes)
+(use-package! olivetti
+  :ensure t
+  :custom
+  (setq olivetti-body-width 100)
+  ;; (setq olivetti-style 'margins)
+  (setq olivetti-style 'fringes)
+  :hook
+  (org-mode . olivetti-mode)
+  )
 
 ;; Save my pinkies
 (map! :after evil :map general-override-mode-map
@@ -153,6 +157,9 @@
          :desc "Diff" "d" #'chezmoi-diff
          :desc "Apply" "a" #'chezmoi-apply)))
 
+(use-package! deadgrep
+  :ensure t)
+
 (setq org-directory "~/Sync/roam")
 ;; (setq org-agenda-files (directory-files-recursively "~/Sync/roam" "\\.org$"))
 (setq org-agenda-files "~/Sync/roam/inbox.org")
@@ -175,13 +182,16 @@
    org-modern-replace-stars '("◉" "○" "●" "○" "▸")
    org-auto-align-tags nil
    org-hide-emphasis-markers t
-   org-ellipsis " >"
+   org-ellipsis "⯈"
    org-catch-invisible-edits 'show-and-error
    org-adapt-indentation nil
    org-hide-leading-stars t
    org-startup-with-inline-images t
    org-cycle-separator-lines 1
-      org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
+   org-modern-list '((43 . "•")
+                     (45 . "•")
+                     (42 . "↪"))
+   org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
 
    ;; Todo states
    org-todo-keywords

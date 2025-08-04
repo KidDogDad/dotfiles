@@ -53,11 +53,15 @@
 ** Olivetti
 
 #+begin_src emacs-lisp
-(require 'olivetti)
-(add-hook 'org-mode-hook 'olivetti-mode 1)
-(setq olivetti-body-width 100)
-(setq olivetti-style 'margins)
-(setq olivetti-style 'fringes)
+(use-package! olivetti
+  :ensure t
+  :custom
+  (setq olivetti-body-width 100)
+  ;; (setq olivetti-style 'margins)
+  (setq olivetti-style 'fringes)
+  :hook
+  (org-mode . olivetti-mode)
+  )
 #+end_src
 
 * Behavior
@@ -227,6 +231,13 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
          :desc "Apply" "a" #'chezmoi-apply)))
 #+end_src
 
+** Deadgrep
+
+#+begin_src emacs-lisp
+(use-package! deadgrep
+  :ensure t)
+#+end_src
+
 * Org & Org-Roam
 ** Set Directories
 
@@ -265,13 +276,16 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
    org-modern-replace-stars '("◉" "○" "●" "○" "▸")
    org-auto-align-tags nil
    org-hide-emphasis-markers t
-   org-ellipsis " >"
+   org-ellipsis "⯈"
    org-catch-invisible-edits 'show-and-error
    org-adapt-indentation nil
    org-hide-leading-stars t
    org-startup-with-inline-images t
    org-cycle-separator-lines 1
-      org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
+   org-modern-list '((43 . "•")
+                     (45 . "•")
+                     (42 . "↪"))
+   org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
 
    ;; Todo states
    org-todo-keywords

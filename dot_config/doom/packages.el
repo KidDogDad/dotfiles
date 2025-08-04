@@ -1,5 +1,6 @@
 (package! catppuccin-theme)
 (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
+(package! olivetti :recipe (:host github :repo "rnkn/olivetti"))
 
 (package! websocket)
 (unpin! org-roam)
@@ -11,3 +12,4 @@
 (package! chezmoi)
 (package! org-transclusion)
 (package! windresize)
+(package! deadgrep)
