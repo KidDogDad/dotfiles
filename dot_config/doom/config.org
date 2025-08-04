@@ -10,12 +10,14 @@
 (setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
 #+end_src
 
-** Theme & Line Numbers
+** Theme & Line Settings
 
 #+begin_src emacs-lisp
 (setq doom-theme 'catppuccin)
 (setq catppuccin-flavor 'mocha)
 (setq display-line-numbers-type 'nil)
+(global-hl-line-mode -1) ;; disable hl-line-mode globally
+(add-hook 'prog-mode-hook #'hl-line-mode) ;; enable hl-line-mode for prog-mode only
 #+end_src
 
 ** Initial Frame Size
@@ -23,15 +25,19 @@
 #+begin_src emacs-lisp
 (setq default-frame-alist
       '((width  . (text-pixels . 1625))
-        (height . (text-pixels . 1020)))
+        (height . (text-pixels . 1015)))
       )
 #+end_src
 
 ** Font Settings
 
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'medium)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "Inter" :size 11.0))
+
+(custom-set-faces!
+  '(bold :weight extra-bold)
+  '(org-bold :weight extra-bold))
 
 ;; Increase line spacing
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
