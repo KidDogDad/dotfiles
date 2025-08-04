@@ -24,6 +24,12 @@
 
 (scroll-bar-mode -1)
 
+(require 'olivetti)
+(add-hook 'org-mode-hook 'olivetti-mode 1)
+(setq olivetti-body-width 100)
+(setq olivetti-style 'margins)
+(setq olivetti-style 'fringes)
+
 ;; Save my pinkies
 (map! :after evil :map general-override-mode-map
       :nv "zj" #'evil-scroll-down
@@ -148,7 +154,8 @@
          :desc "Apply" "a" #'chezmoi-apply)))
 
 (setq org-directory "~/Sync/roam")
-(setq org-agenda-files (directory-files-recursively "~/Sync/roam" "\\.org$"))
+;; (setq org-agenda-files (directory-files-recursively "~/Sync/roam" "\\.org$"))
+(setq org-agenda-files "~/Sync/roam/inbox.org")
 
 ;; (setq org-stuck-projects
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
@@ -182,13 +189,13 @@
 
    ;; Capture templates
    org-capture-templates
-   '(("t" "Todo" entry (file+headline "~/Sync/roam/inbox.org" "Inbox")
+   '(("t" "Todo" entry (file+headline "~/Sync/roam/inbox.org" "")
       "* TODO %?")
-     ("T" "Todo (clipboard)" entry (file+headline "~/Sync/roam/inbox.org" "Inbox")
+     ("T" "Todo (clipboard)" entry (file+headline "~/Sync/roam/inbox.org" "")
       "* TODO %? (notes)\n%x")
-     ("d" "Todo (document)" entry (file+headline "~/Sync/roam/inbox.org" "Inbox")
+     ("d" "Todo (document)" entry (file+headline "~/Sync/roam/inbox.org" "")
       "* TODO %? (notes)\n%a")
-     ("i" "Todo (interactive)" entry (file+headline "~/Sync/roam/inbox.org" "Inbox")
+     ("i" "Todo (interactive)" entry (file+headline "~/Sync/roam/inbox.org" "")
       "* TODO %? (notes)\n%^C")
      )
 
@@ -276,3 +283,88 @@
 ;;       :leader
 ;;       :prefix "m m o"
 ;;       :desc "Add Pagelink" #'org-roam-pagelink-add)
+
+(defun my/orgify-obsidian-todos ()
+  "Convert Obsidian-style TODOs into proper Org-mode TODOs in all .org files."
+  (interactive)
+  (let ((dir (read-directory-name "Org directory: ")))
+    (dolist (file (directory-files-recursively dir "\\.org$"))
+      (message "Processing file: %s" file)
+      (with-current-buffer (find-file-noselect file)
+        (goto-char (point-min))
+        (let ((changed nil))
+          (while (re-search-forward "^\\(\\s-*\\)- \\(\\[.\\]\\) +#todo\\(.*\\)$" nil t)
+            (ignore-errors
+              (let* ((indent (or (match-string 1) ""))
+                     (box    (or (match-string 2) "[ ]"))
+                     (line   (or (match-string 3) ""))
+
+                     ;; Determine state
+                     (org-state (pcase box
+                                  ("[ ]" "TODO")
+                                  ("[x]" "DONE")
+                                  ("[-]" "CANCELED")
+                                  (_ "TODO")))
+
+                     ;; Tags
+                     (tags (let (out)
+                             (while (string-match "#\\([a-zA-Z0-9_-]+\\)" line)
+                               (push (match-string 1 line) out)
+                               (setq line (replace-match "" nil nil line)))
+                             (mapconcat #'identity (reverse out) ":")))
+
+                     ;; Priority
+                     (priority (when (string-match "\\[priority:: \\([^]]+\\)\\]" line)
+                                 (prog1
+                                     (pcase (downcase (match-string 1 line))
+                                       ("high" "[#A]")
+                                       ("medium" "[#B]")
+                                       ("low" "[#C]")
+                                       (_ ""))
+                                   (setq line (replace-match "" nil nil line)))))
+
+                     ;; Scheduled
+                     (scheduled (when (string-match "\\[scheduled:: \\([^]]+\\)\\]" line)
+                                  (prog1 (match-string 1 line)
+                                    (setq line (replace-match "" nil nil line)))))
+
+                     ;; Due
+                     (due (when (string-match "\\[due:: \\([^]]+\\)\\]" line)
+                            (prog1 (match-string 1 line)
+                              (setq line (replace-match "" nil nil line)))))
+
+                     ;; Repeater (naive)
+                     (repeater (when (string-match "\\[repeat:: \\([^]]+\\)\\]" line)
+                                 (prog1
+                                     (match-string 1 line)
+                                   (setq line (replace-match "" nil nil line)))))
+
+                     ;; Completion
+                     (completion (when (string-match "\\[completion:: \\([^]]+\\)\\]" line)
+                                   (prog1 (match-string 1 line)
+                                     (setq line (replace-match "" nil nil line)))))
+                     ;; Or detect ✅ YYYY-MM-DD
+                     (checkmark-date (when (string-match "✅ \\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)" line)
+                                       (prog1 (match-string 1 line)
+                                         (setq line (replace-match "" nil nil line))))))
+
+                (setq line (string-trim line))
+
+                (let ((final (concat indent "* " org-state " "
+                                     (when priority (concat priority " "))
+                                     line
+                                     (when scheduled (concat " SCHEDULED: <" scheduled (when repeater (concat " +" repeater)) ">"))
+                                     (when due (concat " DEADLINE: <" due ">"))
+                                     (when (or completion checkmark-date)
+                                       (concat " CLOSED: <" (or completion checkmark-date) ">"))
+                                     (when tags (concat " :" tags ":")))))
+
+                  ;; Replace line
+                  (beginning-of-line)
+                  (let ((start (point)))
+                    (end-of-line)
+                    (delete-region start (point))
+                    (insert final)
+                    (message "→ Converted: %s" final)
+                    (setq changed t))))))
+          (when changed (save-buffer)))))))
