@@ -3,8 +3,9 @@
 (setq doom-theme 'catppuccin)
 (setq catppuccin-flavor 'mocha)
 (setq display-line-numbers-type 'nil)
-(global-hl-line-mode -1) ;; disable hl-line-mode globally
-(add-hook 'prog-mode-hook #'hl-line-mode) ;; enable hl-line-mode for prog-mode only
+(setq global-hl-line-modes nil)
+(remove-hook 'prog-mode-hook #'hl-line-mode)
+(remove-hook 'text-mode-hook #'hl-line-mode)
 
 (setq default-frame-alist
       '((width  . (text-pixels . 1625))
@@ -157,12 +158,12 @@
          :desc "Diff" "d" #'chezmoi-diff
          :desc "Apply" "a" #'chezmoi-apply)))
 
-(use-package! deadgrep
-  :ensure t)
+;; (use-package! deadgrep
+;;   :ensure t)
 
 (setq org-directory "~/Sync/roam")
-;; (setq org-agenda-files (directory-files-recursively "~/Sync/roam" "\\.org$"))
-(setq org-agenda-files "~/Sync/roam/inbox.org")
+(setq org-agenda-files (directory-files-recursively "~/Sync/roam/agenda" "\\.org$"))
+;; (setq org-agenda-files "~/Sync/roam/inbox.org")
 
 ;; (setq org-stuck-projects
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
@@ -285,6 +286,12 @@
   (org-mode . org-auto-tangle-mode)
   :config
   (setq org-auto-tangle-default t))
+
+(use-package org-ql
+  :after org
+  :commands (org-ql-search org-ql-view-refresh-block)
+  ;; :hook (org-mode . org-ql-view-refresh-maybe)
+  )
 
 ;; First define a function to do this
 

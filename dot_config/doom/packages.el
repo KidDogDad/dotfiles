@@ -12,3 +12,4 @@
 (package! chezmoi)
 (package! org-transclusion)
 (package! windresize)
+(package! org-ql)
