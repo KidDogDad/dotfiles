@@ -9,3 +9,5 @@
 (package! super-save)
 (package! org-auto-tangle)
 (package! chezmoi)
+(package! org-transclusion)
+(package! windresize)

@@ -2,15 +2,19 @@
 
 (setq doom-theme 'catppuccin)
 (setq catppuccin-flavor 'mocha)
-(setq display-line-numbers-type 'visual)
+(setq display-line-numbers-type 'nil)
 
 (setq default-frame-alist
-  '((width  . 176)
-   (height . 48))
-  )
+      '((width  . (text-pixels . 1625))
+        (height . (text-pixels . 1020)))
+      )
 
 (setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'semibold)
       doom-variable-pitch-font (font-spec :family "Inter" :size 11.0))
+
+;; Increase line spacing
+;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
+(setq-default line-spacing 0.2)
 
 (scroll-bar-mode -1)
 
@@ -18,6 +22,21 @@
 (map! :after evil :map general-override-mode-map
       :nv "zj" #'evil-scroll-down
       :nv "zk" #'evil-scroll-up)
+(map! :after evil :map general-override-mode-map
+      :nv "ga" #'evil-avy-goto-line)
+
+(use-package windresize
+  :config
+  (map!
+   :leader
+   :prefix "w"
+   :desc "Resize Window" "r" #'windresize)
+  ;; (setq windresize-modifiers
+  ;;       '((meta)            ; select window
+  ;;         (meta control)    ; move the up/left border (instead of bottom/right)
+  ;;         (meta shift)      ; move window while keeping the width/height
+  ;;         (control)))       ; temporarily negate the increment value
+  )
 
 (use-package! super-save
   :ensure t
@@ -65,6 +84,19 @@
   (push '(?~ . ("~" . "~")) evil-surround-pairs-alist)
   (push '(?s . evil-surround-source-block) evil-surround-pairs-alist)
   ;; (push '(?a . evil-surround-after-block) evil-surround-pairs-alist)
+  )
+
+(use-package! org-transclusion
+  :after org
+  :init
+  (map!
+   :leader
+   :prefix "t"
+   :desc "Toggle Org Transclusion" "t" #'org-transclusion-mode)
+  (map!
+   :leader
+   :prefix "n r"
+   :desc "Add Org Transclusion" "t" #'org-transclusion-add)
   )
 
 (after! evil
@@ -132,6 +164,10 @@
    org-hide-emphasis-markers t
    org-ellipsis "…"
    org-catch-invisible-edits 'show-and-error
+   org-adapt-indentation nil
+   org-hide-leading-stars t
+   org-startup-with-inline-images t
+   org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
 
    ;; Todo states
    org-todo-keywords
@@ -173,11 +209,18 @@
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?"
-      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
+      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n\n")
       :unnarrowed t)))
+  ;; '(("w" "Web Page" plain
+  ;;    "%(org-web-tools--url-as-readable-org (clipboard-get-contents))"
+  ;;    :target (file+head "clips/${slug}.org" "#+title: ${title}\n")
+  ;;    :unnarrowed t))
   :config
   (org-roam-db-autosync-mode +1)
   )
+
+(use-package! org-web-tools
+  :commands org-web-tools--url-as-readable-org)
 
 (use-package! websocket
   :after org-roam)
@@ -214,10 +257,15 @@
 
 (use-package! org-auto-tangle
   :defer t
-  :hook (org-mode . org-auto-tangle-mode)
+  :hook
+  (org-mode . org-auto-tangle-mode)
   :config
   (setq org-auto-tangle-default t))
 
-(after! org-roam
+;; First define a function to do this
 
-  )
+;; Then add the keymap
+;; (map! :after org-roam :map general-override-mode-map
+;;       :leader
+;;       :prefix "m m o"
+;;       :desc "Add Pagelink" #'org-roam-pagelink-add)
