@@ -170,13 +170,16 @@
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
 
 (custom-set-faces!
+  ;; Headings
   '(org-level-1 :height 1.3)
   '(org-level-2 :height 1.2)
   '(org-level-3 :height 1.1)
   ;; Levels 4 and above will use the default size (1.0)
+
+  ;; Other font settings
   ;; '(org-block :inherit fixed-pitch)
   '(org-code :inherit (shadow fixed-pitch))
-  '(org-document-info-keyword :inherit (shadow fixed-pitch))
+  ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
   ;; '(org-indent :inherit (org-hide fixed-pitch))
   ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
   ;; '(org-property-value :inherit fixed-pitch)
