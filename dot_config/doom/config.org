@@ -35,7 +35,7 @@
 #+begin_src emacs-lisp
 (setq
  doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12.0 :weight 'demi-bold)
-      doom-variable-pitch-font (font-spec :family "ETBookOT" :weight 'regular :size 12.0))
+      doom-variable-pitch-font (font-spec :family "ETBookOT" :weight 'regular :size 13.0))
 
 (custom-set-faces!
   '(bold :weight bold)
@@ -58,6 +58,12 @@
 #+begin_src emacs-lisp
 (use-package! olivetti
   :ensure t
+  :config
+  (map!
+:leader
+:prefix "t"
+:desc "Toggle Olivetti" "o" #'olivetti-mode
+   )
   :custom
   (setq olivetti-body-width 100)
   ;; (setq olivetti-style 'margins)
@@ -334,10 +340,12 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
    ))
 
 ;; org-modern-indent
-(use-package! org-modern-indent
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+;; (use-package! org-modern-indent
+;;   :ensure t
+;;   :config
+;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+
+;; Variable pitch in org-mode
   (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
