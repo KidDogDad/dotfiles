@@ -244,7 +244,7 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 
 #+begin_src emacs-lisp
 (setq org-directory "~/Sync/roam")
-(setq org-agenda-files (directory-files-recursively "~/Sync/roam/agenda" "\\.org$"))
+(setq org-agenda-files (directory-files-recursively "~/Sync/roam/agenda/" "\\.org$"))
 ;; (setq org-agenda-files "~/Sync/roam/inbox.org")
 #+end_src
 

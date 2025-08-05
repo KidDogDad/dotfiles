@@ -162,7 +162,7 @@
 ;;   :ensure t)
 
 (setq org-directory "~/Sync/roam")
-(setq org-agenda-files (directory-files-recursively "~/Sync/roam/agenda" "\\.org$"))
+(setq org-agenda-files (directory-files-recursively "~/Sync/roam/agenda/" "\\.org$"))
 ;; (setq org-agenda-files "~/Sync/roam/inbox.org")
 
 ;; (setq org-stuck-projects
