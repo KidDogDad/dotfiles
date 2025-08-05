@@ -12,12 +12,14 @@
         (height . (text-pixels . 1015)))
       )
 
-(setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "Inter" :size 11.0))
+(setq
+ doom-font (font-spec :family "OverpassM Nerd Font" :size 11.0 :weight 'regular)
+      doom-variable-pitch-font (font-spec :family "Overpass Nerd Font" :size 11.0))
 
 (custom-set-faces!
-  '(bold :weight extra-bold)
-  '(org-bold :weight extra-bold))
+  '(bold :weight black)
+  '(org-bold :weight black)
+  )
 
 ;; Increase line spacing
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
@@ -203,13 +205,13 @@
 
    ;; Capture templates
    org-capture-templates
-   '(("t" "Todo" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
+   '(("t" "Todo" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
       "* TODO %?")
-     ("T" "Todo (clipboard)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
+     ("T" "Todo (clipboard)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
       "* TODO %? (notes)\n%x")
-     ("d" "Todo (document)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
+     ("d" "Todo (document)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
       "* TODO %? (notes)\n%a")
-     ("i" "Todo (interactive)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
+     ("i" "Todo (interactive)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
       "* TODO %? (notes)\n%^C")
      )
 
@@ -234,6 +236,7 @@
   :ensure t
   :custom
   (org-roam-directory "~/Sync/roam")
+  (org-roam-completion-everywhere 'nil)
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?"

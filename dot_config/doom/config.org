@@ -9,7 +9,6 @@
 #+begin_src emacs-lisp
 (setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
 #+end_src
-
 ** Theme & Line Settings
 
 #+begin_src emacs-lisp
@@ -20,7 +19,6 @@
 (remove-hook 'prog-mode-hook #'hl-line-mode)
 (remove-hook 'text-mode-hook #'hl-line-mode)
 #+end_src
-
 ** Initial Frame Size
 
 #+begin_src emacs-lisp
@@ -29,28 +27,27 @@
         (height . (text-pixels . 1015)))
       )
 #+end_src
-
 ** Font Settings
 
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "JetBrains Mono" :size 11.0 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "Inter" :size 11.0))
+(setq
+ doom-font (font-spec :family "OverpassM Nerd Font" :size 11.0 :weight 'regular)
+      doom-variable-pitch-font (font-spec :family "Overpass Nerd Font" :size 11.0))
 
 (custom-set-faces!
-  '(bold :weight extra-bold)
-  '(org-bold :weight extra-bold))
+  '(bold :weight black)
+  '(org-bold :weight black)
+  )
 
 ;; Increase line spacing
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
 (setq-default line-spacing 0.2)
 #+end_src
-
 ** The Scroll Bar Is Ugly
 
 #+begin_src emacs-lisp
 (scroll-bar-mode -1)
 #+end_src
-
 ** Olivetti
 
 #+begin_src emacs-lisp
@@ -76,7 +73,6 @@
 (map! :after evil :map general-override-mode-map
       :nv "ga" #'evil-avy-goto-line)
 #+end_src
-
 ** Interactive Window Resizing
 
 #+begin_src emacs-lisp
@@ -93,7 +89,6 @@
   ;;         (control)))       ; temporarily negate the increment value
   )
 #+end_src
-
 ** Autosave With ~super-save~
 
 #+begin_src emacs-lisp
@@ -113,14 +108,12 @@
 (add-to-list 'super-save-hook-triggers 'org-agenda-quit)
 (add-to-list 'super-save-triggers 'org-agenda-quit)
 #+end_src
-
 ** Speed Up ~which-key~
 
 #+begin_src emacs-lisp
 (setq which-key-idle-delay 0.3)
 (setq which-key-idle-secondary-delay 0.05)
 #+end_src
-
 ** Settings For ~evil-surround~
 
 #+begin_src emacs-lisp
@@ -153,7 +146,6 @@
   ;; (push '(?a . evil-surround-after-block) evil-surround-pairs-alist)
   )
 #+end_src
-
 ** Embed Files With ~org-transclusion~
 
 #+begin_src emacs-lisp
@@ -170,7 +162,6 @@
    :desc "Add Org Transclusion" "t" #'org-transclusion-add)
   )
 #+end_src
-
 ** Make Copy-Paste Sane
 This configuration replicates the "cutlass" behavior from Neovim.
 
@@ -198,7 +189,6 @@ This configuration replicates the "cutlass" behavior from Neovim.
   ;; Bind 'x' in visual mode to this new "yank and delete" command.
   (evil-define-key 'visual 'global "x" #'custom-yank-and-delete))
 #+end_src
-
 ** Default Shell
 Avoid problems from using fish shell, but still allow Emacs terminal emulators to use fish.
 
@@ -207,7 +197,6 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 (setq-default vterm-shell "/usr/bin/fish")
 (setq-default explicit-shell-file-name "/usr/bin/fish")
 #+end_src
-
 ** Chezmoi Mode
 
 #+begin_src emacs-lisp
@@ -231,7 +220,6 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
          :desc "Diff" "d" #'chezmoi-diff
          :desc "Apply" "a" #'chezmoi-apply)))
 #+end_src
-
 ** Deadgrep
 
 #+begin_src emacs-lisp
@@ -246,14 +234,12 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 ;; (setq org-directory "~/Sync/roam")
 ;; (setq org-agenda-files (directory-files-recursively "~/Sync/roam/agenda/" "\\.org$"))
 #+end_src
-
 ** Define stuck projects
 
 #+begin_src emacs-lisp
 ;; (setq org-stuck-projects
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
 #+end_src
-
 ** Org Headings Font Settings
 
 #+begin_src emacs-lisp
@@ -264,7 +250,6 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
   ;; Levels 4 and above will use the default size (1.0)
   )
 #+end_src
-
 ** After Org Settings
 
 #+begin_src emacs-lisp
@@ -297,13 +282,13 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 
    ;; Capture templates
    org-capture-templates
-   '(("t" "Todo" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
+   '(("t" "Todo" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
       "* TODO %?")
-     ("T" "Todo (clipboard)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
+     ("T" "Todo (clipboard)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
       "* TODO %? (notes)\n%x")
-     ("d" "Todo (document)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
+     ("d" "Todo (document)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
       "* TODO %? (notes)\n%a")
-     ("i" "Todo (interactive)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
+     ("i" "Todo (interactive)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
       "* TODO %? (notes)\n%^C")
      )
 
@@ -324,7 +309,6 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
   :config
   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 #+end_src
-
 ** Org-Roam Basic Settings
 
 #+begin_src emacs-lisp
@@ -332,6 +316,7 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
   :ensure t
   :custom
   (org-roam-directory "~/Sync/roam")
+  (org-roam-completion-everywhere 'nil)
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?"
@@ -346,14 +331,12 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
   (org-roam-setup)
   )
 #+end_src
-
 ** Org-Web-Tools
 
 #+begin_src emacs-lisp
 (use-package! org-web-tools
   :commands org-web-tools--url-as-readable-org)
 #+end_src
-
 ** Org Roam UI
 *** Basic Settings
 
@@ -380,7 +363,6 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 (map! :leader
       "n r g" nil)
 #+end_src
-
 ** Searching Org-Roam Files With ~consult-ripgrep~
 Taken from https://baty.net/2022/searching-org-roam-files/
 
@@ -394,7 +376,6 @@ Taken from https://baty.net/2022/searching-org-roam-files/
       (:prefix ("s" . "search")
        :desc "Search org-roam files" "R" #'josh/search-roam))
 #+end_src
-
 ** Org Roam Buffer Sections
 
 #+begin_src emacs-lisp
@@ -404,7 +385,6 @@ Taken from https://baty.net/2022/searching-org-roam-files/
             #'org-roam-unlinked-references-section
             ))
 #+end_src
-
 ** Org Auto Tangle
 
 #+begin_src emacs-lisp
@@ -415,7 +395,6 @@ Taken from https://baty.net/2022/searching-org-roam-files/
   :config
   (setq org-auto-tangle-default t))
 #+end_src
-
 ** Org-QL
 
 #+begin_src emacs-lisp
@@ -425,7 +404,6 @@ Taken from https://baty.net/2022/searching-org-roam-files/
   ;; :hook (org-mode . org-ql-view-refresh-maybe)
   )
 #+end_src
-
 ** UNFINISHED Add Pagelink Property To Org Roam Node
 
 #+begin_src emacs-lisp
