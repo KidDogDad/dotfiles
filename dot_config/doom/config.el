@@ -43,6 +43,16 @@
   (org-mode . olivetti-mode)
   )
 
+(setq dirvish-attributes
+      (append
+       ;; The order of these attributes is insignificant, they are always
+       ;; displayed in the same position.
+       '(vc-state subtree-state nerd-icons)
+       ;; Other attributes are displayed in the order they appear in this list.
+       '(file-size))
+      )
+(setq dirvish-override-dired-mode t)
+
 ;; Save my pinkies
 (map! :after evil :map general-override-mode-map
       :nv "zj" #'evil-scroll-down
@@ -190,7 +200,7 @@
   ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
   ;; '(org-property-value :inherit fixed-pitch)
   ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
-  ;; '(org-table :inherit fixed-pitch)
+  '(org-table :inherit fixed-pitch)
   ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
   ;; '(org-verbatim :inherit (shadow fixed-pitch))
   )
