@@ -13,8 +13,8 @@
       )
 
 (setq
- doom-font (font-spec :family "OverpassM Nerd Font" :size 11.0 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "Inter" :weight 'regular :size 12.0))
+ doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12.0 :weight 'demi-bold)
+      doom-variable-pitch-font (font-spec :family "ETBookOT" :weight 'regular :size 12.0))
 
 (custom-set-faces!
   '(bold :weight bold)
@@ -23,7 +23,7 @@
 
 ;; Increase line spacing
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
-(setq-default line-spacing 0.2)
+(setq-default line-spacing 0.1)
 
 (scroll-bar-mode -1)
 
@@ -177,7 +177,7 @@
   ;; Levels 4 and above will use the default size (1.0)
 
   ;; Other font settings
-  ;; '(org-block :inherit fixed-pitch)
+  '(org-block :inherit fixed-pitch)
   '(org-code :inherit (shadow fixed-pitch))
   ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
   ;; '(org-indent :inherit (org-hide fixed-pitch))
@@ -255,11 +255,17 @@
    '(("d" "default" plain
       "%?"
       :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n\n")
-      :unnarrowed t)))
-  ;; '(("w" "Web Page" plain
-  ;;    "%(org-web-tools--url-as-readable-org (clipboard-get-contents))"
-  ;;    :target (file+head "clips/${slug}.org" "#+title: ${title}\n")
-  ;;    :unnarrowed t))
+      :unnarrowed t))
+   ;; '(("w" "Web Page" plain
+   ;;    "%(org-web-tools--url-as-readable-org (clipboard-get-contents))"
+   ;;    :target (file+head "clips/${slug}.org" "#+title: ${title}\n")
+   ;;    :unnarrowed t))
+   )
+  (org-roam-dailies-capture-templates
+   '(("d" "default" entry
+      "* %?"
+      :target (file+head "%<%Y-%m-%d>.org"
+                         "#+title: %<%Y-%m-%d>\n#+date: %U\n\n"))))
   :config
   (org-roam-db-autosync-mode +1)
   (org-roam-setup)
