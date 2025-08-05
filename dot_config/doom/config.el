@@ -14,11 +14,11 @@
 
 (setq
  doom-font (font-spec :family "OverpassM Nerd Font" :size 11.0 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "Overpass Nerd Font" :size 11.0))
+      doom-variable-pitch-font (font-spec :family "Inter" :weight 'regular :size 12.0))
 
 (custom-set-faces!
-  '(bold :weight black)
-  '(org-bold :weight black)
+  '(bold :weight bold)
+  '(org-bold :weight bold)
   )
 
 ;; Increase line spacing
@@ -174,6 +174,16 @@
   '(org-level-2 :height 1.2)
   '(org-level-3 :height 1.1)
   ;; Levels 4 and above will use the default size (1.0)
+  ;; '(org-block :inherit fixed-pitch)
+  '(org-code :inherit (shadow fixed-pitch))
+  '(org-document-info-keyword :inherit (shadow fixed-pitch))
+  ;; '(org-indent :inherit (org-hide fixed-pitch))
+  ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
+  ;; '(org-property-value :inherit fixed-pitch)
+  ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
+  ;; '(org-table :inherit fixed-pitch)
+  ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
+  ;; '(org-verbatim :inherit (shadow fixed-pitch))
   )
 
 (after! org
@@ -193,7 +203,7 @@
    org-adapt-indentation nil
    org-hide-leading-stars t
    org-startup-with-inline-images t
-   org-cycle-separator-lines 1
+   org-cycle-separator-lines 2
    org-modern-list '((43 . "•")
                      (45 . "•")
                      (42 . "↪"))
@@ -231,6 +241,7 @@
   :ensure t
   :config
   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 (use-package! org-roam
   :ensure t
