@@ -161,9 +161,8 @@
 ;; (use-package! deadgrep
 ;;   :ensure t)
 
-(setq org-directory "~/Sync/roam")
-(setq org-agenda-files (directory-files-recursively "~/Sync/roam/agenda/" "\\.org$"))
-;; (setq org-agenda-files "~/Sync/roam/inbox.org")
+;; (setq org-directory "~/Sync/roam")
+;; (setq org-agenda-files (directory-files-recursively "~/Sync/roam/agenda/" "\\.org$"))
 
 ;; (setq org-stuck-projects
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
@@ -177,6 +176,10 @@
 
 (after! org
   (setq
+   ;; Directories
+   org-directory "~/Sync/roam"
+   org-agenda-files '("~/Sync/roam" "~/Sync/roam/agenda")
+
    ;; Modern Org Look
    org-indent-indentation-per-level 1
    org-modern-star 'replace
@@ -200,13 +203,13 @@
 
    ;; Capture templates
    org-capture-templates
-   '(("t" "Todo" entry (file+headline "~/Sync/roam/inbox.org" "")
+   '(("t" "Todo" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
       "* TODO %?")
-     ("T" "Todo (clipboard)" entry (file+headline "~/Sync/roam/inbox.org" "")
+     ("T" "Todo (clipboard)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
       "* TODO %? (notes)\n%x")
-     ("d" "Todo (document)" entry (file+headline "~/Sync/roam/inbox.org" "")
+     ("d" "Todo (document)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
       "* TODO %? (notes)\n%a")
-     ("i" "Todo (interactive)" entry (file+headline "~/Sync/roam/inbox.org" "")
+     ("i" "Todo (interactive)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "")
       "* TODO %? (notes)\n%^C")
      )
 
@@ -242,6 +245,7 @@
   ;;    :unnarrowed t))
   :config
   (org-roam-db-autosync-mode +1)
+  (org-roam-setup)
   )
 
 (use-package! org-web-tools
