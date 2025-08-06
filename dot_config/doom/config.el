@@ -7,6 +7,17 @@
 (remove-hook 'prog-mode-hook #'hl-line-mode)
 (remove-hook 'text-mode-hook #'hl-line-mode)
 
+;; (use-package! org-padding
+;; :ensure t
+;; :config
+;; (setq org-padding-block-begin-line-padding '(2.0 . nil))
+;; (setq org-padding-block-end-line-padding '(nil . 2.0))
+;; (setq org-padding-heading-padding-alist
+;;   '((1.1 . nil) (1.0 . nil) (0.75 . nil) (0.6 . nil) (0.5 . nil) (0.4 . nil)))
+;; :hook
+;; (org-mode . org-padding-mode)
+;;   )
+
 (setq default-frame-alist
       '((width  . (text-pixels . 1625))
         (height . (text-pixels . 1015)))
@@ -14,7 +25,7 @@
 
 (setq
  doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12.0 :weight 'demi-bold)
-      doom-variable-pitch-font (font-spec :family "ETBookOT" :weight 'regular :size 13.0))
+      doom-variable-pitch-font (font-spec :family "Roboto" :weight 'regular :size 12.0))
 
 (custom-set-faces!
   '(bold :weight bold)
@@ -23,7 +34,7 @@
 
 ;; Increase line spacing
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
-(setq-default line-spacing 0.1)
+(setq-default line-spacing 0.4)
 
 (scroll-bar-mode -1)
 
@@ -43,16 +54,6 @@
   (org-mode . olivetti-mode)
   )
 
-(setq dirvish-attributes
-      (append
-       ;; The order of these attributes is insignificant, they are always
-       ;; displayed in the same position.
-       '(vc-state subtree-state nerd-icons)
-       ;; Other attributes are displayed in the order they appear in this list.
-       '(file-size))
-      )
-(setq dirvish-override-dired-mode t)
-
 ;; Save my pinkies
 (map! :after evil :map general-override-mode-map
       :nv "zj" #'evil-scroll-down
@@ -60,7 +61,7 @@
 (map! :after evil :map general-override-mode-map
       :nv "ga" #'evil-avy-goto-line)
 
-(use-package windresize
+(use-package! windresize
   :config
   (map!
    :leader
@@ -132,6 +133,8 @@
    :leader
    :prefix "n r"
    :desc "Add Org Transclusion" "t" #'org-transclusion-add)
+  :hook
+  (org-mode . org-transclusion-mode)
   )
 
 (after! evil
@@ -174,13 +177,21 @@
          :desc "Edit file" "e" #'chezmoi-find
          :desc "Write buffer" "w" #'chezmoi-write
          :desc "Diff" "d" #'chezmoi-diff
-         :desc "Apply" "a" #'chezmoi-apply)))
+         :desc "Apply" "a" #'chezmoi-apply))
+)
 
 ;; (use-package! deadgrep
 ;;   :ensure t)
 
-;; (setq org-directory "~/Sync/roam")
-;; (setq org-agenda-files (directory-files-recursively "~/Sync/roam/agenda/" "\\.org$"))
+(setq dirvish-attributes
+      (append
+       ;; The order of these attributes is insignificant, they are always
+       ;; displayed in the same position.
+       '(vc-state subtree-state nerd-icons)
+       ;; Other attributes are displayed in the order they appear in this list.
+       '(file-size))
+      )
+(setq dirvish-override-dired-mode t)
 
 ;; (setq org-stuck-projects
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
@@ -217,7 +228,7 @@
    org-modern-replace-stars '("◉" "○" "●" "○" "▸")
    org-auto-align-tags nil
    org-hide-emphasis-markers t
-   org-ellipsis "⯈"
+   org-ellipsis " ⯈"
    org-catch-invisible-edits 'show-and-error
    org-adapt-indentation nil
    org-hide-leading-stars t
@@ -250,6 +261,27 @@
    org-agenda-skip-scheduled-if-done t
    org-agenda-tags-column 0
    org-agenda-span 'day
+   org-agenda-prefix-format
+   '((agenda . " %i %-16:c%?-16t% s") (todo . " %i %-16:c") (tags . " %i %-16:c")
+    (search . " %i %-16:c"))
+
+   ;; Agenda views
+   org-agenda-custom-commands
+   '(("p" "Planning"
+      ((tags-todo "+plan"
+                  ((org-agenda-overriding-header "Planning Tasks")))
+       (tags-todo "-{.*}"
+                  ((org-agenda-overriding-header "Untagged Tasks")))))
+     ("i" "Inbox"
+      ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/inbox.org"))
+                 (org-agenda-overriding-header "Inbox Items")))))
+     ("e" "Emacs"
+      ((tags-todo "+Emacs"
+                  ((org-agenda-overriding-header "Emacs Tasks 🤓")))))
+     ("o" "Obsidian Tasks"
+      ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/Obsidian Journals"))
+                 (org-agenda-overriding-header "Tasks From Obsidian Dailies")))))
+     )
 
    ;; Log done time
    org-log-done 'time
@@ -262,7 +294,8 @@
 ;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 ;; Variable pitch in org-mode
-  (add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
 
 (use-package! org-roam
   :ensure t
@@ -289,8 +322,9 @@
   (org-roam-setup)
   )
 
-(use-package! org-web-tools
-  :commands org-web-tools--url-as-readable-org)
+(map! :leader
+      :prefix "m m"
+      :desc "Extract Subtree" "e" #'org-roam-extract-subtree)
 
 (use-package! websocket
   :after org-roam)
@@ -332,7 +366,7 @@
   :config
   (setq org-auto-tangle-default t))
 
-(use-package org-ql
+(use-package! org-ql
   :after org
   :commands (org-ql-search org-ql-view-refresh-block)
   ;; :hook (org-mode . org-ql-view-refresh-maybe)
