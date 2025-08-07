@@ -18,10 +18,19 @@
 ;; (org-mode . org-padding-mode)
 ;;   )
 
-(setq default-frame-alist
-      '((width  . (text-pixels . 1625))
-        (height . (text-pixels . 1015)))
-      )
+;; (setq default-frame-alist
+;;       '((width  . (text-pixels . 1625))
+;;         (height . (text-pixels . 1015)))
+;;       )
+;; (add-to-list 'initial-frame-alist '(width . (text-pixels . 1625)))
+;; (add-to-list 'initial-frame-alist '(height . (text-pixels . 1015)))
+;; (add-to-list 'default-frame-alist '(width . (text-pixels . 1625)))
+;; (add-to-list 'default-frame-alist '(height . (text-pixels . 1015)))
+(setf (alist-get 'width default-frame-alist) '(text-pixels . 1625))
+(setf (alist-get 'height default-frame-alist) '(text-pixels . 1015))
+
+(set-frame-parameter (selected-frame) 'alpha '(96 . 97))
+(add-to-list 'default-frame-alist '(alpha . (96 . 97)))
 
 (setq
  doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12.0 :weight 'demi-bold)
@@ -34,12 +43,11 @@
 
 ;; Increase line spacing
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
-(setq-default line-spacing 0.4)
+(setq-default line-spacing 0.2)
 
 (scroll-bar-mode -1)
 
 (use-package! olivetti
-  :ensure t
   :config
   (map!
 :leader
@@ -52,6 +60,18 @@
   (setq olivetti-style 'fringes)
   :hook
   (org-mode . olivetti-mode)
+  )
+
+(custom-theme-set-faces! 'catppuccin
+  '(org-document-title :foreground "#b4befe")
+  '(org-level-1 :foreground "#cba6f7")
+  '(org-level-2 :foreground "#b4befe")
+  '(org-level-3 :foreground "#74c7ec")
+  '(org-level-4 :foreground "#94e2d5")
+  '(org-level-5 :foreground "#a6e3a1")
+  '(org-level-6 :foreground "#f9e2af")
+  '(org-level-7 :foreground "#fab387")
+  '(org-level-8 :foreground "#f5e0dc")
   )
 
 ;; Save my pinkies
@@ -75,7 +95,6 @@
   )
 
 (use-package! super-save
-  :ensure t
   :config
   (super-save-mode +1)
   :custom
@@ -197,23 +216,27 @@
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
 
 (custom-set-faces!
-  ;; Headings
-  '(org-level-1 :height 1.3)
-  '(org-level-2 :height 1.2)
-  '(org-level-3 :height 1.1)
-  ;; Levels 4 and above will use the default size (1.0)
+  ;; Font sizes
+  '(org-document-title :height 1.8 :weight black)
+  '(org-level-1 :height 1.5 :weight bold)
+  '(org-level-2 :height 1.4 :weight bold)
+  '(org-level-3 :height 1.3 :weight bold)
+  '(org-level-4 :height 1.2 :weight bold)
+  '(org-level-5 :height 1.1 :weight bold)
+  ;; Remaining levels will use the default size (1.0)
+  ;; '(org-modern-todo :box (:line-width (2 . 2)) :height 1.0)
 
   ;; Other font settings
   '(org-block :inherit fixed-pitch)
   '(org-code :inherit (shadow fixed-pitch))
   ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
-  ;; '(org-indent :inherit (org-hide fixed-pitch))
+  '(org-indent :inherit (org-hide fixed-pitch))
   ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
   ;; '(org-property-value :inherit fixed-pitch)
   ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
   '(org-table :inherit fixed-pitch)
   ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
-  ;; '(org-verbatim :inherit (shadow fixed-pitch))
+  '(org-verbatim :inherit (shadow fixed-pitch))
   )
 
 (after! org
@@ -238,10 +261,11 @@
                      (45 . "•")
                      (42 . "↪"))
    org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
+   org-adapt-indentation t
 
    ;; Todo states
    org-todo-keywords
-   '((sequence "TODO(t)" "WAITING(w)" "PROJ(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)"))
+   '((sequence "TODO(t)" "WAIT(w)" "PROJ(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)"))
 
    ;; Capture templates
    org-capture-templates
@@ -261,9 +285,6 @@
    org-agenda-skip-scheduled-if-done t
    org-agenda-tags-column 0
    org-agenda-span 'day
-   org-agenda-prefix-format
-   '((agenda . " %i %-16:c%?-16t% s") (todo . " %i %-16:c") (tags . " %i %-16:c")
-    (search . " %i %-16:c"))
 
    ;; Agenda views
    org-agenda-custom-commands
@@ -285,7 +306,10 @@
 
    ;; Log done time
    org-log-done 'time
-   ))
+   )
+  ;; Preload agenda after startup
+  (run-with-idle-timer 1 nil #'org-agenda-list)
+  )
 
 ;; org-modern-indent
 ;; (use-package! org-modern-indent
@@ -295,10 +319,63 @@
 
 ;; Variable pitch in org-mode
 (add-hook 'org-mode-hook 'variable-pitch-mode)
-(add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
+;; (add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
+(add-hook 'org-mode-hook 'org-modern-mode)
+
+(use-package! all-the-icons)
+
+(setq org-agenda-hide-tags-regexp ".*")
+(setq org-agenda-prefix-format
+      '((agenda . "  %?-2i %t ")
+        (todo . "  %?-2i %t ")
+        (tags . "  %?-2i %t ")
+        (search . " %i %-12:c"))
+      )
+(setq org-agenda-category-icon-alist
+      `(("Projects" ,(list (all-the-icons-faicon "tasks" :height 0.8)) nil nil :ascent center)
+        ("Home" ,(list (all-the-icons-faicon "home" :v-adjust 0.005)) nil nil :ascent center)
+        ("Errands" ,(list (all-the-icons-faicon "car" :height 0.9)) nil nil :ascent center)
+        ("Inbox" ,(list (all-the-icons-faicon "inbox" :height 0.9)) nil nil :ascent center)
+        ("Computer" ,(list (all-the-icons-fileicon "arch-linux" :height 0.9)) nil nil :ascent center)
+        ("Coding" ,(list (all-the-icons-faicon "code-fork" :height 0.9)) nil nil :ascent center)
+        ("Routines" ,(list (all-the-icons-faicon "repeat" :height 0.9)) nil nil :ascent center)
+        ("Yiyi" ,(list (all-the-icons-faicon "female" :height 0.9)) nil nil :ascent center)
+))
+
+;; org-super-agenda
+(use-package! org-super-agenda)
+
+(setq org-super-agenda-groups
+       '(;; Each group has an implicit boolean OR operator between its selectors.
+         (:name " Overdue "  ; Optionally specify section name
+                :scheduled past
+                :order 1
+                :face 'error)
+
+         (:name "Emacs "
+                :tag "Emacs"
+                :order 3)
+
+          (:name " Today "  ; Optionally specify section name
+                :time-grid t
+                :date today
+                :scheduled today
+                :order 2
+                :face 'warning)
+
+))
+
+(org-super-agenda-mode t)
+
+(map! :desc "Next line"
+      :map org-super-agenda-header-map
+      "j" 'org-agenda-next-line)
+
+(map! :desc "Next line"
+      :map org-super-agenda-header-map
+      "k" 'org-agenda-previous-line)
 
 (use-package! org-roam
-  :ensure t
   :custom
   (org-roam-directory "~/Sync/roam")
   (org-roam-completion-everywhere 'nil)
@@ -380,87 +457,11 @@
 ;;       :prefix "m m o"
 ;;       :desc "Add Pagelink" #'org-roam-pagelink-add)
 
-(defun my/orgify-obsidian-todos ()
-  "Convert Obsidian-style TODOs into proper Org-mode TODOs in all .org files."
+(defun logseq-md-headings-to-org ()
+  "Convert Logseq-style #-headings to Org *-headings, removing leading dash and indentation."
   (interactive)
-  (let ((dir (read-directory-name "Org directory: ")))
-    (dolist (file (directory-files-recursively dir "\\.org$"))
-      (message "Processing file: %s" file)
-      (with-current-buffer (find-file-noselect file)
-        (goto-char (point-min))
-        (let ((changed nil))
-          (while (re-search-forward "^\\(\\s-*\\)- \\(\\[.\\]\\) +#todo\\(.*\\)$" nil t)
-            (ignore-errors
-              (let* ((indent (or (match-string 1) ""))
-                     (box    (or (match-string 2) "[ ]"))
-                     (line   (or (match-string 3) ""))
-
-                     ;; Determine state
-                     (org-state (pcase box
-                                  ("[ ]" "TODO")
-                                  ("[x]" "DONE")
-                                  ("[-]" "CANCELED")
-                                  (_ "TODO")))
-
-                     ;; Tags
-                     (tags (let (out)
-                             (while (string-match "#\\([a-zA-Z0-9_-]+\\)" line)
-                               (push (match-string 1 line) out)
-                               (setq line (replace-match "" nil nil line)))
-                             (mapconcat #'identity (reverse out) ":")))
-
-                     ;; Priority
-                     (priority (when (string-match "\\[priority:: \\([^]]+\\)\\]" line)
-                                 (prog1
-                                     (pcase (downcase (match-string 1 line))
-                                       ("high" "[#A]")
-                                       ("medium" "[#B]")
-                                       ("low" "[#C]")
-                                       (_ ""))
-                                   (setq line (replace-match "" nil nil line)))))
-
-                     ;; Scheduled
-                     (scheduled (when (string-match "\\[scheduled:: \\([^]]+\\)\\]" line)
-                                  (prog1 (match-string 1 line)
-                                    (setq line (replace-match "" nil nil line)))))
-
-                     ;; Due
-                     (due (when (string-match "\\[due:: \\([^]]+\\)\\]" line)
-                            (prog1 (match-string 1 line)
-                              (setq line (replace-match "" nil nil line)))))
-
-                     ;; Repeater (naive)
-                     (repeater (when (string-match "\\[repeat:: \\([^]]+\\)\\]" line)
-                                 (prog1
-                                     (match-string 1 line)
-                                   (setq line (replace-match "" nil nil line)))))
-
-                     ;; Completion
-                     (completion (when (string-match "\\[completion:: \\([^]]+\\)\\]" line)
-                                   (prog1 (match-string 1 line)
-                                     (setq line (replace-match "" nil nil line)))))
-                     ;; Or detect ✅ YYYY-MM-DD
-                     (checkmark-date (when (string-match "✅ \\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)" line)
-                                       (prog1 (match-string 1 line)
-                                         (setq line (replace-match "" nil nil line))))))
-
-                (setq line (string-trim line))
-
-                (let ((final (concat indent "* " org-state " "
-                                     (when priority (concat priority " "))
-                                     line
-                                     (when scheduled (concat " SCHEDULED: <" scheduled (when repeater (concat " +" repeater)) ">"))
-                                     (when due (concat " DEADLINE: <" due ">"))
-                                     (when (or completion checkmark-date)
-                                       (concat " CLOSED: <" (or completion checkmark-date) ">"))
-                                     (when tags (concat " :" tags ":")))))
-
-                  ;; Replace line
-                  (beginning-of-line)
-                  (let ((start (point)))
-                    (end-of-line)
-                    (delete-region start (point))
-                    (insert final)
-                    (message "→ Converted: %s" final)
-                    (setq changed t))))))
-          (when changed (save-buffer)))))))
+  (goto-char (point-min))
+  (while (re-search-forward "^\\s-*\\(-\\s-*\\)?\\(#+\\)\\s-+" nil t)
+    (let* ((hashes (match-string 2))
+           (stars (make-string (length hashes) ?*)))
+      (replace-match (concat stars " ") nil t))))

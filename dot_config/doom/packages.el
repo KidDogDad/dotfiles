@@ -14,5 +14,8 @@
 (package! windresize)
 (package! org-ql)
 (unpin! dirvish)
+(package! all-the-icons)
+(package! org-super-agenda)
+(package! esup)
 
 ;; (package! org-padding :recipe (:host github :repo "TonCherAmi/org-padding"))
