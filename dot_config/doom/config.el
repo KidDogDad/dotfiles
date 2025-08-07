@@ -18,6 +18,8 @@
   '(org-level-7 :foreground "#fab387")
   '(org-level-8 :foreground "#f5e0dc")
   '(org-todo :foreground "#a6e3a1")
+  '(italic :weight bold :foreground "#f5c2e7")      ;; pink
+  '(bold :slant italic :foreground "#89dceb")  ;; sky
   )
 
 ;; (use-package! org-padding
@@ -58,6 +60,13 @@
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
 (setq-default line-spacing 0.1)
 
+;; Fallbacks to ensure that all-the-icons display appropriately
+(set-fontset-font t 'unicode "file-icons" nil 'append)
+(set-fontset-font t 'unicode "all-the-icons" nil 'append)
+(set-fontset-font t 'unicode "Material Icons" nil 'append)
+(set-fontset-font t 'unicode "FontAwesome" nil 'append)
+(set-fontset-font t 'unicode "weathericons" nil 'append)
+
 (scroll-bar-mode -1)
 
 (use-package! olivetti
@@ -74,6 +83,29 @@
   :hook
   (org-mode . olivetti-mode)
   )
+
+;; (use-package! spacious-padding)
+
+;; ;; These are the default values, but I keep them here for visibility.
+;; (setq spacious-padding-widths
+;;       '( :internal-border-width 10
+;;          :header-line-width 4
+;;          :mode-line-width 0
+;;          :tab-width 4
+;;          :right-divider-width 25
+;;          :scroll-bar-width 8
+;;          :fringe-width 8))
+
+;; ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
+;; ;; is very flexible and provides several examples.
+;; (setq spacious-padding-subtle-frame-lines nil)
+;;       ;; `( :mode-line-active 'default
+;;       ;;    :mode-line-inactive vertical-border))
+
+;; (spacious-padding-mode 1)
+
+;; ;; Set a key binding if you need to toggle spacious padding.
+;; (define-key global-map (kbd "<f8>") #'spacious-padding-mode)
 
 ;; Save my pinkies
 (map! :after evil :map general-override-mode-map
@@ -351,11 +383,24 @@ org-edit-src-content-indentation 0)
 
 (setq org-agenda-hide-tags-regexp ".*")
 (setq org-agenda-prefix-format
-      '((agenda . "  %?-2i%t ")
+      '((agenda . "  %?-2i %t ")
         (todo . "  %?-2i%t ")
         (tags . "  %?-2i%t ")
         (search . " %i %-12:c"))
       )
+
+(setq org-agenda-current-time-string "")
+(setq org-agenda-time-grid '((daily) () "" ""))
+
+;; Custom styles for dates in agenda
+(custom-set-faces!
+  '(org-agenda-date :inherit outline-1 :height 1.15)
+  '(org-agenda-date-today :inherit outline-2 :height 1.15)
+  '(org-agenda-date-weekend :inherit outline-1 :height 1.15)
+  '(org-agenda-date-weekend-today :inherit outline-2 :height 1.15)
+  '(org-super-agenda-header :inherit custom-button :weight bold :height 1.05)
+  )
+
 (setq org-agenda-category-icon-alist
       `(("Projects" ,(list (all-the-icons-faicon "tasks" :height 0.8)) nil nil :ascent center)
         ("Home" ,(list (all-the-icons-faicon "home" :v-adjust 0.005)) nil nil :ascent center)
@@ -363,6 +408,7 @@ org-edit-src-content-indentation 0)
         ("Inbox" ,(list (all-the-icons-faicon "inbox" :height 0.9)) nil nil :ascent center)
         ("Computer" ,(list (all-the-icons-fileicon "arch-linux" :height 0.9)) nil nil :ascent center)
         ("Coding" ,(list (all-the-icons-faicon "code-fork" :height 0.9)) nil nil :ascent center)
+        ("Emacs" ,(list (all-the-icons-fileicon "emacs" :height 0.9)) nil nil :ascent center)
         ("Routines" ,(list (all-the-icons-faicon "repeat" :height 0.9)) nil nil :ascent center)
         ("Yiyi" ,(list (all-the-icons-faicon "female" :height 0.9)) nil nil :ascent center)
 ))
@@ -377,7 +423,7 @@ org-edit-src-content-indentation 0)
                 :order 1
                 :face 'error)
 
-         (:name "Emacs "
+         (:name " Emacs "
                 :tag "Emacs"
                 :order 3)
 
