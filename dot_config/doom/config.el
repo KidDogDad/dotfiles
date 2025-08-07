@@ -7,6 +7,19 @@
 (remove-hook 'prog-mode-hook #'hl-line-mode)
 (remove-hook 'text-mode-hook #'hl-line-mode)
 
+(custom-theme-set-faces! 'catppuccin
+  '(org-document-title :foreground "#b4befe")
+  '(org-level-1 :foreground "#cba6f7")
+  '(org-level-2 :foreground "#b4befe")
+  '(org-level-3 :foreground "#89b4fa")
+  '(org-level-4 :foreground "#94e2d5")
+  '(org-level-5 :foreground "#a6e3a1")
+  '(org-level-6 :foreground "#f9e2af")
+  '(org-level-7 :foreground "#fab387")
+  '(org-level-8 :foreground "#f5e0dc")
+  '(org-todo :foreground "#a6e3a1")
+  )
+
 ;; (use-package! org-padding
 ;; :ensure t
 ;; :config
@@ -26,8 +39,8 @@
 ;; (add-to-list 'initial-frame-alist '(height . (text-pixels . 1015)))
 ;; (add-to-list 'default-frame-alist '(width . (text-pixels . 1625)))
 ;; (add-to-list 'default-frame-alist '(height . (text-pixels . 1015)))
-(setf (alist-get 'width default-frame-alist) '(text-pixels . 1625))
-(setf (alist-get 'height default-frame-alist) '(text-pixels . 1015))
+(setf (alist-get 'width default-frame-alist) '(text-pixels . 1620))
+(setf (alist-get 'height default-frame-alist) '(text-pixels . 1012))
 
 (set-frame-parameter (selected-frame) 'alpha '(96 . 97))
 (add-to-list 'default-frame-alist '(alpha . (96 . 97)))
@@ -43,7 +56,7 @@
 
 ;; Increase line spacing
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
-(setq-default line-spacing 0.2)
+(setq-default line-spacing 0.1)
 
 (scroll-bar-mode -1)
 
@@ -57,21 +70,9 @@
   :custom
   (setq olivetti-body-width 100)
   ;; (setq olivetti-style 'margins)
-  (setq olivetti-style 'fringes)
+  (setq olivetti-style 'fancy)
   :hook
   (org-mode . olivetti-mode)
-  )
-
-(custom-theme-set-faces! 'catppuccin
-  '(org-document-title :foreground "#b4befe")
-  '(org-level-1 :foreground "#cba6f7")
-  '(org-level-2 :foreground "#b4befe")
-  '(org-level-3 :foreground "#74c7ec")
-  '(org-level-4 :foreground "#94e2d5")
-  '(org-level-5 :foreground "#a6e3a1")
-  '(org-level-6 :foreground "#f9e2af")
-  '(org-level-7 :foreground "#fab387")
-  '(org-level-8 :foreground "#f5e0dc")
   )
 
 ;; Save my pinkies
@@ -212,6 +213,12 @@
       )
 (setq dirvish-override-dired-mode t)
 
+(beacon-mode 1)
+(setq
+ beacon-blink-when-focused t
+ beacon-blink-when-point-moves-vertically t
+ )
+
 ;; (setq org-stuck-projects
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
 
@@ -229,6 +236,8 @@
   ;; Other font settings
   '(org-block :inherit fixed-pitch)
   '(org-code :inherit (shadow fixed-pitch))
+  '(org-hide :inherit fixed-pitch)
+  '(org-checkbox :inherit fixed-pitch)
   ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
   '(org-indent :inherit (org-hide fixed-pitch))
   ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
@@ -239,13 +248,29 @@
   '(org-verbatim :inherit (shadow fixed-pitch))
   )
 
+(setq org-src-fontify-natively t
+org-src-tab-acts-natively t
+org-edit-src-content-indentation 0)
+
 (after! org
+  ;; Add frame borders and window dividers
+  (modify-all-frames-parameters
+   '((right-divider-width . 5)
+     (internal-border-width . 5)))
+  (dolist (face '(window-divider
+                  window-divider-first-pixel
+                  window-divider-last-pixel))
+    (face-spec-reset-face face)
+    (set-face-foreground face (face-attribute 'default :background)))
+  (set-face-background 'fringe (face-attribute 'default :background))
+
   (setq
    ;; Directories
    org-directory "~/Sync/roam"
    org-agenda-files '("~/Sync/roam" "~/Sync/roam/agenda")
 
    ;; Modern Org Look
+   org-startup-indented nil
    org-indent-indentation-per-level 1
    org-modern-star 'replace
    org-modern-replace-stars '("◉" "○" "●" "○" "▸")
@@ -255,6 +280,7 @@
    org-catch-invisible-edits 'show-and-error
    org-adapt-indentation nil
    org-hide-leading-stars t
+   org-insert-heading-respect-content t
    org-startup-with-inline-images t
    org-cycle-separator-lines 2
    org-modern-list '((43 . "•")
@@ -307,11 +333,10 @@
    ;; Log done time
    org-log-done 'time
    )
-  ;; Preload agenda after startup
-  (run-with-idle-timer 1 nil #'org-agenda-list)
   )
 
 ;; org-modern-indent
+;; (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono Nerd Font" :height 1.0)
 ;; (use-package! org-modern-indent
 ;;   :ensure t
 ;;   :config
@@ -326,9 +351,9 @@
 
 (setq org-agenda-hide-tags-regexp ".*")
 (setq org-agenda-prefix-format
-      '((agenda . "  %?-2i %t ")
-        (todo . "  %?-2i %t ")
-        (tags . "  %?-2i %t ")
+      '((agenda . "  %?-2i%t ")
+        (todo . "  %?-2i%t ")
+        (tags . "  %?-2i%t ")
         (search . " %i %-12:c"))
       )
 (setq org-agenda-category-icon-alist

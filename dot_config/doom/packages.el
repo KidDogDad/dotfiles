@@ -17,5 +17,7 @@
 (package! all-the-icons)
 (package! org-super-agenda)
 (package! esup)
+(package! beacon)
+(package! spacious-padding)
 
 ;; (package! org-padding :recipe (:host github :repo "TonCherAmi/org-padding"))

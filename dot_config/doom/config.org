@@ -21,6 +21,22 @@
 (remove-hook 'text-mode-hook #'hl-line-mode)
 #+end_src
 
+*** Catppuccin Customizations
+
+ #+begin_src emacs-lisp
+(custom-theme-set-faces! 'catppuccin
+  '(org-document-title :foreground "#b4befe")
+  '(org-level-1 :foreground "#cba6f7")
+  '(org-level-2 :foreground "#b4befe")
+  '(org-level-3 :foreground "#89b4fa")
+  '(org-level-4 :foreground "#94e2d5")
+  '(org-level-5 :foreground "#a6e3a1")
+  '(org-level-6 :foreground "#f9e2af")
+  '(org-level-7 :foreground "#fab387")
+  '(org-level-8 :foreground "#f5e0dc")
+  '(org-todo :foreground "#a6e3a1")
+  )
+#+end_src
 ** Org Padding
 
 #+begin_src emacs-lisp
@@ -47,8 +63,8 @@
 ;; (add-to-list 'initial-frame-alist '(height . (text-pixels . 1015)))
 ;; (add-to-list 'default-frame-alist '(width . (text-pixels . 1625)))
 ;; (add-to-list 'default-frame-alist '(height . (text-pixels . 1015)))
-(setf (alist-get 'width default-frame-alist) '(text-pixels . 1625))
-(setf (alist-get 'height default-frame-alist) '(text-pixels . 1015))
+(setf (alist-get 'width default-frame-alist) '(text-pixels . 1620))
+(setf (alist-get 'height default-frame-alist) '(text-pixels . 1012))
 #+end_src
 
 *** Transparency
@@ -72,7 +88,7 @@
 
 ;; Increase line spacing
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
-(setq-default line-spacing 0.2)
+(setq-default line-spacing 0.1)
 #+end_src
 
 ** The Scroll Bar Is Ugly
@@ -94,27 +110,12 @@
   :custom
   (setq olivetti-body-width 100)
   ;; (setq olivetti-style 'margins)
-  (setq olivetti-style 'fringes)
+  (setq olivetti-style 'fancy)
   :hook
   (org-mode . olivetti-mode)
   )
 #+end_src
 
-** Catppuccin Customizations
-
-#+begin_src emacs-lisp
-(custom-theme-set-faces! 'catppuccin
-  '(org-document-title :foreground "#b4befe")
-  '(org-level-1 :foreground "#cba6f7")
-  '(org-level-2 :foreground "#b4befe")
-  '(org-level-3 :foreground "#74c7ec")
-  '(org-level-4 :foreground "#94e2d5")
-  '(org-level-5 :foreground "#a6e3a1")
-  '(org-level-6 :foreground "#f9e2af")
-  '(org-level-7 :foreground "#fab387")
-  '(org-level-8 :foreground "#f5e0dc")
-  )
-#+end_src
 * Behavior
 ** Keybindings
 
@@ -144,7 +145,7 @@
   )
 #+end_src
 
-** Autosave With ~super-save~
+** Autosave With Super-Save
 
 #+begin_src emacs-lisp
 (use-package! super-save
@@ -163,14 +164,14 @@
 (add-to-list 'super-save-triggers 'org-agenda-quit)
 #+end_src
 
-** Speed Up ~which-key~
+** Speed Up Which-Key
 
 #+begin_src emacs-lisp
 (setq which-key-idle-delay 0.3)
 (setq which-key-idle-secondary-delay 0.05)
 #+end_src
 
-** Settings For ~evil-surround~
+** Settings For Evil-Surround
 
 #+begin_src emacs-lisp
 ;; Evil-surround stuff
@@ -203,7 +204,7 @@
   )
 #+end_src
 
-** Embed Files With ~org-transclusion~
+** Embed Files With Org-Transclusion
 
 #+begin_src emacs-lisp
 (use-package! org-transclusion
@@ -305,15 +306,25 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 (setq dirvish-override-dired-mode t)
 #+end_src
 
+** Beacon
+
+   #+begin_src emacs-lisp
+(beacon-mode 1)
+(setq
+ beacon-blink-when-focused t
+ beacon-blink-when-point-moves-vertically t
+ )
+#+end_src
+
 * Org & Org-Roam
-** Define stuck projects
+** Define Stuck Projects
 
 #+begin_src emacs-lisp
 ;; (setq org-stuck-projects
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
 #+end_src
 
-** Org Font Settings
+** Org Font & Appearance Settings
 
 #+begin_src emacs-lisp
 (custom-set-faces!
@@ -330,6 +341,8 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
   ;; Other font settings
   '(org-block :inherit fixed-pitch)
   '(org-code :inherit (shadow fixed-pitch))
+  '(org-hide :inherit fixed-pitch)
+  '(org-checkbox :inherit fixed-pitch)
   ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
   '(org-indent :inherit (org-hide fixed-pitch))
   ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
@@ -339,18 +352,35 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
   ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
   '(org-verbatim :inherit (shadow fixed-pitch))
   )
+
+(setq org-src-fontify-natively t
+org-src-tab-acts-natively t
+org-edit-src-content-indentation 0)
+
 #+end_src
 
 ** After Org Settings
 
 #+begin_src emacs-lisp
 (after! org
+  ;; Add frame borders and window dividers
+  (modify-all-frames-parameters
+   '((right-divider-width . 5)
+     (internal-border-width . 5)))
+  (dolist (face '(window-divider
+                  window-divider-first-pixel
+                  window-divider-last-pixel))
+    (face-spec-reset-face face)
+    (set-face-foreground face (face-attribute 'default :background)))
+  (set-face-background 'fringe (face-attribute 'default :background))
+
   (setq
    ;; Directories
    org-directory "~/Sync/roam"
    org-agenda-files '("~/Sync/roam" "~/Sync/roam/agenda")
 
    ;; Modern Org Look
+   org-startup-indented nil
    org-indent-indentation-per-level 1
    org-modern-star 'replace
    org-modern-replace-stars '("◉" "○" "●" "○" "▸")
@@ -360,6 +390,7 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
    org-catch-invisible-edits 'show-and-error
    org-adapt-indentation nil
    org-hide-leading-stars t
+   org-insert-heading-respect-content t
    org-startup-with-inline-images t
    org-cycle-separator-lines 2
    org-modern-list '((43 . "•")
@@ -412,11 +443,10 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
    ;; Log done time
    org-log-done 'time
    )
-  ;; Preload agenda after startup
-  (run-with-idle-timer 1 nil #'org-agenda-list)
   )
 
 ;; org-modern-indent
+;; (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono Nerd Font" :height 1.0)
 ;; (use-package! org-modern-indent
 ;;   :ensure t
 ;;   :config
@@ -435,9 +465,9 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 
 (setq org-agenda-hide-tags-regexp ".*")
 (setq org-agenda-prefix-format
-      '((agenda . "  %?-2i %t ")
-        (todo . "  %?-2i %t ")
-        (tags . "  %?-2i %t ")
+      '((agenda . "  %?-2i%t ")
+        (todo . "  %?-2i%t ")
+        (tags . "  %?-2i%t ")
         (search . " %i %-12:c"))
       )
 (setq org-agenda-category-icon-alist
@@ -553,7 +583,7 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
       "n r g" nil)
 #+end_src
 
-** Searching Org-Roam Files With ~consult-ripgrep~
+** Searching Org-Roam Files With Consult-Ripgrep
 Taken from https://baty.net/2022/searching-org-roam-files/
 
 #+begin_src emacs-lisp
@@ -566,6 +596,7 @@ Taken from https://baty.net/2022/searching-org-roam-files/
       (:prefix ("s" . "search")
        :desc "Search org-roam files" "R" #'josh/search-roam))
 #+end_src
+
 
 ** Org Roam Buffer Sections
 
