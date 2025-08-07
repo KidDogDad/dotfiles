@@ -58,7 +58,7 @@
 
 ;; Increase line spacing
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
-(setq-default line-spacing 0.1)
+(setq-default line-spacing 0.3)
 
 ;; Fallbacks to ensure that all-the-icons display appropriately
 (set-fontset-font t 'unicode "file-icons" nil 'append)
@@ -113,6 +113,12 @@
       :nv "zk" #'evil-scroll-up)
 (map! :after evil :map general-override-mode-map
       :nv "ga" #'evil-avy-goto-line)
+(map!
+ :leader
+ :desc "Dirvish" "d" #'dirvish)
+
+(setq delete-by-moving-to-trash t
+      trash-directory "~/.local/share/Trash/files")
 
 (use-package! windresize
   :config
