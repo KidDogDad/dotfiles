@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
 
 (setq doom-theme 'catppuccin)
@@ -9,8 +11,8 @@
 
 (custom-theme-set-faces! 'catppuccin
   '(org-document-title :foreground "#b4befe")
-  '(org-level-1 :foreground "#cba6f7")
-  '(org-level-2 :foreground "#b4befe")
+  '(org-level-1 :foreground "#b4befe")
+  '(org-level-2 :foreground "#cba6f7")
   '(org-level-3 :foreground "#89b4fa")
   '(org-level-4 :foreground "#94e2d5")
   '(org-level-5 :foreground "#a6e3a1")
@@ -41,7 +43,7 @@
 ;; (add-to-list 'initial-frame-alist '(height . (text-pixels . 1015)))
 ;; (add-to-list 'default-frame-alist '(width . (text-pixels . 1625)))
 ;; (add-to-list 'default-frame-alist '(height . (text-pixels . 1015)))
-(setf (alist-get 'width default-frame-alist) '(text-pixels . 1620))
+(setf (alist-get 'width default-frame-alist) '(text-pixels . 1601))
 (setf (alist-get 'height default-frame-alist) '(text-pixels . 1012))
 
 (set-frame-parameter (selected-frame) 'alpha '(96 . 97))
@@ -84,28 +86,28 @@
   (org-mode . olivetti-mode)
   )
 
-;; (use-package! spacious-padding)
+(use-package! spacious-padding)
 
-;; ;; These are the default values, but I keep them here for visibility.
-;; (setq spacious-padding-widths
-;;       '( :internal-border-width 10
-;;          :header-line-width 4
-;;          :mode-line-width 0
-;;          :tab-width 4
-;;          :right-divider-width 25
-;;          :scroll-bar-width 8
-;;          :fringe-width 8))
+;; These are the default values, but I keep them here for visibility.
+(setq spacious-padding-widths
+      '( :internal-border-width 10
+         :header-line-width 4
+         :mode-line-width 1
+         :tab-width 4
+         :right-divider-width 25
+         :scroll-bar-width 8
+         :fringe-width 10))
 
-;; ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
-;; ;; is very flexible and provides several examples.
-;; (setq spacious-padding-subtle-frame-lines nil)
-;;       ;; `( :mode-line-active 'default
-;;       ;;    :mode-line-inactive vertical-border))
+;; Read the doc string of `spacious-padding-subtle-mode-line' as it
+;; is very flexible and provides several examples.
+(setq spacious-padding-subtle-frame-lines nil)
+      ;; `( :mode-line-active 'default
+      ;;    :mode-line-inactive vertical-border))
 
-;; (spacious-padding-mode 1)
+(spacious-padding-mode 1)
 
-;; ;; Set a key binding if you need to toggle spacious padding.
-;; (define-key global-map (kbd "<f8>") #'spacious-padding-mode)
+;; Set a key binding if you need to toggle spacious padding.
+(define-key global-map (kbd "<f8>") #'spacious-padding-mode)
 
 ;; Save my pinkies
 (map! :after evil :map general-override-mode-map
@@ -251,12 +253,6 @@
       )
 (setq dirvish-override-dired-mode t)
 
-(beacon-mode 1)
-(setq
- beacon-blink-when-focused t
- beacon-blink-when-point-moves-vertically t
- )
-
 ;; (setq org-stuck-projects
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
 
@@ -292,9 +288,9 @@ org-edit-src-content-indentation 0)
 
 (after! org
   ;; Add frame borders and window dividers
-  (modify-all-frames-parameters
-   '((right-divider-width . 5)
-     (internal-border-width . 5)))
+  ;; (modify-all-frames-parameters
+  ;;  '((right-divider-width . 5)
+  ;;    (internal-border-width . 5)))
   (dolist (face '(window-divider
                   window-divider-first-pixel
                   window-divider-last-pixel))
@@ -305,7 +301,7 @@ org-edit-src-content-indentation 0)
   (setq
    ;; Directories
    org-directory "~/Sync/roam"
-   org-agenda-files '("~/Sync/roam" "~/Sync/roam/agenda")
+   ;; org-agenda-files '("~/Sync/roam" "~/Sync/roam/agenda")
 
    ;; Modern Org Look
    org-startup-indented nil
@@ -314,7 +310,7 @@ org-edit-src-content-indentation 0)
    org-modern-replace-stars '("◉" "○" "●" "○" "▸")
    org-auto-align-tags nil
    org-hide-emphasis-markers t
-   org-ellipsis " ⯈"
+   org-ellipsis " >"
    org-catch-invisible-edits 'show-and-error
    org-adapt-indentation nil
    org-hide-leading-stars t
@@ -460,12 +456,15 @@ org-edit-src-content-indentation 0)
    '(("d" "default" plain
       "%?"
       :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n\n")
-      :unnarrowed t))
-   ;; '(("w" "Web Page" plain
-   ;;    "%(org-web-tools--url-as-readable-org (clipboard-get-contents))"
-   ;;    :target (file+head "clips/${slug}.org" "#+title: ${title}\n")
-   ;;    :unnarrowed t))
-   )
+      :unnarrowed t)
+     ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
+      :unnarrowed t)
+     ("w" "Web Page" plain
+      "%(org-web-tools--url-as-readable-org (clipboard-get-contents))"
+      :target (file+head "clips/${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+     ))
   (org-roam-dailies-capture-templates
    '(("d" "default" entry
       "* %?"
@@ -498,15 +497,6 @@ org-edit-src-content-indentation 0)
 (map! :leader
       "n r g" nil)
 
-(defun josh/search-roam ()
-  "Run consult-ripgrep on the org roam directory"
-  (interactive)
-  (consult-ripgrep org-roam-directory))
-
-(map! :leader
-      (:prefix ("s" . "search")
-       :desc "Search org-roam files" "R" #'josh/search-roam))
-
 (setq org-roam-mode-sections
       (list #'org-roam-backlinks-section
             #'org-roam-reflinks-section
@@ -526,13 +516,47 @@ org-edit-src-content-indentation 0)
   ;; :hook (org-mode . org-ql-view-refresh-maybe)
   )
 
-;; First define a function to do this
+(defun my/org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (cons arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args))
+  )
 
-;; Then add the keymap
-;; (map! :after org-roam :map general-override-mode-map
-;;       :leader
-;;       :prefix "m m o"
-;;       :desc "Add Pagelink" #'org-roam-pagelink-add)
+;; Keybinding
+(map!
+:leader
+:prefix "n r"
+:desc "Insert New Node" "I" #'my/org-roam-node-insert-immediate
+ )
+
+;; The buffer you put this code in must have lexical-binding set to t!
+;; See the final configuration at the end for more details.
+
+(defun my/org-roam-filter-by-tag (tag-name)
+  (lambda (node)
+    (member tag-name (org-roam-node-tags node))))
+
+(defun my/org-roam-list-notes-by-tag (tag-name)
+  (mapcar #'org-roam-node-file
+          (seq-filter
+           (my/org-roam-filter-by-tag tag-name)
+           (org-roam-node-list))))
+
+(defun my/org-roam-refresh-agenda-list ()
+  (interactive)
+  (setq org-agenda-files (my/org-roam-list-notes-by-tag "Agenda")))
+
+;; Build the agenda list the first time for the session
+(my/org-roam-refresh-agenda-list)
+
+;; Keybinding
+(map!
+:leader
+:prefix "n r"
+:desc "Build Agenda" "b" #'my/org-roam-refresh-agenda-list
+ )
 
 (defun logseq-md-headings-to-org ()
   "Convert Logseq-style #-headings to Org *-headings, removing leading dash and indentation."
@@ -542,3 +566,38 @@ org-edit-src-content-indentation 0)
     (let* ((hashes (match-string 2))
            (stars (make-string (length hashes) ?*)))
       (replace-match (concat stars " ") nil t))))
+
+(defun markdown-links-to-org (&optional beg end)
+  "Convert [text](url) → [[url][text]] in region or whole buffer.
+Also unwrap URLs like {{video https://...}}."
+  (interactive (if (use-region-p) (list (region-beginning) (region-end))))
+  (save-excursion
+    (save-restriction
+      (when (and beg end) (narrow-to-region beg end))
+      (goto-char (point-min))
+      (let ((re "\\[\\([^]\n]+\\)\\](\\([^)\n]+\\))"))
+        (while (re-search-forward re nil t)
+          (let* ((txt (match-string 1))
+                 (url (match-string 2)))
+            ;; unwrap {{video ...}}
+            (when (string-match "\\`{{video[[:space:]]+\\([^}]+\\)}}\\'" url)
+              (setq url (match-string 1 url)))
+            (replace-match (concat "[[" url "][" txt "]]") t t)))))))
+
+(defun search-roam ()
+  "Run consult-ripgrep on the org roam directory"
+  (interactive)
+  (consult-ripgrep org-roam-directory))
+
+;; Keybinding
+(map! :leader
+      (:prefix ("s" . "search")
+       :desc "Search org-roam files" "R" #'search-roam))
+
+;; First define a function to do this
+
+;; Then add the keymap
+;; (map! :after org-roam :map general-override-mode-map
+;;       :leader
+;;       :prefix "m m o"
+;;       :desc "Add Pagelink" #'org-roam-pagelink-add)
