@@ -3,10 +3,9 @@
 (setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
 
 (after! doom-themes
-  load-theme 'doom-nano-dark t
-  load-theme 'doom-nano-light t)
-(setq doom-theme 'catppuccin)
-(setq catppuccin-flavor 'mocha)
+  (load-theme 'doom-nano-dark t))
+;; (setq doom-theme 'catppuccin)
+;; (setq catppuccin-flavor 'mocha)
 (setq display-line-numbers-type 'nil)
 (setq global-hl-line-modes nil)
 (remove-hook 'prog-mode-hook #'hl-line-mode)
@@ -94,7 +93,7 @@
   (org-mode . olivetti-mode)
   )
 
-(use-package! spacious-padding)
+;; (use-package! spacious-padding)
 
 ;; ;; These are the default values, but I keep them here for visibility.
 ;; (setq spacious-padding-widths
@@ -112,7 +111,7 @@
 ;;       ;; `( :mode-line-active 'default
 ;;       ;;    :mode-line-inactive vertical-border))
 
-(spacious-padding-mode 1)
+;; (spacious-padding-mode 1)
 
 ;; ;; Set a key binding if you need to toggle spacious padding.
 ;; (define-key global-map (kbd "<f8>") #'spacious-padding-mode)

@@ -146,7 +146,7 @@
 ** Spacious Padding
 
    #+begin_src emacs-lisp
-(use-package! spacious-padding)
+;; (use-package! spacious-padding)
 
 ;; ;; These are the default values, but I keep them here for visibility.
 ;; (setq spacious-padding-widths
@@ -164,7 +164,7 @@
 ;;       ;; `( :mode-line-active 'default
 ;;       ;;    :mode-line-inactive vertical-border))
 
-(spacious-padding-mode 1)
+;; (spacious-padding-mode 1)
 
 ;; ;; Set a key binding if you need to toggle spacious padding.
 ;; (define-key global-map (kbd "<f8>") #'spacious-padding-mode)
