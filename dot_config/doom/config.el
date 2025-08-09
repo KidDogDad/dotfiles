@@ -43,11 +43,11 @@
 ;; (add-to-list 'initial-frame-alist '(height . (text-pixels . 1015)))
 ;; (add-to-list 'default-frame-alist '(width . (text-pixels . 1625)))
 ;; (add-to-list 'default-frame-alist '(height . (text-pixels . 1015)))
-(setf (alist-get 'width default-frame-alist) '(text-pixels . 1601))
-(setf (alist-get 'height default-frame-alist) '(text-pixels . 1012))
+(setf (alist-get 'width default-frame-alist) '(text-pixels . 1605))
+(setf (alist-get 'height default-frame-alist) '(text-pixels . 1010))
 
-(set-frame-parameter (selected-frame) 'alpha '(96 . 97))
-(add-to-list 'default-frame-alist '(alpha . (96 . 97)))
+;; (set-frame-parameter (selected-frame) 'alpha '(96 . 97))
+;; (add-to-list 'default-frame-alist '(alpha . (96 . 97)))
 
 (setq
  doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12.0 :weight 'demi-bold)
@@ -88,26 +88,29 @@
 
 (use-package! spacious-padding)
 
-;; These are the default values, but I keep them here for visibility.
-(setq spacious-padding-widths
-      '( :internal-border-width 10
-         :header-line-width 4
-         :mode-line-width 1
-         :tab-width 4
-         :right-divider-width 25
-         :scroll-bar-width 8
-         :fringe-width 10))
+;; ;; These are the default values, but I keep them here for visibility.
+;; (setq spacious-padding-widths
+;;       '( :internal-border-width 10
+;;          :header-line-width 4
+;;          :mode-line-width 1
+;;          :tab-width 4
+;;          :right-divider-width 25
+;;          :scroll-bar-width 8
+;;          :fringe-width 10))
 
-;; Read the doc string of `spacious-padding-subtle-mode-line' as it
-;; is very flexible and provides several examples.
-(setq spacious-padding-subtle-frame-lines nil)
-      ;; `( :mode-line-active 'default
-      ;;    :mode-line-inactive vertical-border))
+;; ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
+;; ;; is very flexible and provides several examples.
+;; (setq spacious-padding-subtle-frame-lines nil)
+;;       ;; `( :mode-line-active 'default
+;;       ;;    :mode-line-inactive vertical-border))
 
 (spacious-padding-mode 1)
 
-;; Set a key binding if you need to toggle spacious padding.
-(define-key global-map (kbd "<f8>") #'spacious-padding-mode)
+;; ;; Set a key binding if you need to toggle spacious padding.
+;; (define-key global-map (kbd "<f8>") #'spacious-padding-mode)
+
+(use-package info+
+  :ensure t)
 
 ;; Save my pinkies
 (map! :after evil :map general-override-mode-map
@@ -253,6 +256,10 @@
       )
 (setq dirvish-override-dired-mode t)
 
+(require 'org-protocol)
+(require 'org-roam-protocol)
+(require 'org-web-tools)
+
 ;; (setq org-stuck-projects
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
 
@@ -329,13 +336,13 @@ org-edit-src-content-indentation 0)
 
    ;; Capture templates
    org-capture-templates
-   '(("t" "Todo" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
+   '(("t" "Todo" entry (file "~/Sync/roam/agenda/inbox.org")
       "* TODO %?")
-     ("T" "Todo (clipboard)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
+     ("T" "Todo (clipboard)" entry (file "~/Sync/roam/agenda/inbox.org")
       "* TODO %? (notes)\n%x")
-     ("d" "Todo (document)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
+     ("d" "Todo (document)" entry (file "~/Sync/roam/agenda/inbox.org")
       "* TODO %? (notes)\n%a")
-     ("i" "Todo (interactive)" entry (file+headline "~/Sync/roam/agenda/inbox.org" "Inbox")
+     ("i" "Todo (interactive)" entry (file "~/Sync/roam/agenda/inbox.org")
       "* TODO %? (notes)\n%^C")
      )
 
@@ -413,6 +420,7 @@ org-edit-src-content-indentation 0)
         ("Emacs" ,(list (all-the-icons-fileicon "emacs" :height 0.9)) nil nil :ascent center)
         ("Routines" ,(list (all-the-icons-faicon "repeat" :height 0.9)) nil nil :ascent center)
         ("Yiyi" ,(list (all-the-icons-faicon "female" :height 0.9)) nil nil :ascent center)
+        ("Misc" ,(list (all-the-icons-material "widgets" :height 0.9)) nil nil :ascent center)
 ))
 
 ;; org-super-agenda
@@ -457,14 +465,21 @@ org-edit-src-content-indentation 0)
       "%?"
       :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n\n")
       :unnarrowed t)
-     ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
+     ("p" "Project" plain
+      "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+      ::if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
       :unnarrowed t)
-     ("w" "Web Page" plain
-      "%(org-web-tools--url-as-readable-org (clipboard-get-contents))"
-      :target (file+head "clips/${slug}.org" "#+title: ${title}\n")
-      :unnarrowed t)
-     ))
+      ))
+      (org-roam-capture-ref-templates
+       '(("W" "Web Page (With Content)" plain
+          "%(org-web-tools--url-as-readable-org \"${ref}\")"
+          :target (file+head "clips/${slug}.org" "#+title: ${title}\n\n")
+          :unnarrowed t)
+        ("w" "Web Page (Link Only)" plain
+         "[[${ref}][${title}]]\n\n%?"
+         :target (file+head "clips/${slug}.org" "#+title: ${title}\n\n")
+         :unnarrowed t)
+      ))
   (org-roam-dailies-capture-templates
    '(("d" "default" entry
       "* %?"

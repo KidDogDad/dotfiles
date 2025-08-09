@@ -5,7 +5,6 @@
 (package! websocket)
 (unpin! org-roam)
 (package! org-roam-ui)
-(package! doct)
 
 (package! org-web-tools)
 (package! super-save)
@@ -20,5 +19,6 @@
 (package! esup)
 ;; (package! beacon)
 (package! spacious-padding)
+(package! info+)
 
 ;; (package! org-padding :recipe (:host github :repo "TonCherAmi/org-padding"))
