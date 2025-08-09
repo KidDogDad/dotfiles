@@ -21,10 +21,9 @@
 
 #+begin_src emacs-lisp
 (after! doom-themes
-  load-theme 'doom-nano-dark t
-  load-theme 'doom-nano-light t)
-(setq doom-theme 'catppuccin)
-(setq catppuccin-flavor 'mocha)
+  (load-theme 'doom-nano-dark t))
+;; (setq doom-theme 'catppuccin)
+;; (setq catppuccin-flavor 'mocha)
 (setq display-line-numbers-type 'nil)
 (setq global-hl-line-modes nil)
 (remove-hook 'prog-mode-hook #'hl-line-mode)
@@ -49,6 +48,15 @@
   '(bold :slant italic :foreground "#89dceb")  ;; sky
   )
 #+end_src
+** Trying Out Doom Nano Modeline
+
+   #+begin_src emacs-lisp
+(use-package! doom-nano-modeline
+  :config
+  (doom-nano-modeline-mode 1)
+  (global-hide-mode-line-mode 1))
+#+end_src
+
 ** Org Padding
 
 #+begin_src emacs-lisp
@@ -587,7 +595,7 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
                 :tag "Errands"
                 :order 3)
 
-          (:name " Today "  
+          (:name " Today "
                 :time-grid t
                 :date today
                 :scheduled today

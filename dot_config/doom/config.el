@@ -27,6 +27,11 @@
   '(bold :slant italic :foreground "#89dceb")  ;; sky
   )
 
+(use-package! doom-nano-modeline
+  :config
+  (doom-nano-modeline-mode 1)
+  (global-hide-mode-line-mode 1))
+
 ;; (use-package! org-padding
 ;; :ensure t
 ;; :config
@@ -455,7 +460,7 @@
                 :tag "Errands"
                 :order 3)
 
-          (:name " Today "  
+          (:name " Today "
                 :time-grid t
                 :date today
                 :scheduled today

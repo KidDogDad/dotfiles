@@ -1,3 +1,5 @@
+;;; lisp/lib/packages.el -*- lexical-binding: t; -*-
+
 (package! catppuccin-theme)
 ;; (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 (package! olivetti :recipe (:host github :repo "rnkn/olivetti"))
@@ -22,5 +24,9 @@
 (package! spacious-padding)
 (package! info+)
 (package! org-download)
+
+(package! doom-nano-modeline
+  :recipe (:host github
+  :repo "ronisbr/doom-nano-modeline"))
 
 ;; (package! org-padding :recipe (:host github :repo "TonCherAmi/org-padding"))
