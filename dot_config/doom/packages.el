@@ -20,5 +20,6 @@
 ;; (package! beacon)
 (package! spacious-padding)
 (package! info+)
+(package! org-download)
 
 ;; (package! org-padding :recipe (:host github :repo "TonCherAmi/org-padding"))

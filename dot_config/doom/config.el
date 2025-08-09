@@ -531,6 +531,15 @@ org-edit-src-content-indentation 0)
   ;; :hook (org-mode . org-ql-view-refresh-maybe)
   )
 
+(use-package! org-download
+  :defer t
+  :init
+  (setq-default org-download-image-dir "images")
+  :config
+  (setq org-download-method 'directory
+        org-download-link-format"[[file:images/%s]]\n"
+        org-download-heading-lvl nil))
+
 (defun my/org-roam-node-insert-immediate (arg &rest args)
   (interactive "P")
   (let ((args (cons arg args))

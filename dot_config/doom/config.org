@@ -699,6 +699,18 @@ org-edit-src-content-indentation 0)
   )
 #+end_src
 
+** Org-Download
+
+   #+begin_src emacs-lisp
+(use-package! org-download
+  :defer t
+  :init
+  (setq-default org-download-image-dir "images")
+  :config
+  (setq org-download-method 'directory
+        org-download-link-format"[[file:images/%s]]\n"
+        org-download-heading-lvl nil))
+#+end_src
 
 * Functions
 ** Org-Roam Immediate Insert
