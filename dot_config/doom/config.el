@@ -50,8 +50,8 @@
 ;; (add-to-list 'default-frame-alist '(alpha . (96 . 97)))
 
 (setq
- doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12.0 :weight 'demi-bold)
-      doom-variable-pitch-font (font-spec :family "Roboto" :weight 'regular :size 12.0))
+ doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 11.0 :weight 'regular)
+      doom-variable-pitch-font (font-spec :family "Roboto" :weight 'regular :size 11.0))
 
 (custom-set-faces!
   '(bold :weight bold)
@@ -272,7 +272,10 @@
   '(org-level-4 :height 1.2 :weight bold)
   '(org-level-5 :height 1.1 :weight bold)
   ;; Remaining levels will use the default size (1.0)
-  ;; '(org-modern-todo :box (:line-width (2 . 2)) :height 1.0)
+
+  ;; '(org-modern-todo :inherit fixed-pitch :height 1.0)
+  ;; '(org-modern-time-inactive :inherit fixed-pitch :height 1.0)
+  ;; '(org-modern-date-inactive :inherit fixed-pitch :height 1.0)
 
   ;; Other font settings
   '(org-block :inherit fixed-pitch)
@@ -289,10 +292,6 @@
   '(org-verbatim :inherit (shadow fixed-pitch))
   )
 
-(setq org-src-fontify-natively t
-org-src-tab-acts-natively t
-org-edit-src-content-indentation 0)
-
 (after! org
   ;; Add frame borders and window dividers
   ;; (modify-all-frames-parameters
@@ -308,27 +307,29 @@ org-edit-src-content-indentation 0)
   (setq
    ;; Directories
    org-directory "~/Sync/roam"
-   ;; org-agenda-files '("~/Sync/roam" "~/Sync/roam/agenda")
 
    ;; Modern Org Look
    org-startup-indented nil
    org-indent-indentation-per-level 1
-   org-modern-star 'replace
-   org-modern-replace-stars '("◉" "○" "●" "○" "▸")
+   org-modern-hide-stars t
+   ;; org-modern-star 'replace
+   ;; org-modern-replace-stars '("◉" "○" "●" "○" "▸")
    org-auto-align-tags nil
    org-hide-emphasis-markers t
    org-ellipsis " >"
    org-catch-invisible-edits 'show-and-error
-   org-adapt-indentation nil
+   org-adapt-indentation t
    org-hide-leading-stars t
    org-insert-heading-respect-content t
    org-startup-with-inline-images t
    org-cycle-separator-lines 2
    org-modern-list '((43 . "•")
-                     (45 . "•")
-                     (42 . "↪"))
+                     (45 . "•"))
    org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
    org-adapt-indentation t
+
+   ;; Trying to fix todo pills, etc, being too short
+   org-modern-label-border nil
 
    ;; Todo states
    org-todo-keywords
@@ -373,6 +374,11 @@ org-edit-src-content-indentation 0)
 
    ;; Log done time
    org-log-done 'time
+
+   ;; Better source code blocks
+   ;; org-src-fontify-natively t
+   ;; org-src-tab-acts-natively
+   ;; org-edit-src-content-indentation 0
    )
   )
 
@@ -390,7 +396,7 @@ org-edit-src-content-indentation 0)
 
 (use-package! all-the-icons)
 
-(setq org-agenda-hide-tags-regexp ".*")
+;; (setq org-agenda-hide-tags-regexp ".*")
 (setq org-agenda-prefix-format
       '((agenda . "  %?-2i %t ")
         (todo . "  %?-2i%t ")
@@ -398,7 +404,7 @@ org-edit-src-content-indentation 0)
         (search . " %i %-12:c"))
       )
 
-(setq org-agenda-current-time-string "")
+(setq org-agenda-current-time-string "← now ───────────────────────────────────────────────")
 (setq org-agenda-time-grid '((daily) () "" ""))
 
 ;; Custom styles for dates in agenda
@@ -408,12 +414,13 @@ org-edit-src-content-indentation 0)
   '(org-agenda-date-weekend :inherit outline-1 :height 1.15)
   '(org-agenda-date-weekend-today :inherit outline-2 :height 1.15)
   '(org-super-agenda-header :inherit custom-button :weight bold :height 1.05)
+  '(org-scheduled-today :weight regular)
   )
 
 (setq org-agenda-category-icon-alist
       `(("Projects" ,(list (all-the-icons-faicon "tasks" :height 0.8)) nil nil :ascent center)
         ("Home" ,(list (all-the-icons-faicon "home" :v-adjust 0.005)) nil nil :ascent center)
-        ("Errands" ,(list (all-the-icons-faicon "car" :height 0.9)) nil nil :ascent center)
+        ("Errands" ,(list (all-the-icons-material "drive_eta" :height 0.9)) nil nil :ascent center)
         ("Inbox" ,(list (all-the-icons-faicon "inbox" :height 0.9)) nil nil :ascent center)
         ("Computer" ,(list (all-the-icons-fileicon "arch-linux" :height 0.9)) nil nil :ascent center)
         ("Coding" ,(list (all-the-icons-faicon "code-fork" :height 0.9)) nil nil :ascent center)
@@ -437,12 +444,19 @@ org-edit-src-content-indentation 0)
                 :tag "Emacs"
                 :order 3)
 
-          (:name " Today "  ; Optionally specify section name
+         (:name " Yiyi"
+                :tag "Yiyi"
+                :order 3)
+
+         (:name " Errands"
+                :tag "Errands"
+                :order 3)
+
+          (:name " Today "  
                 :time-grid t
                 :date today
                 :scheduled today
-                :order 2
-                :face 'warning)
+                :order 2)
 
 ))
 
