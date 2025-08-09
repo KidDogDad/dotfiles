@@ -707,9 +707,11 @@ org-edit-src-content-indentation 0)
   :init
   (setq-default org-download-image-dir "images")
   :config
-  (setq org-download-method 'directory
-        org-download-link-format"[[file:images/%s]]\n"
-        org-download-heading-lvl nil))
+  (setq org-download-method 'attach)
+  :hook
+  (org-mode . org-download-enable)
+  (dired-mode . org-download-enable)
+  )
 #+end_src
 
 * Functions
