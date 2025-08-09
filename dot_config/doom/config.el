@@ -2,6 +2,9 @@
 
 (setq fancy-splash-image "/home/josh/Pictures/doom-banners/splashes/doom/doom-emacs-white.svg")
 
+(after! doom-themes
+  load-theme 'doom-nano-dark t
+  load-theme 'doom-nano-light t)
 (setq doom-theme 'catppuccin)
 (setq catppuccin-flavor 'mocha)
 (setq display-line-numbers-type 'nil)
