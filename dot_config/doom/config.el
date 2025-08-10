@@ -52,7 +52,7 @@
 
 (setq
  doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 11.0 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "Roboto" :weight 'regular :size 11.0))
+ doom-variable-pitch-font (font-spec :family "iA Writer Mono V" :weight 'regular :size 11.0))
 
 (custom-set-faces!
   '(bold :weight bold)
@@ -325,7 +325,7 @@
    org-hide-leading-stars t
    org-insert-heading-respect-content t
    org-startup-with-inline-images t
-   org-cycle-separator-lines 2
+   org-cycle-separator-lines 1
    org-modern-list '((43 . "•")
                      (45 . "•"))
    org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
