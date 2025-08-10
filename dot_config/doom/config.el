@@ -308,28 +308,29 @@
   (set-face-background 'fringe (face-attribute 'default :background))
 
   (setq
+   org-startup-indented t
+   org-modern-star nil
+   org-modern-hide-stars nil
+   org-adapt-indentation t
+   org-hide-leading-stars nil)
+
+  (setq
    ;; Directories
    org-directory "~/Sync/roam"
 
    ;; Modern Org Look
-   org-startup-indented nil
    ;; org-indent-indentation-per-level 1
-   org-modern-hide-stars t
-   ;; org-modern-star 'replace
    ;; org-modern-replace-stars '("◉" "○" "●" "○" "▸")
    org-auto-align-tags nil
    org-hide-emphasis-markers t
    org-ellipsis " >"
    org-catch-invisible-edits 'show-and-error
-   org-adapt-indentation t
-   org-hide-leading-stars t
    org-insert-heading-respect-content t
    org-startup-with-inline-images t
    org-cycle-separator-lines 1
    org-modern-list '((43 . "•")
                      (45 . "•"))
    org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
-   org-adapt-indentation t
 
    ;; Trying to fix todo pills, etc, being too short
    ;; org-modern-label-border nil
