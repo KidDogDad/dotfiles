@@ -72,7 +72,7 @@
 
 (scroll-bar-mode -1)
 
-(setq window-divider-mode nil)
+(window-divider-mode -1)
 
 (use-package! olivetti
   :config
@@ -311,25 +311,24 @@
    ;; Directories
    org-directory "~/Sync/roam"
 
+   ;; Outdenting
+   org-startup-indented t
+   org-modern-hide-stars nil
+   org-hide-leading-stars nil
+   org-adapt-indentation t
+   org-adapt-indentation t
+
    ;; Modern Org Look
-   org-startup-indented nil
-   ;; org-indent-indentation-per-level 1
-   org-modern-hide-stars t
-   ;; org-modern-star 'replace
-   ;; org-modern-replace-stars '("◉" "○" "●" "○" "▸")
    org-auto-align-tags nil
    org-hide-emphasis-markers t
    org-ellipsis " >"
    org-catch-invisible-edits 'show-and-error
-   org-adapt-indentation t
-   org-hide-leading-stars t
    org-insert-heading-respect-content t
    org-startup-with-inline-images t
    org-cycle-separator-lines 1
    org-modern-list '((43 . "•")
                      (45 . "•"))
    org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
-   org-adapt-indentation t
 
    ;; Trying to fix todo pills, etc, being too short
    ;; org-modern-label-border nil
