@@ -1,31 +1,33 @@
 ;;;  -*- lexical-binding: t; -*-
 
-;; Appearance
-
+;; Appearance ;;
 (package! catppuccin-theme)
 ;; (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 (package! olivetti :recipe (:host github :repo "rnkn/olivetti"))
 (package! org-modern)
+(package! all-the-icons)
+;; (package! spacious-padding)
 
-(package! websocket)
+;; Functional packages ;;
+
+;; Org
 (unpin! org-roam)
 (package! org-roam-ui)
-
 (package! org-web-tools)
-(package! super-save)
 (package! org-auto-tangle)
-(package! chezmoi)
 (package! org-transclusion)
-(package! windresize)
 (package! org-ql
   :recipe (:host github :repo "alphapapa/org-ql"))
-(unpin! dirvish)
-(package! all-the-icons)
 (package! org-super-agenda)
-(package! esup)
-;; (package! beacon)
-;; (package! spacious-padding)
-(package! info+)
 (package! org-download)
-
 ;; (package! org-padding :recipe (:host github :repo "TonCherAmi/org-padding"))
+
+;; Other
+(package! websocket)
+(package! super-save)
+(package! chezmoi)
+(package! windresize)
+(unpin! dirvish)
+(package! esup)
+(package! info+)
+;; (package! beacon)
