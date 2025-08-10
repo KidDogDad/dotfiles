@@ -4,7 +4,7 @@
 ;; Appearance ;;
 (package! catppuccin-theme)
 (package! olivetti :recipe (:host github :repo "rnkn/olivetti"))
-(package! org-modern)
+;; (package! org-modern)
 (package! all-the-icons)
 (package! org-outer-indent
   :recipe (:host github :repo "rougier/org-outer-indent"))
