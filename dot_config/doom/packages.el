@@ -20,7 +20,7 @@
 (package! org-super-agenda)
 (package! esup)
 ;; (package! beacon)
-(package! spacious-padding)
+;; (package! spacious-padding)
 (package! info+)
 (package! org-download)
 

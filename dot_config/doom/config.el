@@ -61,7 +61,7 @@
 
 ;; Increase line spacing
 ;; org-modern-mode tries to adjust the tag label display based on the value of line-spacing. This looks best if line-spacing has a value between 0.1 and 0.4 in the Org buffer. Larger values of line-spacing are not recommended, since Emacs does not center the text vertically
-(setq-default line-spacing 0.3)
+(setq-default line-spacing 0.1)
 
 ;; Fallbacks to ensure that all-the-icons display appropriately
 (set-fontset-font t 'unicode "file-icons" nil 'append)
@@ -71,6 +71,8 @@
 (set-fontset-font t 'unicode "weathericons" nil 'append)
 
 (scroll-bar-mode -1)
+
+(setq window-divider-mode nil)
 
 (use-package! olivetti
   :config
@@ -87,7 +89,7 @@
   (org-mode . olivetti-mode)
   )
 
-(use-package! spacious-padding)
+;; (use-package! spacious-padding)
 
 ;; ;; These are the default values, but I keep them here for visibility.
 ;; (setq spacious-padding-widths
@@ -105,7 +107,7 @@
 ;;       ;; `( :mode-line-active 'default
 ;;       ;;    :mode-line-inactive vertical-border))
 
-(spacious-padding-mode 1)
+;; (spacious-padding-mode 1)
 
 ;; ;; Set a key binding if you need to toggle spacious padding.
 ;; (define-key global-map (kbd "<f8>") #'spacious-padding-mode)
@@ -311,7 +313,7 @@
 
    ;; Modern Org Look
    org-startup-indented nil
-   org-indent-indentation-per-level 1
+   ;; org-indent-indentation-per-level 1
    org-modern-hide-stars t
    ;; org-modern-star 'replace
    ;; org-modern-replace-stars '("◉" "○" "●" "○" "▸")
@@ -330,7 +332,7 @@
    org-adapt-indentation t
 
    ;; Trying to fix todo pills, etc, being too short
-   org-modern-label-border nil
+   ;; org-modern-label-border nil
 
    ;; Todo states
    org-todo-keywords
@@ -393,7 +395,7 @@
 ;; Variable pitch in org-mode
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 ;; (add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
-(add-hook 'org-mode-hook 'org-modern-mode)
+;; (add-hook 'org-mode-hook 'org-modern-mode)
 
 (use-package! all-the-icons)
 
