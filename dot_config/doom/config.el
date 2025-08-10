@@ -20,6 +20,7 @@
   '(org-level-7 :foreground "#fab387")
   '(org-level-8 :foreground "#f5e0dc")
   '(org-todo :foreground "#a6e3a1")
+  '(org-quote :foreground "#c6a0f6")
   '(italic :weight bold :foreground "#f5c2e7")      ;; pink
   '(bold :slant italic :foreground "#89dceb")  ;; sky
   )
@@ -333,7 +334,7 @@
 
    ;; Todo states
    org-todo-keywords
-   '((sequence "TODO(t)" "WAIT(w)" "PROJ(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)"))
+   '((sequence "TODO(t)" "WAIT(w)" "PROJ(p)" "SOMEDAY(s)" "BACKLOG(b)" "SCRIPTING(s)" "|" "DONE(d)" "CANCELED(c)"))
 
    ;; Capture templates
    org-capture-templates
@@ -452,7 +453,7 @@
                 :tag "Errands"
                 :order 3)
 
-          (:name " Today "  
+          (:name " Today "
                 :time-grid t
                 :date today
                 :scheduled today
@@ -541,8 +542,11 @@
 
 (use-package! org-ql
   :after org
-  :commands (org-ql-search org-ql-view-refresh-block)
-  ;; :hook (org-mode . org-ql-view-refresh-maybe)
+  :demand t                    ;; ensure it loads now, not lazily
+  ;; :config
+  ;; (require 'org-ql)            ;; provides org-dblock-write:org-ql
+  ;; (require 'org-ql-view)       ;; (safe) also loads views
+  ;; (require 'org-ql-block)
   )
 
 (use-package! org-download

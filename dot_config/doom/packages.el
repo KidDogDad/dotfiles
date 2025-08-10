@@ -13,7 +13,8 @@
 (package! chezmoi)
 (package! org-transclusion)
 (package! windresize)
-(package! org-ql)
+(package! org-ql
+  :recipe (:host github :repo "alphapapa/org-ql"))
 (unpin! dirvish)
 (package! all-the-icons)
 (package! org-super-agenda)
