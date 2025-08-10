@@ -283,8 +283,8 @@
    org-insert-heading-respect-content t
    org-startup-with-inline-images t
    org-cycle-separator-lines 1
-   org-modern-list '((43 . "•")
-                     (45 . "•"))
+   ;; org-modern-list '((43 . "•")
+   ;;                   (45 . "•"))
    org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
    ;; org-indent-indentation-per-level 1
    ;; org-modern-replace-stars '("◉" "○" "●" "○" "▸")
@@ -397,8 +397,8 @@
   (setq
    org-startup-indented t
    org-startup-indented t
-   org-modern-star nil
-   org-modern-hide-stars nil
+   ;; org-modern-star nil
+   ;; org-modern-hide-stars nil
    org-adapt-indentation t
    org-hide-leading-stars nil)
   )
