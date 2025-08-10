@@ -72,7 +72,7 @@
 
 (scroll-bar-mode -1)
 
-(setq window-divider-mode nil)
+(window-divider-mode -1)
 
 (use-package! olivetti
   :config
@@ -259,42 +259,6 @@
       )
 (setq dirvish-override-dired-mode t)
 
-(require 'org-protocol)
-(require 'org-roam-protocol)
-(require 'org-web-tools)
-
-;; (setq org-stuck-projects
-;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
-
-(custom-set-faces!
-  ;; Font sizes
-  '(org-document-title :height 1.8 :weight black)
-  '(org-level-1 :height 1.5 :weight bold)
-  '(org-level-2 :height 1.4 :weight bold)
-  '(org-level-3 :height 1.3 :weight bold)
-  '(org-level-4 :height 1.2 :weight bold)
-  '(org-level-5 :height 1.1 :weight bold)
-  ;; Remaining levels will use the default size (1.0)
-
-  ;; '(org-modern-todo :inherit fixed-pitch :height 1.0)
-  ;; '(org-modern-time-inactive :inherit fixed-pitch :height 1.0)
-  ;; '(org-modern-date-inactive :inherit fixed-pitch :height 1.0)
-
-  ;; Other font settings
-  '(org-block :inherit fixed-pitch)
-  '(org-code :inherit (shadow fixed-pitch))
-  '(org-hide :inherit fixed-pitch)
-  '(org-checkbox :inherit fixed-pitch)
-  ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
-  '(org-indent :inherit (org-hide fixed-pitch))
-  ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
-  ;; '(org-property-value :inherit fixed-pitch)
-  ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
-  '(org-table :inherit fixed-pitch)
-  ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
-  '(org-verbatim :inherit (shadow fixed-pitch))
-  )
-
 (after! org
   ;; Add frame borders and window dividers
   ;; (modify-all-frames-parameters
@@ -308,19 +272,10 @@
   (set-face-background 'fringe (face-attribute 'default :background))
 
   (setq
-   org-startup-indented t
-   org-modern-star nil
-   org-modern-hide-stars nil
-   org-adapt-indentation t
-   org-hide-leading-stars nil)
-
-  (setq
    ;; Directories
    org-directory "~/Sync/roam"
 
    ;; Modern Org Look
-   ;; org-indent-indentation-per-level 1
-   ;; org-modern-replace-stars '("◉" "○" "●" "○" "▸")
    org-auto-align-tags nil
    org-hide-emphasis-markers t
    org-ellipsis " >"
@@ -331,6 +286,8 @@
    org-modern-list '((43 . "•")
                      (45 . "•"))
    org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
+   ;; org-indent-indentation-per-level 1
+   ;; org-modern-replace-stars '("◉" "○" "●" "○" "▸")
 
    ;; Trying to fix todo pills, etc, being too short
    ;; org-modern-label-border nil
@@ -397,6 +354,54 @@
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 ;; (add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
 ;; (add-hook 'org-mode-hook 'org-modern-mode)
+
+(require 'org-protocol)
+(require 'org-roam-protocol)
+(require 'org-web-tools)
+
+;; (setq org-stuck-projects
+;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
+
+(custom-set-faces!
+  ;; Font sizes
+  '(org-document-title :height 1.8 :weight black)
+  '(org-level-1 :height 1.5 :weight bold)
+  '(org-level-2 :height 1.4 :weight bold)
+  '(org-level-3 :height 1.3 :weight bold)
+  '(org-level-4 :height 1.2 :weight bold)
+  '(org-level-5 :height 1.1 :weight bold)
+  ;; Remaining levels will use the default size (1.0)
+
+  ;; '(org-modern-todo :inherit fixed-pitch :height 1.0)
+  ;; '(org-modern-time-inactive :inherit fixed-pitch :height 1.0)
+  ;; '(org-modern-date-inactive :inherit fixed-pitch :height 1.0)
+
+  ;; Other font settings
+  '(org-block :inherit fixed-pitch)
+  '(org-code :inherit (shadow fixed-pitch))
+  '(org-hide :inherit fixed-pitch)
+  '(org-checkbox :inherit fixed-pitch)
+  ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
+  '(org-indent :inherit (org-hide fixed-pitch))
+  ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
+  ;; '(org-property-value :inherit fixed-pitch)
+  ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
+  '(org-table :inherit fixed-pitch)
+  ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
+  '(org-verbatim :inherit (shadow fixed-pitch))
+  )
+
+(use-package! org-outer-indent
+  :hook (org-mode . org-outer-indent-mode)
+  :config
+  (setq
+   org-startup-indented t
+   org-startup-indented t
+   org-modern-star nil
+   org-modern-hide-stars nil
+   org-adapt-indentation t
+   org-hide-leading-stars nil)
+  )
 
 (use-package! all-the-icons)
 

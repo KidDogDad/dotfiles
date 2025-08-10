@@ -119,7 +119,7 @@
 ** And I've Decided The Window Divider Is Too
 
 #+begin_src emacs-lisp
-(setq window-divider-mode nil)
+(window-divider-mode -1)
 #+end_src
 
 ** Olivetti
@@ -378,54 +378,6 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 
 
 * Org & Org-Roam
-** Org-Protocol
-
-   #+begin_src emacs-lisp
-(require 'org-protocol)
-(require 'org-roam-protocol)
-(require 'org-web-tools)
-#+end_src
-
-** Define Stuck Projects
-
-#+begin_src emacs-lisp
-;; (setq org-stuck-projects
-;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
-#+end_src
-
-** Org Font & Appearance Settings
-
-#+begin_src emacs-lisp
-(custom-set-faces!
-  ;; Font sizes
-  '(org-document-title :height 1.8 :weight black)
-  '(org-level-1 :height 1.5 :weight bold)
-  '(org-level-2 :height 1.4 :weight bold)
-  '(org-level-3 :height 1.3 :weight bold)
-  '(org-level-4 :height 1.2 :weight bold)
-  '(org-level-5 :height 1.1 :weight bold)
-  ;; Remaining levels will use the default size (1.0)
-
-  ;; '(org-modern-todo :inherit fixed-pitch :height 1.0)
-  ;; '(org-modern-time-inactive :inherit fixed-pitch :height 1.0)
-  ;; '(org-modern-date-inactive :inherit fixed-pitch :height 1.0)
-
-  ;; Other font settings
-  '(org-block :inherit fixed-pitch)
-  '(org-code :inherit (shadow fixed-pitch))
-  '(org-hide :inherit fixed-pitch)
-  '(org-checkbox :inherit fixed-pitch)
-  ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
-  '(org-indent :inherit (org-hide fixed-pitch))
-  ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
-  ;; '(org-property-value :inherit fixed-pitch)
-  ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
-  '(org-table :inherit fixed-pitch)
-  ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
-  '(org-verbatim :inherit (shadow fixed-pitch))
-  )
-#+end_src
-
 ** After Org Settings
 
 #+begin_src emacs-lisp
@@ -442,19 +394,10 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
   (set-face-background 'fringe (face-attribute 'default :background))
 
   (setq
-   org-startup-indented t
-   org-modern-star nil
-   org-modern-hide-stars nil
-   org-adapt-indentation t
-   org-hide-leading-stars nil)
-
-  (setq
    ;; Directories
    org-directory "~/Sync/roam"
 
    ;; Modern Org Look
-   ;; org-indent-indentation-per-level 1
-   ;; org-modern-replace-stars '("◉" "○" "●" "○" "▸")
    org-auto-align-tags nil
    org-hide-emphasis-markers t
    org-ellipsis " >"
@@ -465,6 +408,8 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
    org-modern-list '((43 . "•")
                      (45 . "•"))
    org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
+   ;; org-indent-indentation-per-level 1
+   ;; org-modern-replace-stars '("◉" "○" "●" "○" "▸")
 
    ;; Trying to fix todo pills, etc, being too short
    ;; org-modern-label-border nil
@@ -531,6 +476,71 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 ;; (add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
 ;; (add-hook 'org-mode-hook 'org-modern-mode)
+#+end_src
+
+** Org-Protocol
+
+   #+begin_src emacs-lisp
+(require 'org-protocol)
+(require 'org-roam-protocol)
+(require 'org-web-tools)
+#+end_src
+
+** Define Stuck Projects
+
+#+begin_src emacs-lisp
+;; (setq org-stuck-projects
+;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
+#+end_src
+
+** Org Font & Appearance Settings
+
+#+begin_src emacs-lisp
+(custom-set-faces!
+  ;; Font sizes
+  '(org-document-title :height 1.8 :weight black)
+  '(org-level-1 :height 1.5 :weight bold)
+  '(org-level-2 :height 1.4 :weight bold)
+  '(org-level-3 :height 1.3 :weight bold)
+  '(org-level-4 :height 1.2 :weight bold)
+  '(org-level-5 :height 1.1 :weight bold)
+  ;; Remaining levels will use the default size (1.0)
+
+  ;; '(org-modern-todo :inherit fixed-pitch :height 1.0)
+  ;; '(org-modern-time-inactive :inherit fixed-pitch :height 1.0)
+  ;; '(org-modern-date-inactive :inherit fixed-pitch :height 1.0)
+
+  ;; Other font settings
+  '(org-block :inherit fixed-pitch)
+  '(org-code :inherit (shadow fixed-pitch))
+  '(org-hide :inherit fixed-pitch)
+  '(org-checkbox :inherit fixed-pitch)
+  ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
+  '(org-indent :inherit (org-hide fixed-pitch))
+  ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
+  ;; '(org-property-value :inherit fixed-pitch)
+  ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
+  '(org-table :inherit fixed-pitch)
+  ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
+  '(org-verbatim :inherit (shadow fixed-pitch))
+  )
+#+end_src
+
+** Org-Outer-Indent
+   Rougier's org-outer-indent
+
+   #+begin_src emacs-lisp
+(use-package! org-outer-indent
+  :hook (org-mode . org-outer-indent-mode)
+  :config
+  (setq
+   org-startup-indented t
+   org-startup-indented t
+   org-modern-star nil
+   org-modern-hide-stars nil
+   org-adapt-indentation t
+   org-hide-leading-stars nil)
+  )
 #+end_src
 
 ** Prettifying Agenda Based On [[https:www.youtube.com/watch?v=a_WNtuefREM][This YouTube video]]

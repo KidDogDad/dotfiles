@@ -24,4 +24,8 @@
 (package! info+)
 (package! org-download)
 
+;; Getting some Rougier up in here
+(package! org-outer-indent
+  :recipe (:host github :repo "rougier/org-outer-indent"))
+
 ;; (package! org-padding :recipe (:host github :repo "TonCherAmi/org-padding"))
