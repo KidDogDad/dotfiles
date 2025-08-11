@@ -25,11 +25,13 @@
   '(bold :weight bold :foreground "#89dceb")  ;; sky
   )
 
-(setf (alist-get 'width default-frame-alist) '(text-pixels . 1605))
-(setf (alist-get 'height default-frame-alist) '(text-pixels . 1010))
+(setf (alist-get 'width default-frame-alist) '(text-pixels . 2500))
+(setf (alist-get 'height default-frame-alist) '(text-pixels . 1500))
+(setf (alist-get 'width initial-frame-alist) '(text-pixels . 2500))
+(setf (alist-get 'height initial-frame-alist) '(text-pixels . 1500))
 
 (setq
- doom-font (font-spec :family "iA Writer Duo S" :size 11.0 :weight 'regular)
+ doom-font (font-spec :family "iA Writer Mono S" :size 11.0 :weight 'regular)
  doom-variable-pitch-font (font-spec :family "iA Writer Duo S" :weight 'regular :size 11.0))
 
 (custom-set-faces!
@@ -102,7 +104,9 @@
 (map!
  :map general-override-mode-map
  :leader
- :desc "Dirvish" "." #'dirvish)
+ :desc "Dirvish" "d" #'dirvish)
+
+(setq evil-auto-indent nil)
 
 (setq delete-by-moving-to-trash t
       trash-directory "~/.local/share/Trash/files")
@@ -234,6 +238,9 @@
        '(file-size))
       )
 (setq dirvish-override-dired-mode t)
+;; (custom-set-faces!
+;;   '(dirvish-hl-line :weight bold)
+;;   )
 
 (require 'org-protocol)
 (require 'org-roam-protocol)
@@ -245,8 +252,8 @@
 (custom-set-faces!
   ;; Font sizes
   '(org-document-title :height 1.5 :weight black)
-  '(org-level-1 :height 1.2 :weight bold)
-  '(org-level-2 :height 1.2 :weight bold)
+  '(org-level-1 :height 1.4 :weight bold)
+  '(org-level-2 :height 1.3 :weight bold)
   '(org-level-3 :height 1.2 :weight bold)
   '(org-level-4 :height 1.2 :weight bold)
   '(org-level-5 :height 1.2 :weight bold)
@@ -264,7 +271,7 @@
         org-auto-align-tags nil
         org-cycle-separator-lines 1
         org-pretty-entities t
-        org-startup-indented t
+        org-startup-indented nil
         org-startup-truncated nil
         org-adapt-indentation t
         org-special-ctrl-a/e nil
@@ -284,63 +291,6 @@
         )
   )
 
-(use-package! org-agenda
-  :ensure nil
-  :config
-  (setq org-agenda-files (list org-directory)
-        org-agenda-start-day "+0d"
-        org-agenda-span 'day
-        org-agenda-tags-column 0
-        org-agenda-dim-blocked-tasks nil
-        org-agenda-use-tag-inheritance nil
-        org-agenda-inhibit-startup t
-        org-agenda-window-setup 'current-window
-        org-agenda-restore-windows-after-quit t
-        org-agenda-start-with-log-mode t
-        org-agenda-show-all-dates nil
-        org-log-done 'time
-        org-log-into-drawer t
-        org-agenda-include-deadlines t
-        org-agenda-breadcrumbs-separator " ❱ "
-        org-agenda-todo-keyword-format "%-1s"
-        org-agenda-use-time-grid t
-        org-agenda-skip-timestamp-if-done t
-        org-agenda-skip-scheduled-if-done t
-        org-agenda-skip-deadline-if-done t
-        org-agenda-scheduled-leaders '("" "")
-        org-agenda-deadline-leaders '("" "")
-        org-agenda-todo-keyword-format ""
-        org-agenda-block-separator (string-to-char " ")
-        org-agenda-current-time-string "← now ─────────"
-        org-agenda-time-grid
-        '((daily today require-timed remove-matched)
-          (800 1200 1600 2000)
-          "       " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-        org-agenda-prefix-format
-        '((agenda . " %i %-12b%t%s")
-          (todo . " %i %?-12b"))
-        org-todo-keywords
-        '((sequence "TODO(t)" "WAIT(w)" "PROJ(p)" "SOMEDAY(s)" "BACKLOG(b)" "SCRIPTING(s)" "|" "DONE(d)" "CANCELED(c)"))
-        ;; Agenda views
-        org-agenda-custom-commands
-        '(("p" "Planning"
-           ((tags-todo "+plan"
-                       ((org-agenda-overriding-header "Planning Tasks")))
-            (tags-todo "-{.*}"
-                       ((org-agenda-overriding-header "Untagged Tasks")))))
-          ("i" "Inbox"
-           ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/inbox.org"))
-                      (org-agenda-overriding-header "Inbox Items")))))
-          ("e" "Emacs"
-           ((tags-todo "+Emacs"
-                       ((org-agenda-overriding-header "Emacs Tasks 🤓")))))
-          ("o" "Obsidian Tasks"
-           ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/Obsidian Journals"))
-                      (org-agenda-overriding-header "Tasks From Obsidian Dailies")))))
-          )
-
-        ))
-
 (use-package! org-capture
   :ensure nil
   ;; :hook (org-capture-mode . meow-insert)
@@ -359,96 +309,157 @@
            "* TODO %? (notes)\n%^C")
           )))
 
-;; (use-package! org-modern
-;;   :after org-roam
-;;   :custom
-;;   (org-modern-list '((43 . "•")
-;;                      (45 . "•")))
-;;   (org-modern-replace-stars nil)
-;;   (org-modern-hide-stars nil)
-;;   )
+(use-package! org-modern
+  :after org-roam
+  :custom
+  (org-modern-list '((43 . "•")
+                     (45 . "•")))
+  (org-modern-replace-stars nil)
+  (org-modern-hide-stars t)
+  )
 
-;; (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono Nerd Font" :height 1.0)
-;; (use-package! org-modern-indent
-;;   :ensure t
-;;   :config
-;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+(use-package! org-modern-indent
+  :ensure t
+  :config
+  :hook
+  (org-mode . org-modern-mode)
+  (org-agenda-finalize . org-modern-agenda)
+  )
 
-;; (use-package! all-the-icons)
+(use-package! all-the-icons)
 
-;; ;; (setq org-agenda-hide-tags-regexp ".*")
-;; (setq org-agenda-prefix-format
-;;       '((agenda . "  %?-2i %t ")
-;;         (todo . "  %?-2i%t ")
-;;         (tags . "  %?-2i%t ")
-;;         (search . " %i %-12:c"))
-;;       )
+(use-package! org-agenda
+  :ensure nil
+  :config
+  (setq org-agenda-start-day "+0d"
+        org-agenda-span 'day
+        org-agenda-tags-column 0
+        org-agenda-dim-blocked-tasks nil
+        org-agenda-use-tag-inheritance nil
+        org-agenda-inhibit-startup t
+        org-agenda-ignore-properties '(stats)
+        org-agenda-window-setup 'current-window
+        org-agenda-restore-windows-after-quit t
+        org-agenda-show-all-dates nil
+        org-log-done 'time
+        org-log-into-drawer t
+        org-agenda-include-deadlines t
+        org-agenda-breadcrumbs-separator " ❱ "
+        org-agenda-todo-keyword-format "%-1s"
+        org-agenda-use-time-grid t
+        org-agenda-skip-timestamp-if-done t
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-scheduled-leaders '("" "")
+        org-agenda-deadline-leaders '("" "")
+        org-agenda-block-separator (string-to-char " ")
+        org-agenda-current-time-string "← now ─────────"
+        ;; org-agenda-time-grid
+        ;; '((daily today require-timed remove-matched)
+        ;;   (800 1200 1600 2000)
+        ;;   "       " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+        ;; org-agenda-prefix-format
+        ;; '((agenda . " %i %-12b%t%s")
+        ;;   (todo . " %i %?-12b"))
+        org-todo-keywords
+        '((sequence "TODO(t)" "WAIT(w)" "PROJ(p)" "SOMEDAY(s)" "BACKLOG(b)" "SCRIPTING(s)" "|" "DONE(d)" "CANCELED(c)"))
+
+        ;; Agenda views
+        org-agenda-custom-commands
+        '(("p" "Planning"
+           ((tags-todo "+plan"
+                       ((org-agenda-overriding-header "Planning Tasks")))
+            (tags-todo "-{.*}"
+                       ((org-agenda-overriding-header "Untagged Tasks")))))
+          ("i" "Inbox"
+           ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/inbox.org"))
+                      (org-agenda-overriding-header "Inbox Items")))))
+          ("e" "Emacs"
+           ((tags-todo "+Emacs"
+                       ((org-agenda-overriding-header "Emacs Tasks 🤓")))))
+          ("o" "Obsidian Tasks"
+           ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/Obsidian Journals"))
+                      (org-agenda-overriding-header "Tasks From Obsidian Dailies")))))
+          )
+        ))
+
+;; (setq org-agenda-hide-tags-regexp ".*")
+(setq org-agenda-prefix-format
+      '((agenda . "  %?-2i %t ")
+        (todo . "  %?-2i%t ")
+        (tags . "  %?-2i%t ")
+        (search . " %i %-12:c"))
+      )
 
 ;; (setq org-agenda-current-time-string "← now ───────────────────────────────────────────────")
-;; (setq org-agenda-time-grid '((daily) () "" ""))
+(setq org-agenda-time-grid '((daily) () "" ""))
 
-;; ;; Custom styles for dates in agenda
-;; (custom-set-faces!
-;;   '(org-agenda-date :inherit outline-1 :height 1.15)
-;;   '(org-agenda-date-today :inherit outline-2 :height 1.15)
-;;   '(org-agenda-date-weekend :inherit outline-1 :height 1.15)
-;;   '(org-agenda-date-weekend-today :inherit outline-2 :height 1.15)
-;;   '(org-super-agenda-header :inherit custom-button :weight bold :height 1.05)
-;;   '(org-scheduled-today :weight regular)
-;;   )
+;; Custom styles for dates in agenda
+(custom-set-faces!
+  '(org-agenda-date :inherit outline-1 :height 1.15)
+  '(org-agenda-date-today :inherit outline-2 :height 1.15)
+  '(org-agenda-date-weekend :inherit outline-1 :height 1.15)
+  '(org-agenda-date-weekend-today :inherit outline-2 :height 1.15)
+  '(org-super-agenda-header :inherit custom-button :weight bold :height 1.05)
+  '(org-scheduled-today :weight regular)
+  )
 
-;; (setq org-agenda-category-icon-alist
-;;       `(("Projects" ,(list (all-the-icons-faicon "tasks" :height 0.8)) nil nil :ascent center)
-;;         ("Home" ,(list (all-the-icons-faicon "home" :v-adjust 0.005)) nil nil :ascent center)
-;;         ("Errands" ,(list (all-the-icons-material "drive_eta" :height 0.9)) nil nil :ascent center)
-;;         ("Inbox" ,(list (all-the-icons-faicon "inbox" :height 0.9)) nil nil :ascent center)
-;;         ("Computer" ,(list (all-the-icons-fileicon "arch-linux" :height 0.9)) nil nil :ascent center)
-;;         ("Coding" ,(list (all-the-icons-faicon "code-fork" :height 0.9)) nil nil :ascent center)
-;;         ("Emacs" ,(list (all-the-icons-fileicon "emacs" :height 0.9)) nil nil :ascent center)
-;;         ("Routines" ,(list (all-the-icons-faicon "repeat" :height 0.9)) nil nil :ascent center)
-;;         ("Yiyi" ,(list (all-the-icons-faicon "female" :height 0.9)) nil nil :ascent center)
-;;         ("Misc" ,(list (all-the-icons-material "widgets" :height 0.9)) nil nil :ascent center)
-;; ))
+(setq org-agenda-category-icon-alist
+      `(("Projects" ,(list (all-the-icons-faicon "tasks" :height 0.9)) nil nil :ascent center)
+        ("Home" ,(list (all-the-icons-faicon "home" :v-adjust 0.9)) nil nil :ascent center)
+        ("Errands" ,(list (all-the-icons-material "drive_eta" :height 0.9)) nil nil :ascent center)
+        ("Inbox" ,(list (all-the-icons-faicon "inbox" :height 0.9)) nil nil :ascent center)
+        ("Computer" ,(list (all-the-icons-fileicon "arch-linux" :height 0.9)) nil nil :ascent center)
+        ("Coding" ,(list (all-the-icons-faicon "code-fork" :height 0.9)) nil nil :ascent center)
+        ("Emacs" ,(list (all-the-icons-fileicon "emacs" :height 0.9)) nil nil :ascent center)
+        ("Routines" ,(list (all-the-icons-faicon "repeat" :height 0.9)) nil nil :ascent center)
+        ("Yiyi" ,(list (all-the-icons-faicon "female" :height 0.9)) nil nil :ascent center)
+        ("Misc" ,(list (all-the-icons-material "widgets" :height 0.9)) nil nil :ascent center)
+        ))
 
-;; ;; org-super-agenda
-;; (use-package! org-super-agenda)
+;; org-super-agenda
+(use-package! org-super-agenda)
 
-;; (setq org-super-agenda-groups
-;;        '(;; Each group has an implicit boolean OR operator between its selectors.
-;;          (:name " Overdue "  ; Optionally specify section name
-;;                 :scheduled past
-;;                 :order 1
-;;                 :face 'error)
+(setq org-super-agenda-groups
+      '(;; Each group has an implicit boolean OR operator between its selectors.
+        (:name " Overdue "  ; Optionally specify section name
+         :scheduled past
+         :order 1
+         :face 'error)
 
-;;          (:name " Emacs "
-;;                 :tag "Emacs"
-;;                 :order 3)
+        (:name " Emacs "
+         :tag "Emacs"
+         :order 3)
 
-;;          (:name " Yiyi"
-;;                 :tag "Yiyi"
-;;                 :order 3)
+        (:name " Yiyi"
+         :tag "Yiyi"
+         :order 3)
 
-;;          (:name " Errands"
-;;                 :tag "Errands"
-;;                 :order 3)
+        (:name " Errands"
+         :tag "Errands"
+         :order 3)
 
-;;           (:name " Today "
-;;                 :time-grid t
-;;                 :date today
-;;                 :scheduled today
-;;                 :order 2)
+        (:name " Today "
+         :time-grid t
+         :date today
+         :scheduled today
+         :order 2)
 
-;; ))
+        ))
 
-;; (org-super-agenda-mode t)
+(org-super-agenda-mode t)
 
-;; (map! :desc "Next line"
-;;       :map org-super-agenda-header-map
-;;       "j" 'org-agenda-next-line)
+(map! :desc "Next line"
+      :map org-super-agenda-header-map
+      "j" 'org-agenda-next-line)
 
-;; (map! :desc "Next line"
-;;       :map org-super-agenda-header-map
-;;       "k" 'org-agenda-previous-line)
+(map! :desc "Next line"
+      :map org-super-agenda-header-map
+      "k" 'org-agenda-previous-line)
+
+;; org-agenda-prefix-format
+;; '((agenda . " %i %-12:c%?-16t% s") (todo . " %i %-12:c") (tags . " %i %-12:c")
+;;   (search . " %i %-12:c"))
 
 (use-package! org-roam
   :custom
