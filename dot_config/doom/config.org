@@ -49,42 +49,11 @@
   )
 #+end_src
 
-** Org Padding
-
-#+begin_src emacs-lisp
-;; (use-package! org-padding
-;; :ensure t
-;; :config
-;; (setq org-padding-block-begin-line-padding '(2.0 . nil))
-;; (setq org-padding-block-end-line-padding '(nil . 2.0))
-;; (setq org-padding-heading-padding-alist
-;;   '((1.1 . nil) (1.0 . nil) (0.75 . nil) (0.6 . nil) (0.5 . nil) (0.4 . nil)))
-;; :hook
-;; (org-mode . org-padding-mode)
-;;   )
-#+end_src
-
 ** Initial Frame Setup
-*** Size
 
 #+begin_src emacs-lisp
-;; (setq default-frame-alist
-;;       '((width  . (text-pixels . 1625))
-;;         (height . (text-pixels . 1015)))
-;;       )
-;; (add-to-list 'initial-frame-alist '(width . (text-pixels . 1625)))
-;; (add-to-list 'initial-frame-alist '(height . (text-pixels . 1015)))
-;; (add-to-list 'default-frame-alist '(width . (text-pixels . 1625)))
-;; (add-to-list 'default-frame-alist '(height . (text-pixels . 1015)))
 (setf (alist-get 'width default-frame-alist) '(text-pixels . 1605))
 (setf (alist-get 'height default-frame-alist) '(text-pixels . 1010))
-#+end_src
-
-*** Other
-
-#+begin_src emacs-lisp
-;; (set-frame-parameter (selected-frame) 'alpha '(96 . 97))
-;; (add-to-list 'default-frame-alist '(alpha . (96 . 97)))
 #+end_src
 
 ** Font Settings
@@ -142,7 +111,7 @@
   )
 #+end_src
 
-** Spacious Padding
+** Spacious Padding (Commented Out)
 
    #+begin_src emacs-lisp
 ;; (use-package! spacious-padding)
@@ -188,8 +157,9 @@
 (map! :after evil :map general-override-mode-map
       :nv "ga" #'evil-avy-goto-line)
 (map!
+ :map general-override-mode-map
  :leader
- :desc "Dirvish" "d" #'dirvish)
+ :desc "Dirvish" "." #'dirvish)
 #+end_src
 
 ** Delete To Trash Can
@@ -208,11 +178,11 @@
    :leader
    :prefix "w"
    :desc "Resize Window" "r" #'windresize)
-  ;; (setq windresize-modifiers
-  ;;       '((meta)            ; select window
-  ;;         (meta control)    ; move the up/left border (instead of bottom/right)
-  ;;         (meta shift)      ; move window while keeping the width/height
-  ;;         (control)))       ; temporarily negate the increment value
+  (setq windresize-modifiers
+        '((meta)            ; select window
+          (meta control)    ; move the up/left border (instead of bottom/right)
+          (meta shift)      ; move window while keeping the width/height
+          (control)))       ; temporarily negate the increment value
   )
 #+end_src
 
@@ -356,13 +326,6 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 )
 #+end_src
 
-** Deadgrep
-
-#+begin_src emacs-lisp
-;; (use-package! deadgrep
-;;   :ensure t)
-#+end_src
-
 ** Dirvish
 
 #+begin_src emacs-lisp
@@ -408,50 +371,20 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
   '(org-level-6 :height 1.2 :weight bold)
   '(org-level-7 :height 1.2 :weight bold)
   '(org-level-8 :height 1.2 :weight bold)
-  ;; Remaining levels will use the default size (1.0)
-
-  ;; Other font settings
-  ;; '(org-block :inherit fixed-pitch)
-  ;; '(org-code :inherit (shadow fixed-pitch))
-  '(org-hide :inherit fixed-pitch :weight bold :height 1.3)
-  ;; '(org-checkbox :inherit fixed-pitch)
-  ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
-  '(org-indent :inherit (org-hide fixed-pitch) :weight bold :height 1.3)
-  ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
-  ;; '(org-property-value :inherit fixed-pitch)
-  ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
-  ;; '(org-table :inherit fixed-pitch)
-  ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
-  ;; '(org-verbatim :inherit (shadow fixed-pitch))
   )
 #+end_src
 
-** Trying Rougier With ChatGPT Help
+** Org Setup
 
 #+begin_src emacs-lisp
 (use-package! org
   :ensure nil
-  :hook ((org-mode . visual-line-mode)
-         (org-mode . my/org-mono-setup))
-  :preface
-  ;; (defun my/org-mono-reset ()
-  ;;   (when (bound-and-true-p my/org-font-remap)
-  ;;     (mapc #'face-remap-remove-relative my/org-font-remap)))
-  (defun my/org-mono-setup ()
-    (variable-pitch-mode -1)  ;; stay monospace in Org
-    ;; (setq-local my/org-font-remap
-    ;;             (list
-    ;;              (face-remap-add-relative 'default '(:family "iA Writer Mono S"))
-    ;;              (face-remap-add-relative 'fixed-pitch '(:family "iA Writer Mono S"))
-    ;;              (face-remap-add-relative 'org-indent '(:inherit default) :height 1.3)
-    ;;              (face-remap-add-relative 'org-hide '(:inherit default) :height 1.3)))
-  ;; (add-hook 'kill-buffer-hook #'my/org-mono-reset nil t)
-    )
+  :hook ((org-mode . visual-line-mode))
   :config
   (setq org-directory "~/Sync/roam"
-        ;; org-use-sub-superscripts '{}
-        ;; org-export-with-sub-superscripts nil
         org-ellipsis " >"
+        org-auto-align-tags nil
+        org-cycle-separator-lines 1
         org-pretty-entities t
         org-startup-indented t
         org-startup-truncated nil
@@ -465,78 +398,21 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
         org-fontify-done-headline nil
         org-fontify-whole-heading-line t
         org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-edit-src-content-indentation 0
         org-hide-emphasis-markers t
         org-startup-with-inline-images t
         org-blank-before-new-entry '((heading . t) (plain-list-item . nil))
         )
-
-;; 1 Define per-level star faces = (org-level-N + default)
-(defun my/org--define-star-faces ()
-  (dotimes (i org-n-level-faces)
-    (let* ((n (1+ i))
-           (fname (intern (format "my/org-star-%d" n)))
-           (hface (intern (format "org-level-%d" n))))
-      (make-face fname)
-      ;; Heading styling + monospace family from `default`
-      (set-face-attribute fname nil :inherit (list hface 'default)))))
-
-;; 2 Font-lock: paint *all* leading stars with the per-level face
-(defun my/org--fontify-stars ()
-  (font-lock-add-keywords
-   nil
-   `(( "^\\(\\*+\\)\\s-+"
-       (1 (let* ((lvl (length (match-string 1)))
-                 (face (intern (format "my/org-star-%d"
-                                       (min lvl org-n-level-faces)))))
-            face)
-          prepend))) ; don’t clobber other faces
-   'append)
-  (font-lock-flush))
-
-(add-hook 'org-mode-hook #'my/org--define-star-faces)
-(add-hook 'org-mode-hook #'my/org--fontify-stars)
-
-  ;; ;; Taken from rougier: org-outer-indent
-  (defun org-outer-indent--compute-prefixes ()
-    "Compute prefix strings for regular text and headlines."
-    (setq org-indent--heading-line-prefixes
-          (make-vector org-indent--deepest-level nil))
-    (setq org-indent--inlinetask-line-prefixes
-          (make-vector org-indent--deepest-level nil))
-    (setq org-indent--text-line-prefixes
-          (make-vector org-indent--deepest-level nil))
-    ;; Find the lowest headline level (FIXME)
-    (let* (;; (headline-levels (or (org-element-map
-           ;;                          (org-element-parse-buffer) 'headline
-           ;;                        #'(lambda (item)
-           ;;                            (org-element-property :level item)))
-           ;;                      '()))
-           ;; (max-level (seq-max (if headline-levels
-           ;;                         headline-levels
-           ;;                       '(0))))
-           (line-indentation (+ 3 4))
-           (headline-indentation))
-      (dotimes (level org-indent--deepest-level)
-        (setq headline-indentation
-              (max 0 (- line-indentation (+ 1 level))))
-        (aset org-indent--inlinetask-line-prefixes level
-              (make-string line-indentation ?\s))
-        (aset org-indent--text-line-prefixes level
-              (make-string line-indentation ?\s))
-        (aset org-indent--heading-line-prefixes level
-              (make-string headline-indentation ?\s))))
-    (setq-local org-hide-leading-stars nil))
-
-  (advice-add 'org-indent--compute-prefixes :override
-              #'org-outer-indent--compute-prefixes)
-
   )
 
 (use-package! org-agenda
   :ensure nil
   :config
   (setq org-agenda-files (list org-directory)
-        ;; org-agenda-ignore-properties '(effort appt stats category)
+        org-agenda-start-day "+0d"
+        org-agenda-span 'day
+        org-agenda-tags-column 0
         org-agenda-dim-blocked-tasks nil
         org-agenda-use-tag-inheritance nil
         org-agenda-inhibit-startup t
@@ -546,25 +422,8 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
         org-agenda-show-all-dates nil
         org-log-done 'time
         org-log-into-drawer t
-        org-agenda-include-deadlines t)
-
-  (defun elegant-agenda--title nil ;; src: elegant-agenda-mode
-    (when-let* ((title (when (and org-agenda-redo-command
-                                  (stringp (cadr org-agenda-redo-command)))
-                         (format "─  %s "
-                                 (mapconcat
-                                  #'identity
-                                  (split-string-and-unquote
-                                   (cadr org-agenda-redo-command) "")
-                                  ""))))
-                (width (window-width)))
-      (face-remap-set-base 'header-line :height 1.4)
-      (setq-local header-line-format
-                  (format "%s %s" title (make-string (- width (length title)) ?─ t)))))
-
-  (add-hook 'org-agenda-finalize-hook #'elegant-agenda--title)
-
-  (setq org-agenda-breadcrumbs-separator " ❱ "
+        org-agenda-include-deadlines t
+        org-agenda-breadcrumbs-separator " ❱ "
         org-agenda-todo-keyword-format "%-1s"
         org-agenda-use-time-grid t
         org-agenda-skip-timestamp-if-done t
@@ -584,6 +443,24 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
           (todo . " %i %?-12b"))
         org-todo-keywords
         '((sequence "TODO(t)" "WAIT(w)" "PROJ(p)" "SOMEDAY(s)" "BACKLOG(b)" "SCRIPTING(s)" "|" "DONE(d)" "CANCELED(c)"))
+        ;; Agenda views
+        org-agenda-custom-commands
+        '(("p" "Planning"
+           ((tags-todo "+plan"
+                       ((org-agenda-overriding-header "Planning Tasks")))
+            (tags-todo "-{.*}"
+                       ((org-agenda-overriding-header "Untagged Tasks")))))
+          ("i" "Inbox"
+           ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/inbox.org"))
+                      (org-agenda-overriding-header "Inbox Items")))))
+          ("e" "Emacs"
+           ((tags-todo "+Emacs"
+                       ((org-agenda-overriding-header "Emacs Tasks 🤓")))))
+          ("o" "Obsidian Tasks"
+           ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/Obsidian Journals"))
+                      (org-agenda-overriding-header "Tasks From Obsidian Dailies")))))
+          )
+
         ))
 
 (use-package! org-capture
@@ -603,101 +480,6 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
           ("i" "Todo (interactive)" entry (file "~/Sync/roam/agenda/inbox.org")
            "* TODO %? (notes)\n%^C")
           )))
-#+end_src
-
-#+RESULTS:
-: t
-
-** After Org Settings
-
-#+begin_src emacs-lisp
-;; (after! org
-;;   (add-hook 'org-mode-hook
-;;             (lambda ()
-;;               (setq-local org-hide-leading-stars nil)
-;;               (font-lock-flush)))
-
-;;   (setq
-;;    ;; Directories
-;;    org-directory "~/Sync/roam"
-
-;;    ;; Outdenting
-;;    org-startup-indented nil
-;;    org-adapt-indentation nil
-
-;;    ;; Modern Org Look
-;;    org-auto-align-tags nil
-;;    org-hide-emphasis-markers t
-;;    org-ellipsis " >"
-;;    org-catch-invisible-edits 'show-and-error
-;;    org-startup-with-inline-images t
-;;    org-cycle-separator-lines 1
-;;    org-blank-before-new-entry '((heading . t) (plain-list-item . nil))
-
-;;    ;; Todo states
-;;    org-todo-keywords
-;;    '((sequence "TODO(t)" "WAIT(w)" "PROJ(p)" "SOMEDAY(s)" "BACKLOG(b)" "SCRIPTING(s)" "|" "DONE(d)" "CANCELED(c)"))
-
-;;    ;; Capture templates
-;;    org-capture-templates
-;;    '(("t" "Todo" entry (file "~/Sync/roam/agenda/inbox.org")
-;;       "* TODO %?")
-;;      ("T" "Todo (clipboard)" entry (file "~/Sync/roam/agenda/inbox.org")
-;;       "* TODO %? (notes)\n%x")
-;;      ("d" "Todo (document)" entry (file "~/Sync/roam/agenda/inbox.org")
-;;       "* TODO %? (notes)\n%a")
-;;      ("i" "Todo (interactive)" entry (file "~/Sync/roam/agenda/inbox.org")
-;;       "* TODO %? (notes)\n%^C")
-;;      )
-
-;;    ;; Agenda settings
-;;    org-agenda-start-day "+0d"
-;;    org-agenda-skip-deadline-if-done t
-;;    org-agenda-skip-scheduled-if-done t
-;;    org-agenda-tags-column 0
-;;    org-agenda-span 'day
-
-;;    ;; Agenda views
-;;    org-agenda-custom-commands
-;;    '(("p" "Planning"
-;;       ((tags-todo "+plan"
-;;                   ((org-agenda-overriding-header "Planning Tasks")))
-;;        (tags-todo "-{.*}"
-;;                   ((org-agenda-overriding-header "Untagged Tasks")))))
-;;      ("i" "Inbox"
-;;       ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/inbox.org"))
-;;                  (org-agenda-overriding-header "Inbox Items")))))
-;;      ("e" "Emacs"
-;;       ((tags-todo "+Emacs"
-;;                   ((org-agenda-overriding-header "Emacs Tasks 🤓")))))
-;;      ("o" "Obsidian Tasks"
-;;       ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/Obsidian Journals"))
-;;                  (org-agenda-overriding-header "Tasks From Obsidian Dailies")))))
-;;      )
-
-;;    ;; Log done time
-;;    org-log-done 'time
-
-;;    ;; Better source code blocks
-;;    ;; org-src-fontify-natively t
-;;    ;; org-src-tab-acts-natively
-;;    ;; org-edit-src-content-indentation 0
-;;    )
-;;   )
-
-;; ;; Variable pitch in org-mode
-;; (add-hook 'org-mode-hook 'variable-pitch-mode)
-#+end_src
-
-** Org-Outer-Indent
-
-#+begin_src emacs-lisp
-;; (use-package! org-outer-indent
-;;   :after org
-;;   :hook (org-mode . org-outer-indent-mode)
-;;   )
-
-;; (add-hook 'org-mode-hook (lambda () (setq-local org-hide-leading-stars nil)))
 #+end_src
 
 ** Org-Modern
