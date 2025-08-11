@@ -21,8 +21,8 @@
   '(org-level-8 :foreground "#f5e0dc")
   '(org-todo :foreground "#a6e3a1")
   '(org-quote :foreground "#c6a0f6")
-  '(italic :weight bold :foreground "#f5c2e7")      ;; pink
-  '(bold :slant italic :foreground "#89dceb")  ;; sky
+  '(italic :slant italic :foreground "#f5c2e7")      ;; pink
+  '(bold :weight bold :foreground "#89dceb")  ;; sky
   )
 
 ;; (use-package! org-padding
@@ -51,7 +51,7 @@
 ;; (add-to-list 'default-frame-alist '(alpha . (96 . 97)))
 
 (setq
- doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 11.0 :weight 'regular)
+ doom-font (font-spec :family "iA Writer Duo S" :size 11.0 :weight 'regular)
  doom-variable-pitch-font (font-spec :family "iA Writer Duo S" :weight 'regular :size 11.0))
 
 (custom-set-faces!
@@ -269,23 +269,23 @@
 (custom-set-faces!
   ;; Font sizes
   '(org-document-title :height 1.5 :weight black)
-  '(org-level-1 :height 1.3 :weight bold)
-  '(org-level-2 :height 1.3 :weight bold)
-  '(org-level-3 :height 1.3 :weight bold)
-  '(org-level-4 :height 1.3 :weight bold)
-  '(org-level-5 :height 1.3 :weight bold)
-  '(org-level-6 :height 1.3 :weight bold)
-  '(org-level-7 :height 1.3 :weight bold)
-  '(org-level-8 :height 1.3 :weight bold)
+  '(org-level-1 :height 1.2 :weight bold)
+  '(org-level-2 :height 1.2 :weight bold)
+  '(org-level-3 :height 1.2 :weight bold)
+  '(org-level-4 :height 1.2 :weight bold)
+  '(org-level-5 :height 1.2 :weight bold)
+  '(org-level-6 :height 1.2 :weight bold)
+  '(org-level-7 :height 1.2 :weight bold)
+  '(org-level-8 :height 1.2 :weight bold)
   ;; Remaining levels will use the default size (1.0)
 
   ;; Other font settings
   ;; '(org-block :inherit fixed-pitch)
   ;; '(org-code :inherit (shadow fixed-pitch))
-  ;; '(org-hide :inherit variable-pitch :weight bold)
+  '(org-hide :inherit fixed-pitch :weight bold :height 1.3)
   ;; '(org-checkbox :inherit fixed-pitch)
   ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
-  ;; '(org-indent :inherit (org-hide variable-pitch) :weight bold)
+  '(org-indent :inherit (org-hide fixed-pitch) :weight bold :height 1.3)
   ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
   ;; '(org-property-value :inherit fixed-pitch)
   ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
@@ -299,18 +299,19 @@
   :hook ((org-mode . visual-line-mode)
          (org-mode . my/org-mono-setup))
   :preface
-  (defun my/org-mono-reset ()
-    (when (bound-and-true-p my/org-font-remap)
-      (mapc #'face-remap-remove-relative my/org-font-remap)))
+  ;; (defun my/org-mono-reset ()
+  ;;   (when (bound-and-true-p my/org-font-remap)
+  ;;     (mapc #'face-remap-remove-relative my/org-font-remap)))
   (defun my/org-mono-setup ()
     (variable-pitch-mode -1)  ;; stay monospace in Org
-    (setq-local my/org-font-remap
-                (list
-                 (face-remap-add-relative 'default '(:family "iA Writer Mono S"))
-                 (face-remap-add-relative 'fixed-pitch '(:family "iA Writer Mono S"))
-                 (face-remap-add-relative 'org-indent '(:inherit default) :height 1.3)
-                 (face-remap-add-relative 'org-hide '(:inherit default) :height 1.3)))
-  (add-hook 'kill-buffer-hook #'my/org-mono-reset nil t))
+    ;; (setq-local my/org-font-remap
+    ;;             (list
+    ;;              (face-remap-add-relative 'default '(:family "iA Writer Mono S"))
+    ;;              (face-remap-add-relative 'fixed-pitch '(:family "iA Writer Mono S"))
+    ;;              (face-remap-add-relative 'org-indent '(:inherit default) :height 1.3)
+    ;;              (face-remap-add-relative 'org-hide '(:inherit default) :height 1.3)))
+  ;; (add-hook 'kill-buffer-hook #'my/org-mono-reset nil t)
+    )
   :config
   (setq org-directory "~/Sync/roam"
         ;; org-use-sub-superscripts '{}
@@ -333,7 +334,6 @@
         org-startup-with-inline-images t
         org-blank-before-new-entry '((heading . t) (plain-list-item . nil))
         )
-;; Put inside your org use-package :config (or after org loads)
 
 ;; 1 Define per-level star faces = (org-level-N + default)
 (defun my/org--define-star-faces ()
@@ -360,6 +360,41 @@
 
 (add-hook 'org-mode-hook #'my/org--define-star-faces)
 (add-hook 'org-mode-hook #'my/org--fontify-stars)
+
+  ;; ;; Taken from rougier: org-outer-indent
+  (defun org-outer-indent--compute-prefixes ()
+    "Compute prefix strings for regular text and headlines."
+    (setq org-indent--heading-line-prefixes
+          (make-vector org-indent--deepest-level nil))
+    (setq org-indent--inlinetask-line-prefixes
+          (make-vector org-indent--deepest-level nil))
+    (setq org-indent--text-line-prefixes
+          (make-vector org-indent--deepest-level nil))
+    ;; Find the lowest headline level (FIXME)
+    (let* (;; (headline-levels (or (org-element-map
+           ;;                          (org-element-parse-buffer) 'headline
+           ;;                        #'(lambda (item)
+           ;;                            (org-element-property :level item)))
+           ;;                      '()))
+           ;; (max-level (seq-max (if headline-levels
+           ;;                         headline-levels
+           ;;                       '(0))))
+           (line-indentation (+ 3 4))
+           (headline-indentation))
+      (dotimes (level org-indent--deepest-level)
+        (setq headline-indentation
+              (max 0 (- line-indentation (+ 1 level))))
+        (aset org-indent--inlinetask-line-prefixes level
+              (make-string line-indentation ?\s))
+        (aset org-indent--text-line-prefixes level
+              (make-string line-indentation ?\s))
+        (aset org-indent--heading-line-prefixes level
+              (make-string headline-indentation ?\s))))
+    (setq-local org-hide-leading-stars nil))
+
+  (advice-add 'org-indent--compute-prefixes :override
+              #'org-outer-indent--compute-prefixes)
+
   )
 
 (use-package! org-agenda
@@ -511,12 +546,12 @@
 ;; ;; Variable pitch in org-mode
 ;; (add-hook 'org-mode-hook 'variable-pitch-mode)
 
-(use-package! org-outer-indent
-  :after org
-  :hook (org-mode . org-outer-indent-mode)
-  )
+;; (use-package! org-outer-indent
+;;   :after org
+;;   :hook (org-mode . org-outer-indent-mode)
+;;   )
 
-(add-hook 'org-mode-hook (lambda () (setq-local org-hide-leading-stars nil)))
+;; (add-hook 'org-mode-hook (lambda () (setq-local org-hide-leading-stars nil)))
 
 ;; (use-package! org-modern
 ;;   :after org-roam
