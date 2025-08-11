@@ -34,3 +34,4 @@
 (unpin! dirvish)
 (package! esup)
 (package! info+)
+;; (package! mu4easy)

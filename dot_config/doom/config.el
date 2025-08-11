@@ -271,7 +271,7 @@
         org-auto-align-tags nil
         org-cycle-separator-lines 1
         org-pretty-entities t
-        org-startup-indented nil
+        org-startup-indented t
         org-startup-truncated nil
         org-adapt-indentation t
         org-special-ctrl-a/e nil
@@ -325,6 +325,8 @@
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda)
   )
+
+(set-face-attribute 'fixed-pitch nil :family "iA Writer Mono S" :height 1.0)
 
 (use-package! all-the-icons)
 
