@@ -267,7 +267,7 @@
 ;;       '("TODO=\"PROJ\"&-TODO=\"DONE\"" ("TODO") nil ""))
 
 (custom-set-faces!
-  ;; Font sizes
+  ;; Title & heading sizes
   '(org-document-title :height 1.5 :weight black)
   '(org-level-1 :height 1.2 :weight bold)
   '(org-level-2 :height 1.2 :weight bold)
@@ -277,21 +277,10 @@
   '(org-level-6 :height 1.2 :weight bold)
   '(org-level-7 :height 1.2 :weight bold)
   '(org-level-8 :height 1.2 :weight bold)
-  ;; Remaining levels will use the default size (1.0)
 
   ;; Other font settings
-  ;; '(org-block :inherit fixed-pitch)
-  ;; '(org-code :inherit (shadow fixed-pitch))
   '(org-hide :inherit fixed-pitch :weight bold :height 1.3)
-  ;; '(org-checkbox :inherit fixed-pitch)
-  ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
   '(org-indent :inherit (org-hide fixed-pitch) :weight bold :height 1.3)
-  ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
-  ;; '(org-property-value :inherit fixed-pitch)
-  ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
-  ;; '(org-table :inherit fixed-pitch)
-  ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
-  ;; '(org-verbatim :inherit (shadow fixed-pitch))
   )
 
 (use-package! org
@@ -324,30 +313,30 @@
         )
 
 ;; Define per-level star faces = (org-level-N + default)
-(defun my/org--define-star-faces ()
-  (dotimes (i org-n-level-faces)
-    (let* ((n (1+ i))
-           (fname (intern (format "my/org-star-%d" n)))
-           (hface (intern (format "org-level-%d" n))))
-      (make-face fname)
-      ;; Heading styling + monospace family from `default`
-      (set-face-attribute fname nil :inherit (list hface 'default)))))
+;; (defun my/org--define-star-faces ()
+;;   (dotimes (i org-n-level-faces)
+;;     (let* ((n (1+ i))
+;;            (fname (intern (format "my/org-star-%d" n)))
+;;            (hface (intern (format "org-level-%d" n))))
+;;       (make-face fname)
+;;       ;; Heading styling + monospace family from `default`
+;;       (set-face-attribute fname nil :inherit (list hface 'default)))))
 
-;; Font-lock: paint *all* leading stars with the per-level face
-(defun my/org--fontify-stars ()
-  (font-lock-add-keywords
-   nil
-   `(( "^\\(\\*+\\)\\s-+"
-       (1 (let* ((lvl (length (match-string 1)))
-                 (face (intern (format "my/org-star-%d"
-                                       (min lvl org-n-level-faces)))))
-            face)
-          prepend))) ; don’t clobber other faces
-   'append)
-  (font-lock-flush))
+;; ;; Font-lock: paint *all* leading stars with the per-level face
+;; (defun my/org--fontify-stars ()
+;;   (font-lock-add-keywords
+;;    nil
+;;    `(( "^\\(\\*+\\)\\s-+"
+;;        (1 (let* ((lvl (length (match-string 1)))
+;;                  (face (intern (format "my/org-star-%d"
+;;                                        (min lvl org-n-level-faces)))))
+;;             face)
+;;           prepend))) ; don’t clobber other faces
+;;    'append)
+;;   (font-lock-flush))
 
-(add-hook 'org-mode-hook #'my/org--define-star-faces)
-(add-hook 'org-mode-hook #'my/org--fontify-stars)
+;; (add-hook 'org-mode-hook #'my/org--define-star-faces)
+;; (add-hook 'org-mode-hook #'my/org--fontify-stars)
   )
 
 (use-package! org-agenda
@@ -365,22 +354,6 @@
         org-log-done 'time
         org-log-into-drawer t
         org-agenda-include-deadlines t)
-
-  (defun elegant-agenda--title nil ;; src: elegant-agenda-mode
-    (when-let* ((title (when (and org-agenda-redo-command
-                                  (stringp (cadr org-agenda-redo-command)))
-                         (format "─  %s "
-                                 (mapconcat
-                                  #'identity
-                                  (split-string-and-unquote
-                                   (cadr org-agenda-redo-command) "")
-                                  ""))))
-                (width (window-width)))
-      (face-remap-set-base 'header-line :height 1.4)
-      (setq-local header-line-format
-                  (format "%s %s" title (make-string (- width (length title)) ?─ t)))))
-
-  (add-hook 'org-agenda-finalize-hook #'elegant-agenda--title)
 
   (setq org-agenda-breadcrumbs-separator " ❱ "
         org-agenda-todo-keyword-format "%-1s"
