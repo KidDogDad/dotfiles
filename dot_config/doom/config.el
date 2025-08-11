@@ -299,18 +299,8 @@
   :hook ((org-mode . visual-line-mode)
          (org-mode . my/org-mono-setup))
   :preface
-  ;; (defun my/org-mono-reset ()
-  ;;   (when (bound-and-true-p my/org-font-remap)
-  ;;     (mapc #'face-remap-remove-relative my/org-font-remap)))
   (defun my/org-mono-setup ()
     (variable-pitch-mode -1)  ;; stay monospace in Org
-    ;; (setq-local my/org-font-remap
-    ;;             (list
-    ;;              (face-remap-add-relative 'default '(:family "iA Writer Mono S"))
-    ;;              (face-remap-add-relative 'fixed-pitch '(:family "iA Writer Mono S"))
-    ;;              (face-remap-add-relative 'org-indent '(:inherit default) :height 1.3)
-    ;;              (face-remap-add-relative 'org-hide '(:inherit default) :height 1.3)))
-  ;; (add-hook 'kill-buffer-hook #'my/org-mono-reset nil t)
     )
   :config
   (setq org-directory "~/Sync/roam"
@@ -358,40 +348,6 @@
 
 (add-hook 'org-mode-hook #'my/org--define-star-faces)
 (add-hook 'org-mode-hook #'my/org--fontify-stars)
-
-  ;; ;; ;; Taken from rougier: org-outer-indent
-  ;; (defun org-outer-indent--compute-prefixes ()
-  ;;   "Compute prefix strings for regular text and headlines."
-  ;;   (setq org-indent--heading-line-prefixes
-  ;;         (make-vector org-indent--deepest-level nil))
-  ;;   (setq org-indent--inlinetask-line-prefixes
-  ;;         (make-vector org-indent--deepest-level nil))
-  ;;   (setq org-indent--text-line-prefixes
-  ;;         (make-vector org-indent--deepest-level nil))
-  ;;   ;; Find the lowest headline level (FIXME)
-  ;;   (let* (;; (headline-levels (or (org-element-map
-  ;;          ;;                          (org-element-parse-buffer) 'headline
-  ;;          ;;                        #'(lambda (item)
-  ;;          ;;                            (org-element-property :level item)))
-  ;;          ;;                      '()))
-  ;;          ;; (max-level (seq-max (if headline-levels
-  ;;          ;;                         headline-levels
-  ;;          ;;                       '(0))))
-  ;;          (line-indentation (+ 3 4))
-  ;;          (headline-indentation))
-  ;;     (dotimes (level org-indent--deepest-level)
-  ;;       (setq headline-indentation
-  ;;             (max 0 (- line-indentation (+ 1 level))))
-  ;;       (aset org-indent--inlinetask-line-prefixes level
-  ;;             (make-string line-indentation ?\s))
-  ;;       (aset org-indent--text-line-prefixes level
-  ;;             (make-string line-indentation ?\s))
-  ;;       (aset org-indent--heading-line-prefixes level
-  ;;             (make-string headline-indentation ?\s))))
-  ;;   (setq-local org-hide-leading-stars nil))
-
-  ;; (advice-add 'org-indent--compute-prefixes :override
-  ;;             #'org-outer-indent--compute-prefixes)
   )
 
 (use-package! org-agenda
