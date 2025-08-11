@@ -1,3 +1,5 @@
+;; -*- olivetti-mode: nil; -*-
+
 #+title: Config
 #+property: header-args :tangle config.el
 #+auto_tangle: t
