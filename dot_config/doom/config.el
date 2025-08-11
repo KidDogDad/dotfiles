@@ -52,7 +52,7 @@
 
 (setq
  doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 11.0 :weight 'regular)
- doom-variable-pitch-font (font-spec :family "iA Writer Mono S" :weight 'regular :size 11.0))
+ doom-variable-pitch-font (font-spec :family "iA Writer Duo S" :weight 'regular :size 11.0))
 
 (custom-set-faces!
   '(bold :weight bold)
@@ -112,7 +112,7 @@
 ;; ;; Set a key binding if you need to toggle spacious padding.
 ;; (define-key global-map (kbd "<f8>") #'spacious-padding-mode)
 
-(use-package info+
+(use-package! info+
   :ensure t)
 
 ;; Save my pinkies
@@ -280,59 +280,38 @@
   ;; Remaining levels will use the default size (1.0)
 
   ;; Other font settings
-  '(org-block :inherit fixed-pitch)
-  '(org-code :inherit (shadow fixed-pitch))
-  '(org-hide :inherit variable-pitch :weight bold)
-  '(org-checkbox :inherit fixed-pitch)
+  ;; '(org-block :inherit fixed-pitch)
+  ;; '(org-code :inherit (shadow fixed-pitch))
+  ;; '(org-hide :inherit variable-pitch :weight bold)
+  ;; '(org-checkbox :inherit fixed-pitch)
   ;; '(org-document-info-keyword :inherit (shadow fixed-pitch))
-  '(org-indent :inherit (org-hide variable-pitch) :weight bold)
+  ;; '(org-indent :inherit (org-hide variable-pitch) :weight bold)
   ;; '(org-meta-line :inherit (font-lock-comment-face fixed-pitch))
   ;; '(org-property-value :inherit fixed-pitch)
   ;; '(org-special-keyword :inherit (font-lock-comment-face fixed-pitch))
-  '(org-table :inherit fixed-pitch)
+  ;; '(org-table :inherit fixed-pitch)
   ;; '(org-tag :inherit (shadow fixed-pitch) :weight bold :height 0.8)
-  '(org-verbatim :inherit (shadow fixed-pitch))
+  ;; '(org-verbatim :inherit (shadow fixed-pitch))
   )
 
 (use-package! org
   :ensure nil
   :hook ((org-mode . visual-line-mode)
-         (org-mode . variable-pitch-mode))
+         (org-mode . my/org-mono-setup))
+  :preface
+  (defun my/org-mono-reset ()
+    (when (bound-and-true-p my/org-font-remap)
+      (mapc #'face-remap-remove-relative my/org-font-remap)))
+  (defun my/org-mono-setup ()
+    (variable-pitch-mode -1)  ;; stay monospace in Org
+    (setq-local my/org-font-remap
+                (list
+                 (face-remap-add-relative 'default '(:family "iA Writer Mono S"))
+                 (face-remap-add-relative 'fixed-pitch '(:family "iA Writer Mono S"))
+                 (face-remap-add-relative 'org-indent '(:inherit default) :height 1.3)
+                 (face-remap-add-relative 'org-hide '(:inherit default) :height 1.3)))
+  (add-hook 'kill-buffer-hook #'my/org-mono-reset nil t))
   :config
-  ;; Taken from rougier: org-outer-indent
-  (defun org-outer-indent--compute-prefixes ()
-    "Compute prefix strings for regular text and headlines."
-    (setq org-indent--heading-line-prefixes
-          (make-vector org-indent--deepest-level nil))
-    (setq org-indent--inlinetask-line-prefixes
-          (make-vector org-indent--deepest-level nil))
-    (setq org-indent--text-line-prefixes
-          (make-vector org-indent--deepest-level nil))
-    ;; Find the lowest headline level (FIXME)
-    (let* (;; (headline-levels (or (org-element-map
-           ;;                          (org-element-parse-buffer) 'headline
-           ;;                        #'(lambda (item)
-           ;;                            (org-element-property :level item)))
-           ;;                      '()))
-           ;; (max-level (seq-max (if headline-levels
-           ;;                         headline-levels
-           ;;                       '(0))))
-           (line-indentation (+ 3 4))
-           (headline-indentation))
-      (dotimes (level org-indent--deepest-level)
-        (setq headline-indentation
-              (max 0 (- line-indentation (+ 1 level))))
-        (aset org-indent--inlinetask-line-prefixes level
-              (make-string line-indentation ?\s))
-        (aset org-indent--text-line-prefixes level
-              (make-string line-indentation ?\s))
-        (aset org-indent--heading-line-prefixes level
-              (make-string headline-indentation ?\s))))
-    (setq-local org-hide-leading-stars nil))
-
-  (advice-add 'org-indent--compute-prefixes :override
-              #'org-outer-indent--compute-prefixes)
-
   (setq org-directory "~/Sync/roam"
         ;; org-use-sub-superscripts '{}
         ;; org-export-with-sub-superscripts nil
@@ -348,13 +327,42 @@
         org-src-preserve-indentation t
         org-fontify-quote-and-verse-blocks t
         org-fontify-done-headline nil
+        org-fontify-whole-heading-line t
         org-src-fontify-natively t
         org-hide-emphasis-markers t
         org-startup-with-inline-images t
         org-blank-before-new-entry '((heading . t) (plain-list-item . nil))
-        ))
+        )
+;; Put inside your org use-package :config (or after org loads)
 
-(use-package org-agenda
+;; 1 Define per-level star faces = (org-level-N + default)
+(defun my/org--define-star-faces ()
+  (dotimes (i org-n-level-faces)
+    (let* ((n (1+ i))
+           (fname (intern (format "my/org-star-%d" n)))
+           (hface (intern (format "org-level-%d" n))))
+      (make-face fname)
+      ;; Heading styling + monospace family from `default`
+      (set-face-attribute fname nil :inherit (list hface 'default)))))
+
+;; 2 Font-lock: paint *all* leading stars with the per-level face
+(defun my/org--fontify-stars ()
+  (font-lock-add-keywords
+   nil
+   `(( "^\\(\\*+\\)\\s-+"
+       (1 (let* ((lvl (length (match-string 1)))
+                 (face (intern (format "my/org-star-%d"
+                                       (min lvl org-n-level-faces)))))
+            face)
+          prepend))) ; don’t clobber other faces
+   'append)
+  (font-lock-flush))
+
+(add-hook 'org-mode-hook #'my/org--define-star-faces)
+(add-hook 'org-mode-hook #'my/org--fontify-stars)
+  )
+
+(use-package! org-agenda
   :ensure nil
   :config
   (setq org-agenda-files (list org-directory)
@@ -370,46 +378,45 @@
         org-log-into-drawer t
         org-agenda-include-deadlines t)
 
-(defun elegant-agenda--title nil ;; src: elegant-agenda-mode
-  (when-let* ((title (when (and org-agenda-redo-command
-                                (stringp (cadr org-agenda-redo-command)))
-                       (format "─  %s "
-                               (mapconcat
-                                #'identity
-                                (split-string-and-unquote
-                                 (cadr org-agenda-redo-command) "")
-                                ""))))
-              (width (window-width)))
-    (face-remap-set-base 'header-line :height 1.4)
-    (setq-local header-line-format
-                (format "%s %s" title (make-string (- width (length title)) ?─ t)))))
+  (defun elegant-agenda--title nil ;; src: elegant-agenda-mode
+    (when-let* ((title (when (and org-agenda-redo-command
+                                  (stringp (cadr org-agenda-redo-command)))
+                         (format "─  %s "
+                                 (mapconcat
+                                  #'identity
+                                  (split-string-and-unquote
+                                   (cadr org-agenda-redo-command) "")
+                                  ""))))
+                (width (window-width)))
+      (face-remap-set-base 'header-line :height 1.4)
+      (setq-local header-line-format
+                  (format "%s %s" title (make-string (- width (length title)) ?─ t)))))
 
-(add-hook 'org-agenda-finalize-hook #'elegant-agenda--title)
+  (add-hook 'org-agenda-finalize-hook #'elegant-agenda--title)
 
-(setq org-agenda-breadcrumbs-separator " ❱ "
-      org-agenda-todo-keyword-format "%-1s"
-      org-agenda-use-time-grid t
-      org-agenda-skip-timestamp-if-done t
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-scheduled-leaders '("" "")
-      org-agenda-deadline-leaders '("" "")
-      org-agenda-todo-keyword-format ""
-      org-agenda-block-separator (string-to-char " ")
-      org-agenda-current-time-string "← now ─────────"
-      org-agenda-time-grid
-      '((daily today require-timed remove-matched)
-        (800 1200 1600 2000)
-        "       " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-      org-agenda-prefix-format
-      '((agenda . " %i %-12b%t%s")
-        (todo . " %i %?-12b"))
-      org-todo-keywords
-      '((sequence "TODO(t)" "WAIT(w)" "PROJ(p)" "SOMEDAY(s)" "BACKLOG(b)" "SCRIPTING(s)" "|" "DONE(d)" "CANCELED(c)"))
+  (setq org-agenda-breadcrumbs-separator " ❱ "
+        org-agenda-todo-keyword-format "%-1s"
+        org-agenda-use-time-grid t
+        org-agenda-skip-timestamp-if-done t
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-scheduled-leaders '("" "")
+        org-agenda-deadline-leaders '("" "")
+        org-agenda-todo-keyword-format ""
+        org-agenda-block-separator (string-to-char " ")
+        org-agenda-current-time-string "← now ─────────"
+        org-agenda-time-grid
+        '((daily today require-timed remove-matched)
+          (800 1200 1600 2000)
+          "       " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+        org-agenda-prefix-format
+        '((agenda . " %i %-12b%t%s")
+          (todo . " %i %?-12b"))
+        org-todo-keywords
+        '((sequence "TODO(t)" "WAIT(w)" "PROJ(p)" "SOMEDAY(s)" "BACKLOG(b)" "SCRIPTING(s)" "|" "DONE(d)" "CANCELED(c)"))
+        ))
 
-      ))
-
-(use-package org-capture
+(use-package! org-capture
   :ensure nil
   ;; :hook (org-capture-mode . meow-insert)
   :config
@@ -504,12 +511,12 @@
 ;; ;; Variable pitch in org-mode
 ;; (add-hook 'org-mode-hook 'variable-pitch-mode)
 
-;; (use-package! org-outer-indent
-;; :after org
-;;   :hook (org-mode . org-outer-indent-mode)
-;;   )
+(use-package! org-outer-indent
+  :after org
+  :hook (org-mode . org-outer-indent-mode)
+  )
 
-;; (add-hook 'org-mode-hook (lambda () (setq-local org-hide-leading-stars nil)))
+(add-hook 'org-mode-hook (lambda () (setq-local org-hide-leading-stars nil)))
 
 ;; (use-package! org-modern
 ;;   :after org-roam
