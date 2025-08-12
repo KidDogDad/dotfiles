@@ -22,7 +22,7 @@
 
        :completion
        ;;company           ; the ultimate code completion backend
-       (corfu +orderless)  ; complete with cap(f), cape and a flying feather!
+       (corfu +icons +orderless)  ; complete with cap(f), cape and a flying feather!
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
@@ -39,7 +39,7 @@
        ligatures         ; ligatures and symbols to make your code pretty again
        ;;minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
-       ;; nav-flash         ; blink cursor line after big motions
+       ;;nav-flash         ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
@@ -154,7 +154,7 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +pretty +roam2 +dragndrop +noter)        ; organize your plain life in plain text
+       (org +roam2 +dragndrop +noter)        ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;graphviz          ; diagrams for confusing yourself even more
@@ -179,13 +179,13 @@
        ;;zig               ; C, but simpler
 
        :email
-       (mu4e +org +gmail)
+       (mu4e +org +gmail +mbsync)
        ;;notmuch
        ;;(wanderlust +gmail)
 
        :app
-       ;;calendar
-       ;;emms
+       calendar
+       emms
        ;;everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader

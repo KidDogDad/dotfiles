@@ -25,10 +25,10 @@
   '(bold :weight bold :foreground "#89dceb")  ;; sky
   )
 
-(setf (alist-get 'width default-frame-alist) '(text-pixels . 2500))
-(setf (alist-get 'height default-frame-alist) '(text-pixels . 1500))
-(setf (alist-get 'width initial-frame-alist) '(text-pixels . 2500))
-(setf (alist-get 'height initial-frame-alist) '(text-pixels . 1500))
+(setf (alist-get 'width default-frame-alist) '(text-pixels . 1625))
+(setf (alist-get 'height default-frame-alist) '(text-pixels . 1015))
+(setf (alist-get 'width initial-frame-alist) '(text-pixels . 1625))
+(setf (alist-get 'height initial-frame-alist) '(text-pixels . 1015))
 
 (setq
  doom-font (font-spec :family "iA Writer Mono S" :size 11.0 :weight 'regular)
@@ -93,11 +93,15 @@
 ;; (define-key global-map (kbd "<f8>") #'spacious-padding-mode)
 
 (setq evil-escape-key-sequence "jk")
+(setq evil-escape-unordered-key-sequence t)
 
 (use-package! gptel
  :config
  (setq! gptel-api-key
         (auth-source-pick-first-password :host "api.openai.com"))
+ (setq gptel-default-mode 'org-mode)
+ :hook
+ (gptel-mode . (lambda () (olivetti-mode -1)))
  )
 
 (use-package! info+
@@ -552,6 +556,31 @@
   ;; (require 'org-ql)            ;; provides org-dblock-write:org-ql
   ;; (require 'org-ql-view)       ;; (safe) also loads views
   ;; (require 'org-ql-block)
+  )
+
+(setq +mu4e-gmail-accounts '(("josh@gilliland.cloud" . "~/.mail/gmail")))
+
+;; Each path is relative to the path of the maildir you passed to mu
+(set-email-account! "josh@gilliland.cloud"
+  '((mu4e-sent-folder       . "/[Gmail]/Sent Mail")
+    (mu4e-drafts-folder     . "/[Gmail]/Drafts")
+    (mu4e-trash-folder      . "/[Gmail]/Trash")
+    (mu4e-refile-folder     . "/[Gmail]/All Mail")
+    )
+  t)
+
+(after! mu4e
+  (setq sendmail-program (executable-find "msmtp")
+        send-mail-function #'smtpmail-send-it
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-send-mail-function #'message-send-mail-with-sendmail)
+
+;; don't need to run cleanup after indexing for gmail
+(setq mu4e-index-cleanup nil
+      ;; because gmail uses labels as folders we can use lazy check since
+      ;; messages don't really "move"
+      mu4e-index-lazy-check t)
   )
 
 (defun my/org-roam-node-insert-immediate (arg &rest args)
