@@ -92,6 +92,14 @@
 ;; ;; Set a key binding if you need to toggle spacious padding.
 ;; (define-key global-map (kbd "<f8>") #'spacious-padding-mode)
 
+(setq evil-escape-key-sequence "jk")
+
+(use-package! gptel
+ :config
+ (setq! gptel-api-key
+        (auth-source-pick-first-password :host "api.openai.com"))
+ )
+
 (use-package! info+
   :ensure t)
 
@@ -191,6 +199,11 @@
   (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
     (apply orig-fn beg end type ?_ args))
   (advice-add 'evil-delete :around 'bb/evil-delete)
+
+  ;; I also need to intercept 'evil-org-delete-char'
+  ;; (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
+  ;;   (apply orig-fn beg end type ?_ args))
+  ;; (advice-add 'evil-delete :around 'bb/evil-delete)
 
   ;; This function first yanks the selection to the kill-ring/clipboard,
   ;; then deletes it. The delete operation will use the black hole register
@@ -316,13 +329,14 @@
                      (45 . "•")))
   (org-modern-replace-stars nil)
   (org-modern-hide-stars t)
+  (org-modern-star nil)
   )
 
 (use-package! org-modern-indent
   :ensure t
   :config
   :hook
-  (org-mode . org-modern-mode)
+  (org-mode . org-modern-indent-mode)
   (org-agenda-finalize . org-modern-agenda)
   )
 

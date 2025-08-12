@@ -146,6 +146,22 @@
 
 * Behavior
 
+** Evil-Escape
+
+#+begin_src emacs-lisp
+(setq evil-escape-key-sequence "jk")
+#+end_src
+
+** GPTel
+
+#+begin_src emacs-lisp
+(use-package! gptel
+ :config
+ (setq! gptel-api-key
+        (auth-source-pick-first-password :host "api.openai.com"))
+ )
+#+end_src
+
 ** Info+
 
    #+begin_src emacs-lisp
@@ -286,6 +302,11 @@ This configuration replicates the "cutlass" behavior from Neovim.
   (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
     (apply orig-fn beg end type ?_ args))
   (advice-add 'evil-delete :around 'bb/evil-delete)
+
+  ;; I also need to intercept 'evil-org-delete-char'
+  ;; (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
+  ;;   (apply orig-fn beg end type ?_ args))
+  ;; (advice-add 'evil-delete :around 'bb/evil-delete)
 
   ;; This function first yanks the selection to the kill-ring/clipboard,
   ;; then deletes it. The delete operation will use the black hole register
@@ -447,18 +468,18 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
                      (45 . "•")))
   (org-modern-replace-stars nil)
   (org-modern-hide-stars t)
+  (org-modern-star nil)
   )
 #+end_src
 
 ** Org-Modern-Indent
-This would need to be changed to a use-package if I'm going to use it again
 
 #+begin_src emacs-lisp
 (use-package! org-modern-indent
   :ensure t
   :config
   :hook
-  (org-mode . org-modern-mode)
+  (org-mode . org-modern-indent-mode)
   (org-agenda-finalize . org-modern-agenda)
   )
 

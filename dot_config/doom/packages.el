@@ -6,9 +6,9 @@
 (package! olivetti :recipe (:host github :repo "rnkn/olivetti"))
 (package! org-modern)
 (package! all-the-icons)
-(package! org-outer-indent
-  :recipe (:host github :repo "rougier/org-outer-indent"))
 (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
+;; (package! org-outer-indent
+;;   :recipe (:host github :repo "rougier/org-outer-indent"))
 ;; (package! spacious-padding)
 
 
@@ -23,6 +23,7 @@
   :recipe (:host github :repo "alphapapa/org-ql"))
 (package! org-super-agenda)
 (package! org-download)
+(package! gptel :recipe (:nonrecursive t))
 ;; (package! org-padding :recipe (:host github :repo "TonCherAmi/org-padding"))
 
 
