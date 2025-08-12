@@ -554,17 +554,6 @@
   ;; (require 'org-ql-block)
   )
 
-;; (use-package! org-download
-;;   :defer t
-;;   :init
-;;   (setq-default org-download-image-dir "~/org/.attach")
-;;   :config
-;;   (setq org-download-method 'attach)
-;;   :hook
-;;   (org-mode . org-download-enable)
-;;   (dired-mode . org-download-enable)
-;;   )
-
 (defun my/org-roam-node-insert-immediate (arg &rest args)
   (interactive "P")
   (let ((args (cons arg args))
