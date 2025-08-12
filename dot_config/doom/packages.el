@@ -22,7 +22,7 @@
 (package! org-ql
   :recipe (:host github :repo "alphapapa/org-ql"))
 (package! org-super-agenda)
-(package! org-download)
+;; (package! org-download)
 (package! gptel :recipe (:nonrecursive t))
 ;; (package! org-padding :recipe (:host github :repo "TonCherAmi/org-padding"))
 

@@ -279,7 +279,7 @@
   :ensure nil
   :hook ((org-mode . visual-line-mode))
   :config
-  (setq org-directory "~/Sync/roam"
+  (setq org-directory "~/org"
         org-ellipsis " >"
         org-auto-align-tags nil
         org-cycle-separator-lines 1
@@ -312,13 +312,13 @@
             (lambda nil
               (setq-local header-line-format nil)))
   (setq org-capture-templates
-        '(("t" "Todo" entry (file "~/Sync/roam/agenda/inbox.org")
+        '(("t" "Todo" entry (file "~/org/agenda/inbox.org")
            "* TODO %?")
-          ("T" "Todo (clipboard)" entry (file "~/Sync/roam/agenda/inbox.org")
+          ("T" "Todo (clipboard)" entry (file "~/org/agenda/inbox.org")
            "* TODO %? (notes)\n%x")
-          ("d" "Todo (document)" entry (file "~/Sync/roam/agenda/inbox.org")
+          ("d" "Todo (document)" entry (file "~/org/agenda/inbox.org")
            "* TODO %? (notes)\n%a")
-          ("i" "Todo (interactive)" entry (file "~/Sync/roam/agenda/inbox.org")
+          ("i" "Todo (interactive)" entry (file "~/org/agenda/inbox.org")
            "* TODO %? (notes)\n%^C")
           )))
 
@@ -388,13 +388,13 @@
             (tags-todo "-{.*}"
                        ((org-agenda-overriding-header "Untagged Tasks")))))
           ("i" "Inbox"
-           ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/inbox.org"))
+           ((todo "" ((org-agenda-files '("~/org/agenda/inbox.org"))
                       (org-agenda-overriding-header "Inbox Items")))))
           ("e" "Emacs"
            ((tags-todo "+Emacs"
                        ((org-agenda-overriding-header "Emacs Tasks 🤓")))))
           ("o" "Obsidian Tasks"
-           ((todo "" ((org-agenda-files '("~/Sync/roam/agenda/Obsidian Journals"))
+           ((todo "" ((org-agenda-files '("~/org/agenda/Obsidian Journals"))
                       (org-agenda-overriding-header "Tasks From Obsidian Dailies")))))
           )
         ))
@@ -479,7 +479,7 @@
 
 (use-package! org-roam
   :custom
-  (org-roam-directory "~/Sync/roam")
+  (org-roam-directory "~/org")
   (org-roam-completion-everywhere nil)
   (org-roam-capture-templates
    '(("d" "default" plain
@@ -554,16 +554,16 @@
   ;; (require 'org-ql-block)
   )
 
-(use-package! org-download
-  :defer t
-  :init
-  (setq-default org-download-image-dir "images")
-  :config
-  (setq org-download-method 'attach)
-  :hook
-  (org-mode . org-download-enable)
-  (dired-mode . org-download-enable)
-  )
+;; (use-package! org-download
+;;   :defer t
+;;   :init
+;;   (setq-default org-download-image-dir "~/org/.attach")
+;;   :config
+;;   (setq org-download-method 'attach)
+;;   :hook
+;;   (org-mode . org-download-enable)
+;;   (dired-mode . org-download-enable)
+;;   )
 
 (defun my/org-roam-node-insert-immediate (arg &rest args)
   (interactive "P")
