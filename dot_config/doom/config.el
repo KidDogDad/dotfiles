@@ -321,7 +321,7 @@
           ("c" "Clipboard Todo" entry (file "~/org/agenda/inbox.org")
            "* TODO %?\n%(string-trim (shell-command-to-string \"wl-paste -n\"))")
           ("o" "bin/org-capture Todo" entry (file "~/org/agenda/inbox.org")
-           "* TODO %?\n%i\n")
+           "* TODO %?\n%(string-trim (shell-command-to-string \"wl-paste -n\"))\n")
           ("e" "Emacs Todo" entry (file "~/org/agenda/inbox.org")
            "* TODO %? :Emacs:\n")
           ("y" "Yiyi Todo" entry (file "~/org/agenda/inbox.org")
