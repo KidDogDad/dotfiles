@@ -55,10 +55,10 @@
 ** Initial Frame Setup
 
 #+begin_src emacs-lisp
-(setf (alist-get 'width default-frame-alist) '(text-pixels . 1625))
-(setf (alist-get 'height default-frame-alist) '(text-pixels . 1015))
-(setf (alist-get 'width initial-frame-alist) '(text-pixels . 1625))
-(setf (alist-get 'height initial-frame-alist) '(text-pixels . 1015))
+(setf (alist-get 'width default-frame-alist) '(text-pixels . 1626))
+(setf (alist-get 'height default-frame-alist) '(text-pixels . 1016))
+(setf (alist-get 'width initial-frame-alist) '(text-pixels . 1626))
+(setf (alist-get 'height initial-frame-alist) '(text-pixels . 1016))
 #+end_src
 
 ** Font Settings
@@ -454,7 +454,7 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
         '(("t" "Todo" entry (file "~/org/agenda/inbox.org")
            "* TODO %?")
           ("c" "Clipboard Todo" entry (file "~/org/agenda/inbox.org")
-           "* TODO %?\n(shell-command-to-string \"wl-paste)\n")
+           "* TODO %?\n%(string-trim (shell-command-to-string \"wl-paste -n\"))")
           ("o" "bin/org-capture Todo" entry (file "~/org/agenda/inbox.org")
            "* TODO %?\n%i\n")
           ("e" "Emacs Todo" entry (file "~/org/agenda/inbox.org")
@@ -494,7 +494,7 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
 
 (set-face-attribute 'fixed-pitch nil :family "iA Writer Mono S" :height 1.0)
    #+end_src
-   
+
 ** Agenda Settings
 Some settings taken from [[https:www.youtube.com/watch?v=a_WNtuefREM][this YouTube video]]
 

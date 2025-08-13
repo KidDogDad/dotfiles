@@ -25,10 +25,10 @@
   '(bold :weight bold :foreground "#89dceb")  ;; sky
   )
 
-(setf (alist-get 'width default-frame-alist) '(text-pixels . 1625))
-(setf (alist-get 'height default-frame-alist) '(text-pixels . 1015))
-(setf (alist-get 'width initial-frame-alist) '(text-pixels . 1625))
-(setf (alist-get 'height initial-frame-alist) '(text-pixels . 1015))
+(setf (alist-get 'width default-frame-alist) '(text-pixels . 1626))
+(setf (alist-get 'height default-frame-alist) '(text-pixels . 1016))
+(setf (alist-get 'width initial-frame-alist) '(text-pixels . 1626))
+(setf (alist-get 'height initial-frame-alist) '(text-pixels . 1016))
 
 (setq
  doom-font (font-spec :family "iA Writer Mono S" :size 11.0 :weight 'regular)
@@ -319,7 +319,7 @@
         '(("t" "Todo" entry (file "~/org/agenda/inbox.org")
            "* TODO %?")
           ("c" "Clipboard Todo" entry (file "~/org/agenda/inbox.org")
-           "* TODO %?\n(shell-command-to-string \"wl-paste)\n")
+           "* TODO %?\n%(string-trim (shell-command-to-string \"wl-paste -n\"))")
           ("o" "bin/org-capture Todo" entry (file "~/org/agenda/inbox.org")
            "* TODO %?\n%i\n")
           ("e" "Emacs Todo" entry (file "~/org/agenda/inbox.org")
