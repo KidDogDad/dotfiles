@@ -497,28 +497,37 @@
       :unnarrowed t)
      ("p" "Project" plain
       "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      ::if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
       :unnarrowed t)
-      ))
-      (org-roam-capture-ref-templates
-       '(("W" "Web Page (With Content)" plain
-          "%(org-web-tools--url-as-readable-org \"${ref}\")"
-          :target (file+head "clips/${slug}.org" "#+title: ${title}\n\n")
-          :unnarrowed t)
-        ("w" "Web Page (Link Only)" plain
-         "[[${ref}][${title}]]\n\n%?"
-         :target (file+head "clips/${slug}.org" "#+title: ${title}\n\n")
-         :unnarrowed t)
-      ))
+     ))
+  (org-roam-capture-ref-templates
+   '(("W" "Web Page (With Content)" plain
+      "%(org-web-tools--url-as-readable-org \"${ref}\")"
+      :target (file+head "clips/${slug}.org" "#+title: ${title}\n\n")
+      :unnarrowed t)
+     ("w" "Web Page (Link Only)" plain
+      "[[${ref}][${title}]]\n\n%?"
+      :target (file+head "clips/${slug}.org" "#+title: ${title}\n\n")
+      :unnarrowed t)
+     ))
+
+  (org-roam-dailies-directory "~/org/daily/")
+
   (org-roam-dailies-capture-templates
    '(("d" "default" entry
-      "* %?"
+      "\n* %?"
       :target (file+head "%<%Y-%m-%d>.org"
-                         "#+title: %<%Y-%m-%d>\n#+date: %U\n\n"))))
-  :config
-  (org-roam-db-autosync-mode +1)
-  (org-roam-setup)
-  )
+                         "#+title: %<%Y-%m-%d>\n"))
+     ("y" "Yiyi Check-In" entry
+      (file "~/org/templates/daily-note-template.org")
+      :target (file+head "%<%Y-%m-%d>.org"
+                         "#+title: %<%Y-%m-%d>\n"))
+     )
+   )
+:config
+(org-roam-db-autosync-mode +1)
+(org-roam-setup)
+)
 
 (map! :leader
       :prefix "m m"
