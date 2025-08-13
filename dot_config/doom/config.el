@@ -414,6 +414,8 @@
         (search . " %i %-12:c"))
       )
 
+(setq org-agenda-files (list (concat org-directory "/agenda")))
+
 ;; (setq org-agenda-current-time-string "← now ───────────────────────────────────────────────")
 (setq org-agenda-time-grid '((daily) () "" ""))
 
@@ -604,29 +606,29 @@
 ;; The buffer you put this code in must have lexical-binding set to t!
 ;; See the final configuration at the end for more details.
 
-(defun my/org-roam-filter-by-tag (tag-name)
-  (lambda (node)
-    (member tag-name (org-roam-node-tags node))))
+;; (defun my/org-roam-filter-by-tag (tag-name)
+;;   (lambda (node)
+;;     (member tag-name (org-roam-node-tags node))))
 
-(defun my/org-roam-list-notes-by-tag (tag-name)
-  (mapcar #'org-roam-node-file
-          (seq-filter
-           (my/org-roam-filter-by-tag tag-name)
-           (org-roam-node-list))))
+;; (defun my/org-roam-list-notes-by-tag (tag-name)
+;;   (mapcar #'org-roam-node-file
+;;           (seq-filter
+;;            (my/org-roam-filter-by-tag tag-name)
+;;            (org-roam-node-list))))
 
-(defun my/org-roam-refresh-agenda-list ()
-  (interactive)
-  (setq org-agenda-files (my/org-roam-list-notes-by-tag "Agenda")))
+;; (defun my/org-roam-refresh-agenda-list ()
+;;   (interactive)
+;;   (setq org-agenda-files (my/org-roam-list-notes-by-tag "Agenda")))
 
-;; Build the agenda list the first time for the session
-(my/org-roam-refresh-agenda-list)
+;; ;; Build the agenda list the first time for the session
+;; (my/org-roam-refresh-agenda-list)
 
-;; Keybinding
-(map!
-:leader
-:prefix "n r"
-:desc "Build Agenda" "b" #'my/org-roam-refresh-agenda-list
- )
+;; ;; Keybinding
+;; (map!
+;; :leader
+;; :prefix "n r"
+;; :desc "Build Agenda" "b" #'my/org-roam-refresh-agenda-list
+;;  )
 
 (defun logseq-md-headings-to-org ()
   "Convert Logseq-style #-headings to Org *-headings, removing leading dash and indentation."
