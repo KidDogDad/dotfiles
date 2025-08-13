@@ -337,6 +337,8 @@
   (org-modern-replace-stars nil)
   (org-modern-hide-stars t)
   (org-modern-star nil)
+  :hook
+  (org-mode . org-modern-mode)
   )
 
 (use-package! org-modern-indent

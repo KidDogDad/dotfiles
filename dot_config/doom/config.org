@@ -476,12 +476,14 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
   (org-modern-replace-stars nil)
   (org-modern-hide-stars t)
   (org-modern-star nil)
+  :hook
+  (org-mode . org-modern-mode)
   )
 #+end_src
 
 ** Org-Modern-Indent
 
-#+begin_src emacs-lisp
+   #+begin_src emacs-lisp
 (use-package! org-modern-indent
   :ensure t
   :config
@@ -491,8 +493,8 @@ Avoid problems from using fish shell, but still allow Emacs terminal emulators t
   )
 
 (set-face-attribute 'fixed-pitch nil :family "iA Writer Mono S" :height 1.0)
-#+end_src
-
+   #+end_src
+   
 ** Agenda Settings
 Some settings taken from [[https:www.youtube.com/watch?v=a_WNtuefREM][this YouTube video]]
 
