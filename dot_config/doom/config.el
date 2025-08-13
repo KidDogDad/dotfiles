@@ -318,13 +318,16 @@
   (setq org-capture-templates
         '(("t" "Todo" entry (file "~/org/agenda/inbox.org")
            "* TODO %?")
-          ("T" "Todo (clipboard)" entry (file "~/org/agenda/inbox.org")
-           "* TODO %? (notes)\n%x")
-          ("d" "Todo (document)" entry (file "~/org/agenda/inbox.org")
-           "* TODO %? (notes)\n%a")
-          ("i" "Todo (interactive)" entry (file "~/org/agenda/inbox.org")
-           "* TODO %? (notes)\n%^C")
-          )))
+          ("c" "Clipboard Todo" entry (file "~/org/agenda/inbox.org")
+           "* TODO %?\n(shell-command-to-string \"wl-paste)\n")
+          ("o" "bin/org-capture Todo" entry (file "~/org/agenda/inbox.org")
+           "* TODO %?\n%i\n")
+          ("e" "Emacs Todo" entry (file "~/org/agenda/inbox.org")
+           "* TODO %? :Emacs:\n")
+          ("y" "Yiyi Todo" entry (file "~/org/agenda/inbox.org")
+           "* TODO %? :Yiyi:\n"))
+        )
+  )
 
 (use-package! org-modern
   :after org-roam
