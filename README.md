@@ -1,1 +1,1 @@
-Dotfiles repo for Arch Linux.
+Dotfiles repo for Arch Linux, managed through chezmoi
