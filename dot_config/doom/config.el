@@ -574,6 +574,12 @@
   ;; (require 'org-ql-block)
   )
 
+(setq org-gcal-client-id "your-id-foo.apps.googleusercontent.com"
+      org-gcal-client-secret "your-secret"
+      org-gcal-fetch-file-alist '(("your-mail@gmail.com" .  "~/schedule.org")
+                                  ("another-mail@gmail.com" .  "~/task.org")))
+(require 'org-gcal)
+
 (setq +mu4e-gmail-accounts '(("josh@gilliland.cloud" . "~/.mail/gmail")))
 
 ;; Each path is relative to the path of the maildir you passed to mu

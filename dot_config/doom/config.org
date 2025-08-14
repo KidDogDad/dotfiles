@@ -760,6 +760,16 @@ Some settings taken from [[https:www.youtube.com/watch?v=a_WNtuefREM][this YouTu
 
 * Apps
 
+** Calendar (Calfw)
+
+#+begin_src emacs-lisp
+(setq org-gcal-client-id "your-id-foo.apps.googleusercontent.com"
+      org-gcal-client-secret "your-secret"
+      org-gcal-fetch-file-alist '(("your-mail@gmail.com" .  "~/schedule.org")
+                                  ("another-mail@gmail.com" .  "~/task.org")))
+(require 'org-gcal)
+#+end_src
+
 ** Mu4e
 
 #+begin_src emacs-lisp
