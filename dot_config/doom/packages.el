@@ -13,6 +13,7 @@
 
 
 ;; Functional packages ;;
+
 ;; Org
 (unpin! org-roam)
 (package! org-roam-ui)
@@ -24,6 +25,14 @@
 (package! org-super-agenda)
 ;; (package! org-padding :recipe (:host github :repo "TonCherAmi/org-padding"))
 
+;; Denote
+(package! denote)
+(package! denote-journal)
+(package! denote-markdown)
+(package! denote-search)
+(package! denote-explore)
+(package! consult-denote)
+(package! denote-menu)
 
 ;; Other
 (package! websocket)

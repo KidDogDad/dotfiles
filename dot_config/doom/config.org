@@ -103,9 +103,9 @@
 (use-package! olivetti
   :config
   (map!
-:leader
-:prefix "t"
-:desc "Toggle Olivetti" "o" #'olivetti-mode
+   :leader
+   :prefix "t"
+   :desc "Toggle Olivetti" "o" #'olivetti-mode
    )
   :custom
   (setq olivetti-body-width 100)
@@ -145,6 +145,31 @@
 
 
 * Behavior
+
+** Chinese Stuff (Commented Out)
+
+*** Use Fcitx5
+
+ #+begin_src emacs-lisp
+;; (setq fcitx-remote-command "fcitx5-remote")
+ #+end_src
+
+*** Fix Pinyin Minibuffer Issues
+
+#+begin_src emacs-lisp
+;; Keep Orderless simple; no fancy builders that expand to huge regexps.
+;; (after! orderless
+;;   (setq orderless-matching-styles
+;;         '(orderless-literal orderless-initialism orderless-regexp))
+
+;;   ;; If the Chinese module added a pinyin dispatcher, drop it.
+;;   (when (boundp 'orderless-style-dispatchers)
+;;     (require 'cl-lib)
+;;     (setq orderless-style-dispatchers
+;;           (cl-remove-if (lambda (fn)
+;;                           (string-match-p "pinyin" (symbol-name fn)))
+;;                         orderless-style-dispatchers))))
+#+end_src
 
 ** Evil-Escape
 
@@ -758,16 +783,82 @@ Some settings taken from [[https:www.youtube.com/watch?v=a_WNtuefREM][this YouTu
 #+end_src
 
 
+* Denote
+
+** Denote Base Package
+
+#+begin_src emacs-lisp
+(use-package! denote
+  :ensure t
+  :hook
+  ;; Make Denote links clickable
+  (text-mode . denote-fontify-links-mode-maybe)
+  ;; Apply colors to Denote names in Dired
+  (dired-mode . denote-dired-mode)
+  :config
+  (setq denote-directory (expand-file-name "~/denote test/"))
+  (setq denote-save-buffers t)
+  (setq denote-infer-keywords t)
+  (setq denote-sort-keywords t)
+  (setq denote-rename-confirmations '(rewrite-front-matter modify-file-name))
+
+  ;; Pick dates, where relevant, with Org's advanced interface:
+  (setq denote-date-prompt-use-org-read-date t)
+
+  (map! :leader
+        (:prefix ("n" . "notes")
+                 (:prefix ("d" . "denote")
+                  :desc "Create a note" "n" #'denote
+                  :desc "Rename" "r" #'denote-rename-file
+                  :desc "Rename using front matter" "R" #'denote-rename-file-using-front-matter
+                  :desc "Link a note" "l" #'denote-link
+                  :desc "Add links" "L" #'denote-add-links
+                  :desc "Backlinks" "b" #'denote-backlinks
+                  :desc "Search notes" "s" #'denote-grep
+                  :desc "Denote dired" "d" #'denote-dired
+                  :desc "Open or create" "o" #'denote-open-or-create
+                  )))
+
+  ;; Automatically rename Denote buffers when opening them so that
+  ;; instead of their long file name they have, for example, a literal
+  ;; "[D]" followed by the file's title.  Read the doc string of
+  ;; `denote-rename-buffer-format' for how to modify this.
+  (denote-rename-buffer-mode 1)
+  )
+#+end_src
+
+** Denote Journal
+
+#+begin_src emacs-lisp
+(use-package! denote-journal
+  :ensure t
+  ;; Bind those to some key for your convenience.
+  :commands ( denote-journal-new-entry
+              denote-journal-new-or-existing-entry
+              denote-journal-link-or-create-entry )
+  :hook (calendar-mode . denote-journal-calendar-mode)
+  :config
+  ;; Use the "journal" subdirectory of the `denote-directory'.  Set this
+  ;; to nil to use the `denote-directory' instead.
+  (setq denote-journal-directory
+        (expand-file-name "journal" denote-directory))
+  ;; Default keyword for new journal entries. It can also be a list of
+  ;; strings.
+  (setq denote-journal-keyword "journal")
+  ;; Read the doc string of `denote-journal-title-format'.
+  (setq denote-journal-title-format "%Y-%0m-%0d"))
+#+end_src
+
 * Apps
 
 ** Calendar (Calfw)
 
 #+begin_src emacs-lisp
-(setq org-gcal-client-id "your-id-foo.apps.googleusercontent.com"
-      org-gcal-client-secret "your-secret"
-      org-gcal-fetch-file-alist '(("your-mail@gmail.com" .  "~/schedule.org")
-                                  ("another-mail@gmail.com" .  "~/task.org")))
-(require 'org-gcal)
+;; (setq org-gcal-client-id "your-id-foo.apps.googleusercontent.com"
+;;       org-gcal-client-secret "your-secret"
+;;       org-gcal-fetch-file-alist '(("your-mail@gmail.com" .  "~/schedule.org")
+;;                                   ("another-mail@gmail.com" .  "~/task.org")))
+;; (require 'org-gcal)
 #+end_src
 
 ** Mu4e
