@@ -146,6 +146,13 @@
 
 * Behavior
 
+** Scrolling
+
+#+begin_src emacs-lisp
+(setq scroll-conservatively 5)
+(pixel-scroll-precision-mode 1)
+#+end_src
+
 ** Chinese Stuff (Commented Out)
 
 *** Use Fcitx5
@@ -802,6 +809,18 @@ Some settings taken from [[https:www.youtube.com/watch?v=a_WNtuefREM][this YouTu
   ;; Pick dates, where relevant, with Org's advanced interface:
   (setq denote-date-prompt-use-org-read-date t)
 
+  ;; Automatically rename Denote buffers when opening them so that
+  ;; instead of their long file name they have, for example, a literal
+  ;; "[D]" followed by the file's title.  Read the doc string of
+  ;; `denote-rename-buffer-format' for how to modify this.
+  (denote-rename-buffer-mode 1)
+  )
+#+end_src
+
+
+** Denote Keybindings
+
+#+begin_src emacs-lisp
   (map! :leader
         (:prefix ("n" . "notes")
                  (:prefix ("d" . "denote")
@@ -812,28 +831,20 @@ Some settings taken from [[https:www.youtube.com/watch?v=a_WNtuefREM][this YouTu
                   :desc "Backlinks" "b" #'denote-backlinks
                   :desc "Denote dired" "D" #'denote-dired
                   :desc "Open or create a note" "n" #'denote-open-or-create
+                  :desc "Goto journal" "j" #'denote-journal-new-or-existing-entry
+                  :desc "Link or create journal" "J" #'denote-journal-new-or-existing-entry
+                  :desc "Search notes (ripgrep)" "s" #'consult-denote-grep
                   )))
-
-  ;; Automatically rename Denote buffers when opening them so that
-  ;; instead of their long file name they have, for example, a literal
-  ;; "[D]" followed by the file's title.  Read the doc string of
-  ;; `denote-rename-buffer-format' for how to modify this.
-  (denote-rename-buffer-mode 1)
-  )
 #+end_src
-
+   
 ** Denote Journal
 
 #+begin_src emacs-lisp
 (use-package! denote-journal
   :ensure t
-  ;; Bind those to some key for your convenience.
-  :commands ( denote-journal-new-entry
-              denote-journal-new-or-existing-entry
-              denote-journal-link-or-create-entry )
   :hook (calendar-mode . denote-journal-calendar-mode)
   :config
-  ;; Use the "journal" subdirectory of the `denote-directory'.  Set this
+  ;; Use the "journal" subdirectory of the `denote-directory'. Set this
   ;; to nil to use the `denote-directory' instead.
   (setq denote-journal-directory
         (expand-file-name "journal" denote-directory))
@@ -842,13 +853,6 @@ Some settings taken from [[https:www.youtube.com/watch?v=a_WNtuefREM][this YouTu
   (setq denote-journal-keyword "journal")
   ;; Read the doc string of `denote-journal-title-format'.
   (setq denote-journal-title-format "%Y-%0m-%0d")
-  ;; Keybindings
-  (map! :leader
-        (:prefix ("n" . "notes")
-                 (:prefix ("d" . "denote")
-                  :desc "Goto journal" "j" #'denote-journal-new-or-existing-entry
-                  :desc "Link or create journal" "J" #'denote-journal-new-or-existing-entry
-                  )))
   )
 #+end_src
 
@@ -863,11 +867,6 @@ Some settings taken from [[https:www.youtube.com/watch?v=a_WNtuefREM][this YouTu
   :config
   (consult-denote-mode 1)
   (setq consult-denote-grep-command #'consult-ripgrep)
-  (map! :leader
-        (:prefix ("n" . "notes")
-                 (:prefix ("d" . "denote")
-                  :desc "Search notes" "s" #'consult-denote-grep
-                  )))
   )
 #+end_src
 
