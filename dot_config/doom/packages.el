@@ -18,7 +18,7 @@
 (unpin! org-roam)
 (package! org-roam-ui)
 (package! org-web-tools)
-(package! org-auto-tangle)
+;; (package! org-auto-tangle)
 (package! org-transclusion)
 (package! org-ql
   :recipe (:host github :repo "alphapapa/org-ql"))
@@ -33,6 +33,7 @@
 (package! denote-explore)
 (package! consult-denote)
 (package! denote-menu)
+(package! denote-org)
 
 ;; Other
 (package! websocket)

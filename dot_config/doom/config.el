@@ -331,15 +331,15 @@
             (lambda nil
               (setq-local header-line-format nil)))
   (setq org-capture-templates
-        '(("t" "Todo" entry (file "~/org/agenda/inbox.org")
+        '(("t" "Todo" entry (file "~/org/agenda/20250814T155838--inbox.org")
            "* TODO %?")
-          ("c" "Clipboard Todo" entry (file "~/org/agenda/inbox.org")
+          ("c" "Clipboard Todo" entry (file "~/org/agenda/20250814T155838--inbox.org")
            "* TODO %?\n%(string-trim (shell-command-to-string \"wl-paste -n\"))")
-          ("o" "bin/org-capture Todo" entry (file "~/org/agenda/inbox.org")
+          ("o" "bin/org-capture Todo" entry (file "~/org/agenda/20250814T155838--inbox.org")
            "* TODO %?\n%(string-trim (shell-command-to-string \"wl-paste -n\"))\n")
-          ("e" "Emacs Todo" entry (file "~/org/agenda/inbox.org")
+          ("e" "Emacs Todo" entry (file "~/org/agenda/20250811T110445--emacs-todos__agenda_emacs.org")
            "* TODO %? :Emacs:\n")
-          ("y" "Yiyi Todo" entry (file "~/org/agenda/inbox.org")
+          ("y" "Yiyi Todo" entry (file "~/org/agenda/20250814T095858--yiyi-todos__agenda_yiyi.org")
            "* TODO %? :Yiyi:\n"))
         )
   )
@@ -412,14 +412,11 @@
             (tags-todo "-{.*}"
                        ((org-agenda-overriding-header "Untagged Tasks")))))
           ("i" "Inbox"
-           ((todo "" ((org-agenda-files '("~/org/agenda/inbox.org"))
+           ((todo "" ((org-agenda-files '("~/org/agenda/20250814T155838--inbox.org"))
                       (org-agenda-overriding-header "Inbox Items")))))
           ("e" "Emacs"
            ((tags-todo "+Emacs"
                        ((org-agenda-overriding-header "Emacs Tasks 🤓")))))
-          ("o" "Obsidian Tasks"
-           ((todo "" ((org-agenda-files '("~/org/agenda/Obsidian Journals"))
-                      (org-agenda-overriding-header "Tasks From Obsidian Dailies")))))
           )
         ))
 
@@ -505,7 +502,7 @@
 
 (use-package! org-roam
   :custom
-  (org-roam-directory "~/org")
+  (org-roam-directory "~/org backup (roam version)")
   (org-roam-completion-everywhere nil)
   (org-roam-capture-templates
    '(("d" "default" plain
@@ -528,7 +525,7 @@
       :unnarrowed t)
      ))
 
-  (org-roam-dailies-directory "~/org/daily/")
+  (org-roam-dailies-directory "~/org backup (roam version)/daily/")
 
   (org-roam-dailies-capture-templates
    '(("d" "default" entry
@@ -574,12 +571,12 @@
             #'org-roam-unlinked-references-section
             ))
 
-(use-package! org-auto-tangle
-  :defer t
-  :hook
-  (org-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-default t))
+;; (use-package! org-auto-tangle
+;;   :defer t
+;;   :hook
+;;   (org-mode . org-auto-tangle-mode)
+;;   :config
+;;   (setq org-auto-tangle-default nil))
 
 (use-package! org-ql
   :after org
@@ -597,7 +594,7 @@
   ;; Apply colors to Denote names in Dired
   (dired-mode . denote-dired-mode)
   :config
-  (setq denote-directory (expand-file-name "~/denote test/"))
+  (setq denote-directory (expand-file-name "~/org/"))
   (setq denote-save-buffers t)
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
@@ -609,15 +606,13 @@
   (map! :leader
         (:prefix ("n" . "notes")
                  (:prefix ("d" . "denote")
-                  :desc "Create a note" "n" #'denote
                   :desc "Rename" "r" #'denote-rename-file
                   :desc "Rename using front matter" "R" #'denote-rename-file-using-front-matter
-                  :desc "Link a note" "l" #'denote-link
+                  :desc "Link or create a note" "l" #'denote-link-or-create
                   :desc "Add links" "L" #'denote-add-links
                   :desc "Backlinks" "b" #'denote-backlinks
-                  :desc "Search notes" "s" #'denote-grep
-                  :desc "Denote dired" "d" #'denote-dired
-                  :desc "Open or create" "o" #'denote-open-or-create
+                  :desc "Denote dired" "D" #'denote-dired
+                  :desc "Open or create a note" "n" #'denote-open-or-create
                   )))
 
   ;; Automatically rename Denote buffers when opening them so that
@@ -643,7 +638,44 @@
   ;; strings.
   (setq denote-journal-keyword "journal")
   ;; Read the doc string of `denote-journal-title-format'.
-  (setq denote-journal-title-format "%Y-%0m-%0d"))
+  (setq denote-journal-title-format "%Y-%0m-%0d")
+  ;; Keybindings
+  (map! :leader
+        (:prefix ("n" . "notes")
+                 (:prefix ("d" . "denote")
+                  :desc "Goto journal" "j" #'denote-journal-new-or-existing-entry
+                  :desc "Link or create journal" "J" #'denote-journal-new-or-existing-entry
+                  )))
+  )
+
+(use-package! consult-denote
+  :ensure t
+  :bind
+  (("C-c n f" . consult-denote-find)
+   ("C-c n g" . consult-denote-grep))
+  :config
+  (consult-denote-mode 1)
+  (setq consult-denote-grep-command #'consult-ripgrep)
+  (map! :leader
+        (:prefix ("n" . "notes")
+                 (:prefix ("d" . "denote")
+                  :desc "Search notes" "s" #'consult-denote-grep
+                  )))
+  )
+
+(use-package! denote-org
+  :ensure t
+  :config
+  ;; I list the commands here so that you can discover them more
+  ;; easily. You might want to bind the most frequently used ones to
+  ;; the `org-mode-map'.
+  (map! :leader
+        (:prefix ("n" . "notes")
+                 (:prefix ("d" . "denote")
+                  :desc "Extract subtree" "x" #'denote-org-extract-org-subtree
+                  :desc "Convert links to denote" "C" #'denote-org-convert-links-to-denote-type
+                  )))
+  )
 
 ;; (setq org-gcal-client-id "your-id-foo.apps.googleusercontent.com"
 ;;       org-gcal-client-secret "your-secret"
