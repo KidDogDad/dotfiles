@@ -44,4 +44,4 @@
 (package! esup)
 (package! info+)
 (package! nov)
-;; (package! mu4easy)
+(package! scroll-on-jump :recipe (:host github :repo "emacsmirror/scroll-on-jump"))

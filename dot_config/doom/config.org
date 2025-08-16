@@ -153,6 +153,35 @@
 (pixel-scroll-precision-mode 1)
 #+end_src
 
+** Scroll-On-Jump
+
+#+begin_src emacs-lisp
+(use-package! scroll-on-jump
+  :config
+  (setq scroll-on-jump-duration 0.2))
+
+(after! evil
+  (scroll-on-jump-advice-add evil-undo)
+  (scroll-on-jump-advice-add evil-redo)
+  (scroll-on-jump-advice-add evil-jump-item)
+  (scroll-on-jump-advice-add evil-jump-forward)
+  (scroll-on-jump-advice-add evil-jump-backward)
+  (scroll-on-jump-advice-add evil-ex-search-next)
+  (scroll-on-jump-advice-add evil-ex-search-previous)
+  (scroll-on-jump-advice-add evil-forward-paragraph)
+  (scroll-on-jump-advice-add evil-backward-paragraph)
+  (scroll-on-jump-advice-add evil-goto-mark)
+
+  ;; Actions that themselves scroll.
+  (scroll-on-jump-with-scroll-advice-add evil-goto-line)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-down)
+  (scroll-on-jump-with-scroll-advice-add evil-scroll-up)
+  ;; (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-center)
+  ;; (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-top)
+  ;; (scroll-on-jump-with-scroll-advice-add evil-scroll-line-to-bottom)
+  )
+#+end_src
+
 ** Chinese Stuff (Commented Out)
 
 *** Use Fcitx5
@@ -211,7 +240,10 @@
 ;; Save my pinkies
 (map! :after evil :map general-override-mode-map
       :nv "zj" #'evil-scroll-down
-      :nv "zk" #'evil-scroll-up)
+      :nv "zk" #'evil-scroll-up
+      :nv "E" #'evil-end-of-line
+      :nv "B" #'evil-first-non-blank
+      )
 (map! :after evil :map general-override-mode-map
       :nv "ga" #'evil-avy-goto-line)
 (map!
@@ -805,6 +837,14 @@ Some settings taken from [[https:www.youtube.com/watch?v=a_WNtuefREM][this YouTu
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
   (setq denote-rename-confirmations '(rewrite-front-matter modify-file-name))
+  (setq denote-backlinks-display-buffer-action
+        (quote ((display-buffer-reuse-window display-buffer-in-side-window)
+                (side . right)
+                (slot . 99)
+                (window-width . 0.3)
+                (dedicated . t)
+                (preserve-size . (t . t)))))
+
 
   ;; Pick dates, where relevant, with Org's advanced interface:
   (setq denote-date-prompt-use-org-read-date t)
@@ -836,7 +876,7 @@ Some settings taken from [[https:www.youtube.com/watch?v=a_WNtuefREM][this YouTu
                   :desc "Search notes (ripgrep)" "s" #'consult-denote-grep
                   )))
 #+end_src
-   
+
 ** Denote Journal
 
 #+begin_src emacs-lisp
